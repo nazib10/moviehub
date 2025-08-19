@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doraemon Films Hub - Your Curated Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for a clean, Apple-inspired aesthetic */
+        body {
+            font-family: 'Inter', sans-serif; /* Clean, modern body font */
+            background-color: #ffffff; /* Pure white background */
+            color: #1a1a1a; /* Very dark gray text for high readability */
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        h1 {
+            font-family: 'Inter', sans-serif; /* Using Inter for all headings too */
+            font-weight: 700;
+            letter-spacing: -0.03em; /* Tighter spacing for modern feel */
+            font-size: 4.5rem; /* Larger for impact */
+            line-height: 1.1;
+        }
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #1a1a1a; /* Consistent dark text for card titles */
+        }
+
+        /* Header Specific Styles - Minimalist and bright */
+        .header-bg {
+            background-color: #f8f8f8; /* Very subtle light gray */
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 40px; /* Softly rounded bottom corners */
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Very subtle shadow */
+            z-index: 1;
+        }
+        .header-text-container {
+            max-width: 900px; /* Control width of header text */
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 8rem;
+            padding-bottom: 8rem;
+        }
+        .header-subtitle {
+            font-weight: 500; /* Medium weight for subtitle */
+            opacity: 0.9;
+            font-size: 1.8rem;
+        }
+
+        /* Search Bar Styles - Integrated and clean */
+        .search-input {
+            width: 100%;
+            padding: 14px 22px; /* Adjusted padding */
+            border-radius: 28px; /* Slightly less rounded */
+            background-color: #ffffff;
+            color: #1a1a1a;
+            font-size: 1.05em;
+            border: 1px solid #e0e0e0; /* Light gray border */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); /* Very light shadow */
+            transition: all 0.2s ease-in-out;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        .search-input::placeholder {
+            color: #888888; /* Softer placeholder color */
+            opacity: 1; /* Ensure placeholder is visible */
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #007aff; /* Apple-esque blue on focus */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08), 0 0 0 3px rgba(0, 122, 255, 0.2); /* Soft blue glow */
+        }
+
+        /* Movie Card Styles - Ultra-clean with subtle interaction */
+        .movie-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            background-color: #ffffff;
+            border-radius: 10px; /* Slightly less rounded */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Very soft shadow */
+            overflow: hidden;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+            border: 1px solid #f0f0f0; /* Very light border for definition */
+        }
+        .movie-card:hover {
+            transform: translateY(-3px); /* Barely-there lift */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* Slightly more defined shadow on hover */
+        }
+        .movie-card img {
+            width: 100%;
+            height: 260px; /* Adjusted height */
+            object-fit: cover;
+            border-radius: 9px 9px 0 0;
+            transition: transform 0.2s ease-out;
+        }
+        .movie-card:hover img {
+            transform: scale(1.01); /* Minimal zoom */
+        }
+        .movie-card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            text-align: center;
+            gap: 15px;
+        }
+        .movie-card-title {
+            font-size: 1.3em;
+            line-height: 1.35;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 55px; /* Consistent title box height */
+        }
+
+        /* Facebook Button Styles - Flat and functional */
+        .facebook-button {
+            background-color: transparent; /* Transparent background */
+            color: #1877f2; /* Facebook blue text */
+            padding: 12px 25px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 1px solid #1877f2; /* Facebook blue border */
+            transition: all 0.2s ease-out;
+            cursor: pointer;
+        }
+        .facebook-button:hover {
+            background-color: #1877f2; /* Fill with blue on hover */
+            color: white; /* White text on hover */
+            box-shadow: 0 4px 10px rgba(24, 119, 242, 0.2); /* Soft blue shadow */
+        }
+        .facebook-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 5px rgba(24, 119, 242, 0.1);
+        }
+        .facebook-icon {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        /* Footer Specific Styles - Mirrors header minimalism */
+        .footer-bg {
+            background-color: #f8f8f8;
+            color: #555555; /* Slightly darker footer text */
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+            z-index: 1;
+        }
+        .footer-text {
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        .footer-copyright {
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+    <!-- Header Section -->
+    <header class="header-bg text-gray-900 py-24 px-4 text-center shadow-md mb-16">
+        <div class="header-text-container relative z-10">
+            <h1 class="text-7xl md:text-8xl lg:text-9xl mb-6 leading-tight">DORAEMON FILMS HUB</h1>
+            <p class="header-subtitle text-xl md:text-2xl lg:text-3xl">Your Curated Collection of Doraemon Animated Masterpieces.</p>
+        </div>
+    </header>
+
+    <!-- Search Bar Section -->
+    <section class="container mx-auto px-6 mb-16">
+        <div class="max-w-3xl mx-auto">
+            <input type="text" id="movieSearch" placeholder="Search for your favorite Doraemon film..."
+                   class="search-input">
+        </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <main class="container mx-auto px-6 py-12">
+        <div id="movieGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+
+            <!-- Movie Card 1: Doraemon - Nobita's Sky Utopia -->
+            <div class="movie-card">
+                <img src="images/doraemon-sky-utopia.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon the Movie: Nobita's Sky Utopia (2023) Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon the Movie: Nobita's Sky Utopia (2023)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/3932224157088366/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- New Movie Card 2: Doraemon The Movie Nobita's Treasure Island -->
+            <div class="movie-card">
+                <img src="images/doraemon-treasure-island.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita's Treasure Island Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie Nobita's Treasure Island (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/640454295760593/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 3: Doraemon - Nobita Ki Nayi Duniya (moved from 2nd position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-nayi-duniya.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita Ki Nayi Duniya Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie Nobita Ki Nayi Duniya (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/641767961811897/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 4: Doraemon - Nobita's Dorabian Nights (moved from 3rd position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-dorabian-nights.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita's Dorabian Nights Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie Nobita's Dorabian Nights (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/733719062768636/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 5: Doraemon - Toofani Adventure (moved from 4th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-toofani-adventure.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Toofani Adventure Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie Toofani Adventure (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1677849806264181/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 6: Doraemon - Nobita Aur Jadooi Tapu (moved from 5th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-jadooi-tapu.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita Aur Jadooi Tapu Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie Nobita Aur Jadooi Tapu (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1044495797465981/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 7: Doraemon - Nobita's Chronicle of the Moon Exploration (moved from 6th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-moon-exploration.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon: Nobita's Chronicle of the Moon Exploration Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon: Nobita's Chronicle of the Moon Exploration (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1089875305836794/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 8: Doraemon - Nobita and the Castle of the Undersea Devil (moved from 7th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-undersea-devil.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita and the Castle of the Undersea Devil Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie Nobita and the Castle of the Undersea Devil (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/614771978339141/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Movie Card 9: Doraemon - Nobita's Great Adventure in the Antarctic Kachi Kochi (moved from 8th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-antarctic-kachi-kochi.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita's Great Adventure in the Antarctic Kachi Kochi Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie Nobita's Great Adventure in the Antarctic Kachi Kochi (Hindi)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1723058328351545/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 10: Doraemon - Stand by Me 2 (moved from 9th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-stand-by-me-2.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon Stand by Me 2 Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon Stand by Me 2 (2020) 1080p</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/4111010009177962/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 11: Doraemon - Steel Troops (moved from 10th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-steel-troops.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon In Nobita And The Steel Troops-The New Age Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon In Nobita And The Steel Troops-The New Age</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1051273367116965/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 12: Doraemon - Gadget Museum Ka Rahasya (moved from 11th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-gadget-museum.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Gadget Museum Ka Rahasya Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie Gadget Museum Ka Rahasya (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1470419020634494/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 13: Doraemon - Little Space War (moved from 12th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-little-space-war.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon: Nobita's Little Space War Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon: Nobita's Little Space War (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1803317223873586/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 14: Doraemon - Birdopia Ka Sultan (moved from 13th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-birdopia-sultan.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie – Nobita Aur Birdopia Ka Sultan Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie – Nobita Aur Birdopia Ka Sultan (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/4061355814138236/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 15: Doraemon - Birth Of Japan (moved from 14th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-birth-of-japan.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita And The Birth Of Japan Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie Nobita And The Birth Of Japan (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1655457565117495/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 16: Doraemon - Galaxy Super Express (moved from 15th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-galaxy-super-express.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon Movie: Galaxy Super Express Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon Movie: Galaxy Super Express (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1826372554757201/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 17: Doraemon - Three Magical Swordsmen (moved from 16th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-three-magical-swordsmen.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita's Three Magical Swordsmen Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie Nobita's Three Magical Swordsmen (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1805560470314218/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 18: Doraemon - Jalpari (moved from 17th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-jalpari.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita Aur Ek Jalpari Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie Nobita Aur Ek Jalpari (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1050964053530942/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 19: Doraemon - Hara Hara Planet (moved from 18th position) -->
+            <div class="movie-card">
+                <img src="images/doraemon-hara-hara-planet.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita In Hara Hara Planet Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Doraemon The Movie Nobita In Hara Hara Planet (Hindi Dubbed)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/24854423730809045/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 20: Crayon Shin-chan - Our Dinosaur Diary (2024) -->
+            <div class="movie-card">
+                <img src="images/shinchan-dinosaur-diary.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Crayon Shin-chan the Movie - Our Dinosaur Diary (2024) Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Crayon Shin-chan the Movie - Our Dinosaur Diary (2024)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/723534853835364/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 21: Crayon Shin-chan - The Adult Empire Strikes Back (2001) -->
+            <div class="movie-card">
+                <img src="images/shinchan-adult-empire.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Crayon Shin-chan - The Storm Called-The Adult Empire Strikes Back (2001) Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Crayon Shin-chan - The Storm Called-The Adult Empire Strikes Back (2001) 1080p Hindi</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1802085427401967/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 22: Death Note ReLight - Visions of a God (2007) -->
+            <div class="movie-card">
+                <img src="images/death-note-relight.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Death Note ReLight - Visions of a God (2007) Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Death Note ReLight - Visions of a God (2007)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1266322374949691/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 23: Dragon Ball Z Battle of Gods 2013 -->
+            <div class="movie-card">
+                <img src="images/dragon-ball-battle-of-gods.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Dragon Ball Z Battle of Gods 2013 Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Dragon Ball Z Battle of Gods 2013</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/2608678586139750/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 24: DragonBall Super Broly 2018 -->
+            <div class="movie-card">
+                <img src="images/dragon-ball-super-broly.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="DragonBall Super Broly 2018 Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">DragonBall Super Broly 2018</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1272086881027408/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+            <!-- Movie Card 25: Dragon Ball Super Super Hero (2022) -->
+            <div class="movie-card">
+                <img src="images/dragon-ball-super-hero.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Dragon Ball Super Super Hero (2022) Poster" class="w-full">
+                <div class="movie-card-content">
+                    <h2 class="movie-card-title">Dragon Ball Super Super Hero (2022)</h2>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/videos/1882284009295582/" target="_blank" class="facebook-button">
+                        <svg class="facebook-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.415 9.876V14.65h-2.923V12h2.923V9.742c0-2.893 1.765-4.485 4.364-4.485 1.243 0 2.316.22 2.628.319v2.548h-1.526c-1.5 0-1.792.714-1.792 1.76V12h3.39l-.53 2.65h-2.86V21.876C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                        Watch on Facebook
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer-bg text-gray-900 text-center py-12 mt-20 shadow-inner">
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+            <p class="footer-text text-lg mb-3">&copy; 2025 Doraemon Films Hub.</p>
+            <p class="footer-copyright text-sm">All rights reserved. Content is linked to external platforms for viewing pleasure.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('movieSearch');
+            const movieGrid = document.getElementById('movieGrid');
+            const movieCards = Array.from(movieGrid.getElementsByClassName('movie-card')); // Convert to Array
+
+            searchInput.addEventListener('keyup', function() {
+                const searchTerm = searchInput.value.toLowerCase().trim(); // Trim whitespace
+
+                movieCards.forEach(card => { // Use forEach on the array
+                    const titleElement = card.querySelector('.movie-card-title');
+                    if (titleElement) {
+                        const movieTitle = titleElement.textContent.toLowerCase();
+
+                        if (movieTitle.includes(searchTerm)) {
+                            card.style.display = 'flex'; // Show the card
+                        } else {
+                            card.style.display = 'none'; // Hide the card
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
