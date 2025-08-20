@@ -19,7 +19,10 @@
             font-family: 'Inter', sans-serif; /* Using Inter for all headings too */
             font-weight: 700;
             letter-spacing: -0.03em; /* Tighter spacing for modern feel */
-            font-size: 4.5rem; /* Larger for impact */
+            /* Adjusted font size for better mobile responsiveness using clamp() */
+            /* This ensures the font size scales fluidly between 3rem (min) and 4.5rem (max),
+               preventing text from being cut off on small screens. */
+            font-size: clamp(3rem, 10vw + 1rem, 4.5rem);
             line-height: 1.1;
         }
         h2 {
