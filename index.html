@@ -19,11 +19,23 @@
             font-family: 'Inter', sans-serif; /* Using Inter for all headings too */
             font-weight: 700;
             letter-spacing: -0.03em; /* Tighter spacing for modern feel */
-            /* Adjusted font size for better mobile responsiveness using clamp() */
-            /* This ensures the font size scales fluidly between 3rem (min) and 4.5rem (max),
-               preventing text from being cut off on small screens. */
-            font-size: clamp(3rem, 10vw + 1rem, 4.5rem);
             line-height: 1.1;
+            text-align: center; /* Ensure overall text alignment is centered */
+            
+            /* New Flexbox properties for controlled wrapping */
+            display: flex; /* Make h1 a flex container */
+            flex-wrap: wrap; /* Allow content to wrap to the next line */
+            justify-content: center; /* Center the wrapped lines horizontally */
+            align-items: center; /* Vertically align items if they have different heights */
+            gap: 0.5rem; /* Small space between words/lines */
+
+            /* Combined clamp for consistent font size - adjusted for the new layout */
+            font-size: clamp(1.2rem, 5.5vw + 0.5rem, 4.5rem); /* Fine-tuned scaling */
+        }
+
+        h1 span {
+            white-space: nowrap; /* PREVENTS "DORAEMON" from breaking */
+            display: inline-block; /* Essential for nowrap to work within a flex container */
         }
         h2 {
             font-family: 'Inter', sans-serif;
@@ -180,7 +192,10 @@
     <!-- Header Section -->
     <header class="header-bg text-gray-900 py-24 px-4 text-center shadow-md mb-16">
         <div class="header-text-container relative z-10">
-            <h1 class="text-7xl md:text-8xl lg:text-9xl mb-6 leading-tight">DORAEMON FILMS HUB</h1>
+            <!-- SIGNIFICANTLY MODIFIED H1 FOR DEFINITIVE MOBILE WRAPPING -->
+            <h1 class="text-7xl md:text-8xl lg:text-9xl mb-6 leading-tight">
+                <span>DORAEMON</span> FILMS HUB
+            </h1>
             <p class="header-subtitle text-xl md:text-2xl lg:text-3xl">Your Curated Collection of Doraemon Animated Masterpieces.</p>
         </div>
     </header>
@@ -233,7 +248,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 4: Doraemon - Nobita's Dorabian Nights (moved from 3rd position) -->
+            <!-- Movie Card 4: Doraemon - Nobita's Dorabian Nights -->
             <div class="movie-card">
                 <img src="images/doraemon-dorabian-nights.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita's Dorabian Nights Poster" class="w-full">
                 <div class="movie-card-content">
@@ -245,7 +260,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 5: Doraemon - Toofani Adventure (moved from 4th position) -->
+            <!-- Movie Card 5: Doraemon - Toofani Adventure -->
             <div class="movie-card">
                 <img src="images/doraemon-toofani-adventure.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Toofani Adventure Poster" class="w-full">
                 <div class="movie-card-content">
@@ -257,7 +272,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 6: Doraemon - Nobita Aur Jadooi Tapu (moved from 5th position) -->
+            <!-- Movie Card 6: Doraemon - Nobita Aur Jadooi Tapu -->
             <div class="movie-card">
                 <img src="images/doraemon-jadooi-tapu.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita Aur Jadooi Tapu Poster" class="w-full">
                 <div class="movie-card-content">
@@ -269,7 +284,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 7: Doraemon - Nobita's Chronicle of the Moon Exploration (moved from 6th position) -->
+            <!-- Movie Card 7: Doraemon - Nobita's Chronicle of the Moon Exploration -->
             <div class="movie-card">
                 <img src="images/doraemon-moon-exploration.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon: Nobita's Chronicle of the Moon Exploration Poster" class="w-full">
                 <div class="movie-card-content">
@@ -281,7 +296,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 8: Doraemon - Nobita and the Castle of the Undersea Devil (moved from 7th position) -->
+            <!-- Movie Card 8: Doraemon - Nobita and the Castle of the Undersea Devil -->
             <div class="movie-card">
                 <img src="images/doraemon-undersea-devil.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita and the Castle of the Undersea Devil Poster" class="w-full">
                 <div class="movie-card-content">
@@ -293,7 +308,7 @@
                 </div>
             </div>
             
-            <!-- Movie Card 9: Doraemon - Nobita's Great Adventure in the Antarctic Kachi Kochi (moved from 8th position) -->
+            <!-- Movie Card 9: Doraemon - Nobita's Great Adventure in the Antarctic Kachi Kochi -->
             <div class="movie-card">
                 <img src="images/doraemon-antarctic-kachi-kochi.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita's Great Adventure in the Antarctic Kachi Kochi Poster" class="w-full">
                 <div class="movie-card-content">
@@ -305,7 +320,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 10: Doraemon - Stand by Me 2 (moved from 9th position) -->
+            <!-- Movie Card 10: Doraemon - Stand by Me 2 -->
             <div class="movie-card">
                 <img src="images/doraemon-stand-by-me-2.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon Stand by Me 2 Poster" class="w-full">
                 <div class="movie-card-content">
@@ -317,7 +332,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 11: Doraemon - Steel Troops (moved from 10th position) -->
+            <!-- Movie Card 11: Doraemon - Steel Troops -->
             <div class="movie-card">
                 <img src="images/doraemon-steel-troops.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon In Nobita And The Steel Troops-The New Age Poster" class="w-full">
                 <div class="movie-card-content">
@@ -329,7 +344,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 12: Doraemon - Gadget Museum Ka Rahasya (moved from 11th position) -->
+            <!-- Movie Card 12: Doraemon - Gadget Museum Ka Rahasya -->
             <div class="movie-card">
                 <img src="images/doraemon-gadget-museum.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Gadget Museum Ka Rahasya Poster" class="w-full">
                 <div class="movie-card-content">
@@ -341,7 +356,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 13: Doraemon - Little Space War (moved from 12th position) -->
+            <!-- Movie Card 13: Doraemon - Little Space War -->
             <div class="movie-card">
                 <img src="images/doraemon-little-space-war.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon: Nobita's Little Space War Poster" class="w-full">
                 <div class="movie-card-content">
@@ -353,7 +368,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 14: Doraemon - Birdopia Ka Sultan (moved from 13th position) -->
+            <!-- Movie Card 14: Doraemon - Birdopia Ka Sultan -->
             <div class="movie-card">
                 <img src="images/doraemon-birdopia-sultan.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie – Nobita Aur Birdopia Ka Sultan Poster" class="w-full">
                 <div class="movie-card-content">
@@ -365,7 +380,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 15: Doraemon - Birth Of Japan (moved from 14th position) -->
+            <!-- Movie Card 15: Doraemon - Birth Of Japan -->
             <div class="movie-card">
                 <img src="images/doraemon-birth-of-japan.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita And The Birth Of Japan Poster" class="w-full">
                 <div class="movie-card-content">
@@ -377,7 +392,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 16: Doraemon - Galaxy Super Express (moved from 15th position) -->
+            <!-- Movie Card 16: Doraemon - Galaxy Super Express -->
             <div class="movie-card">
                 <img src="images/doraemon-galaxy-super-express.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon Movie: Galaxy Super Express Poster" class="w-full">
                 <div class="movie-card-content">
@@ -389,7 +404,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 17: Doraemon - Three Magical Swordsmen (moved from 16th position) -->
+            <!-- Movie Card 17: Doraemon - Three Magical Swordsmen -->
             <div class="movie-card">
                 <img src="images/doraemon-three-magical-swordsmen.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita's Three Magical Swordsmen Poster" class="w-full">
                 <div class="movie-card-content">
@@ -401,7 +416,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 18: Doraemon - Jalpari (moved from 17th position) -->
+            <!-- Movie Card 18: Doraemon - Jalpari -->
             <div class="movie-card">
                 <img src="images/doraemon-jalpari.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita Aur Ek Jalpari Poster" class="w-full">
                 <div class="movie-card-content">
@@ -413,7 +428,7 @@
                 </div>
             </div>
 
-            <!-- Movie Card 19: Doraemon - Hara Hara Planet (moved from 18th position) -->
+            <!-- Movie Card 19: Doraemon - Hara Hara Planet -->
             <div class="movie-card">
                 <img src="images/doraemon-hara-hara-planet.jpg" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="Doraemon The Movie Nobita In Hara Hara Planet Poster" class="w-full">
                 <div class="movie-card-content">
