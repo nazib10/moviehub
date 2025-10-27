@@ -23,7 +23,7 @@ const LOCAL_FIREBASE_CONFIG = {
     storageBucket: "movieapp-b6801.firebasestorage.app",
     messagingSenderId: "1014850345340",
     appId: "1:1014850345340:web:4f9b548c52cb29fd85acf9",
-    measurementId: "G-W91SRGT40K" // Your GA4 Measurement ID
+    measurementId: "G-W91SRGT40K" // Corrected to your desired GA4 Measurement ID
 };
 // --- END Firebase Config ---
 
@@ -505,7 +505,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 myListGrid.appendChild(createMovieCard(movie, true));
             });
             console.log(`My List rendered with ${moviesInMyList.length} movies.`);
-        } else {
+        }
+        else {
             myListEmptyMessage.style.display = 'block';
             myListSection.style.display = 'block';
             console.log("My List is empty.");
@@ -539,7 +540,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             section.style.display = show ? 'block' : 'none';
         });
         if (currentUserId) {
-            myListSection.style.display = 'block' : 'none';
+            myListSection.style.display = show ? 'block' : 'none';
         }
     }
 
