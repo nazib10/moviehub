@@ -23,7 +23,7 @@ const LOCAL_FIREBASE_CONFIG = {
     storageBucket: "movieapp-b6801.firebasestorage.app",
     messagingSenderId: "1014850345340",
     appId: "1:1014850345340:web:4f9b548c52cb29fd85acf9",
-    measurementId: "G-W91SRGT40K" // Corrected to your desired GA4 Measurement ID
+    measurementId: "G-P365MMCVRW" // Updated to match server-fetched ID
 };
 // --- END Firebase Config ---
 
@@ -374,7 +374,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 movieIds: arrayUnion(movieId)
             }, { merge: true });
             console.log(`Movie ${movieId} added to My List in Firestore.`);
-        } catch (e) {
+        }
+        catch (e) {
             console.error("Error adding document to My List: ", e);
         }
     }
@@ -386,7 +387,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 movieIds: arrayRemove(movieId)
             });
             console.log(`Movie ${movieId} removed from My List in Firestore.`);
-        } catch (e) {
+        }
+        catch (e) {
             console.error("Error removing document from My List: ", e);
         }
     }
@@ -572,7 +574,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         searchToggleButton.addEventListener('click', function() {
             if (isSearchActive) {
                 deactivateSearch();
-            } else {
+            }
+            else {
                 activateSearch();
             }
         });
@@ -592,7 +595,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     movie.title.toLowerCase().includes(searchTerm) || movie.description.toLowerCase().includes(searchTerm)
                 );
                 displayMovies(filteredMovies);
-            } else {
+            }
+            else {
                 displayMovies([]);
             }
         });
