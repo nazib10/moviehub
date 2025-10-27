@@ -764,6 +764,12 @@
             .hero-content {
                 padding-left: 20px;
             }
+            .hero-content h1 {
+                font-size: 2.5rem; /* Optimized for mobile */
+            }
+            .hero-content p {
+                font-size: 1rem; /* Optimized for mobile */
+            }
             .hero-buttons .play-button,
             .hero-buttons .info-button {
                 padding: 10px 20px;
