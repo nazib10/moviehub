@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doraemon Films Hub - Dorahub Style</title>
+
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W91SRGT40K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-W91SRGT40K');
+    </script>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Your ultimate hub for Doraemon movies, presented in a sleek, Dorahub-style interface. Watch, track, and enjoy all your favorite Doraemon adventures.">
+    <meta name="keywords" content="Doraemon, movies, films, watch, streaming, anime, kids, family, adventure">
+    <meta name="author" content="Dorahub">
+
+    <!-- Open Graph Meta Tags (for Facebook, etc.) -->
+    <meta property="og:title" content="Doraemon Films Hub">
+    <meta property="og:description" content="Your ultimate hub for Doraemon movies, presented in a sleek, Dorahub-style interface.">
+    <meta property="og:image" content="https://doraemonhub.netlify.app/images/doraemon-stand-by-me-2.jpg">
+    <meta property="og:url" content="https://doraemonhub.netlify.app/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Doraemon Films Hub">
+    <meta property="twitter:description" content="Your ultimate hub for Doraemon movies, presented in a sleek, Dorahub-style interface.">
+    <meta property="twitter:image" content="https://doraemonhub.netlify.app/images/doraemon-stand-by-me-2.jpg">
+
+
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <header>
+            <div class="header-logo" id="headerLogo">Dorahub</div>
+            
+            <div class="flex items-center" id="rightControlsContainer">
+                <!-- Search elements -->
+                <div id="searchElements">
+                    <button id="searchToggleButton" class="search-icon-button">
+                        <svg class="search-icon-svg" viewBox="0 0 24 24">
+                            <!-- Magnifying glass path -->
+                            <path class="search-path" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.69 0 3.17-.59 4.38-1.55l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                            <!-- Close (X) path -->
+                            <path class="close-path" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </button>
+                    <input type="text" id="movieSearch" placeholder="Search for films..." class="search-input-field">
+                </div>
+
+                <!-- User Icon and Tooltip (now comes before Support Us) -->
+                <button id="userIdToggleButton" class="user-icon-button">
+                    <svg class="user-icon-svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </button>
+                <div id="userIdTooltip" class="user-id-tooltip"></div>
+
+                <!-- Support Us Button (now moved to the very right) -->
+                <button id="donateButton" class="donate-button">
+                    <svg class="donate-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 21.5C17.2467 21.5 21.5 17.2467 21.5 12C21.5 6.75329 17.2467 2.5 12 2.5C6.75329 2.5 2.5 6.75329 2.5 12C2.5 17.2467 6.75329 21.5 12 21.5Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 16.5V12" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Support Us
+                </button>
+            </div>
+        </header>
+
+        <div class="hero" id="heroSection">
+            <div class="hero-carousel" id="heroCarousel">
+            </div>
+            <button class="carousel-control prev" aria-label="Previous slide">&#10094;</button>
+            <button class="carousel-control next" aria-label="Next slide">&#10095;</button>
+            <div class="carousel-indicators"></div>
+        </div>
+
+        <main class="content-sections">
+            <!-- My List Section -->
+            <section class="category-section" id="myListSection" style="display: none;">
+                <h2 class="category-title">My List</h2>
+                <div class="movie-grid-display" id="myListGrid">
+                    <!-- My List movies will be appended here by JavaScript -->
+                </div>
+                <p id="myListEmptyMessage" class="text-medium text-center mt-8" style="display: none;">Your list is empty. Add some movies!</p>
+            </section>
+
+            <!-- All Movies Section (Dynamically Populated) -->
+            <section class="category-section" id="allMoviesSection">
+                <h2 class="category-title">All Movies</h2>
+                <div class="movie-row" id="allMoviesGrid">
+                    <!-- All movies will be appended here by JavaScript -->
+                </div>
+            </section>
+            
+            <!-- Search Results Section (Dynamically Added/Removed) -->
+            <section class="category-section" id="searchResultsSection" style="display: none;">
+                <h2 class="category-title">Search Results</h2>
+                <div class="movie-grid-display" id="searchResultsGrid">
+                    <!-- Search results will be appended here by JavaScript -->
+                </div>
+                <p id="noResultsMessage" class="text-medium text-center mt-8" style="display: none;">No movies found matching your search.</p>
+            </section>
+
+        </main>
+
+        <footer>
+            <p class="text-center text-gray-500 text-sm mt-10 pb-4">© 2025 Dorahub. All rights reserved. Content is linked to external platforms for viewing pleasure.</p>
+        </footer>
+    </div>
+
+    <!-- The Modal -->
+    <div id="donateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Support Us</h2>
+                <span class="close-button">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p class="text-center text-gray-400 mb-6">Your support helps us keep the Doraemon Hub running!</p>
+                <div class="crypto-options" id="cryptoOptionsContainer">
+                    <!-- Crypto options will be dynamically loaded here -->
+                </div>
+                <p id="copiedMessage" class="copied-message">Copied to clipboard!</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

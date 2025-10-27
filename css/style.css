@@ -1,0 +1,841 @@
+/* New Color Variables */
+        :root {
+            --primary-accent: #20B2AA; /* Light Sea Green - a vibrant, yet calm teal */
+            --primary-accent-darker: #1A8F8A; /* Slightly darker for hover states */
+            --bg-main: #1A1A1A; /* Deep dark background */
+            --bg-card: #282828; /* Slightly lighter dark for cards */
+            --bg-modal: #383838; /* Even lighter for modal content */
+            --text-light: #E0E0E0; /* Soft white for primary text */
+            --text-medium: #A0A0A0; /* Medium gray for secondary text */
+            --input-bg: #333333; /* Darker background for inputs */
+            --input-border: #444444; /* Subtle dark border for inputs */
+        }
+
+        /* General Body and Font Styles for Dorahub Feel */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll for the main body */
+        }
+        .container-wide {
+            max-width: 1920px; /* Wider container for streaming feel */
+            margin: 0 auto;
+            padding: 0 40px; /* Padding for the sides */
+        }
+        
+        /* Header Specific Styles */
+        header {
+            background-color: var(--bg-main);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between; /* Keeps logo left, other items right */
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+        .header-logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary-accent);
+            letter-spacing: -0.05em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            flex-shrink: 0; /* Ensures logo doesn't shrink */
+        }
+
+        /* Right Header Section - Holds search and other controls */
+        #rightControlsContainer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* Aligns contents to the right within itself */
+            gap: 10px;
+        }
+
+        /* Search elements container */
+        #searchElements {
+            display: flex;
+            align-items: center;
+            position: relative; /* For z-index stacking if needed */
+            margin-right: 15px; /* Space between search and donate button (will be auto-adjusted by flex-end) */
+        }
+
+        /* Search Input Field */
+        .search-input-field {
+            width: 0; /* Hidden initially */
+            opacity: 0;
+            padding: 10px 0px; /* Reduce horizontal padding when hidden */
+            margin-left: 0; /* No initial margin-left to keep search icon to the right */
+            transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out, margin-left 0.3s ease-in-out, padding 0.3s ease-in-out, border 0.3s ease-in-out, background-color 0.3s ease-in-out;
+            border: none; /* No border when hidden */
+            background-color: transparent; /* Transparent background when hidden */
+            pointer-events: none; /* Disable interaction when hidden */
+            box-sizing: border-box;
+            white-space: nowrap; /* Prevent wrapping */
+            border-radius: 8px; /* Rounded corners for the input */
+            color: var(--text-light); /* Text color for input */
+            font-size: 1em;
+        }
+
+        .search-input-field.active {
+            width: 250px; /* Desired width when active */
+            opacity: 1;
+            padding: 10px 15px; /* Full padding when active */
+            margin-left: 10px; /* Space from search toggle button */
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            pointer-events: auto; /* Enable interaction when active */
+        }
+        .search-input-field::placeholder {
+            color: var(--text-medium);
+            opacity: 1;
+        }
+        .search-input-field:focus {
+            outline: none;
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.3);
+        }
+
+        /* Search Toggle Button (magnifying glass / X) */
+        .search-icon-button {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.3s ease-in-out;
+            flex-shrink: 0;
+            padding: 0; /* Remove default button padding */
+            display: flex; /* To center SVG */
+            align-items: center;
+            justify-content: center;
+        }
+        .search-icon-button:hover {
+            color: var(--primary-accent);
+        }
+        .search-icon-svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            transition: all 0.3s ease-in-out; /* For icon change */
+        }
+        .search-icon-svg .search-path {
+            display: block; /* Show magnifying glass by default */
+        }
+        .search-icon-svg .close-path {
+            display: none; /* Hide 'X' by default */
+        }
+        .search-icon-button.active .search-path {
+            display: none; /* Hide magnifying glass when active */
+        }
+        .search-icon-button.active .close-path {
+            display: block; /* Show 'X' when active */
+        }
+
+        /* Donate Button Styles (Header) */
+        .donate-button {
+            background-image: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            flex-shrink: 0;
+            white-space: nowrap;
+            margin-left: 15px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+        .donate-button.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .donate-button:hover {
+            background-color: var(--primary-accent-darker);
+            transform: translateY(-2px);
+        }
+        .donate-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        /* User Icon & Tooltip Styles */
+        .user-icon-button {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+            margin-left: 15px; /* Space from search icon/input */
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative; /* For tooltip positioning */
+        }
+        .user-icon-button:hover {
+            color: var(--primary-accent);
+            transform: scale(1.1);
+        }
+        .user-icon-svg {
+            width: 28px; /* Slightly larger for prominence */
+            height: 28px;
+            fill: currentColor;
+        }
+
+        .user-id-tooltip {
+            position: absolute;
+            top: 100%; /* Position below the icon */
+            right: 0; /* Align to the right of the icon */
+            background-color: var(--bg-modal); /* Dark background */
+            color: var(--text-light); /* Light text */
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            font-size: 0.85rem;
+            white-space: nowrap; /* Prevent wrapping */
+            z-index: 60; /* Above other elements */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px); /* Start slightly below */
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+            pointer-events: none; /* Don't block clicks */
+            min-width: 120px; /* Ensure it's not too small */
+            text-align: center;
+            border: 1px solid var(--input-border); /* Subtle border */
+        }
+        .user-id-tooltip.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+
+        /* Hero Section Styles */
+        .hero {
+            height: 600px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+        .hero.hidden-by-search {
+            opacity: 0;
+            visibility: hidden;
+            height: 0;
+            margin-bottom: 0;
+        }
+
+        .hero-carousel {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 50px;
+            position: relative;
+        }
+
+        .carousel-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(26,26,26,1) 0%, rgba(26,26,26,0.6) 50%, rgba(26,26,26,0) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+            padding-left: 40px;
+            text-align: left;
+        }
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-medium);
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+        }
+        .hero-buttons .play-button,
+        .hero-buttons .info-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+        .hero-buttons .play-button {
+            background-color: #ffffff;
+            color: var(--bg-main);
+            margin-right: 15px;
+        }
+        .hero-buttons .play-button:hover {
+            background-color: #f0f0f0;
+        }
+        .hero-buttons .info-button {
+            background-color: rgba(109, 109, 110, 0.7);
+            color: white;
+        }
+        .hero-buttons .info-button:hover {
+            background-color: rgba(109, 109, 110, 0.9);
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 2rem;
+            z-index: 20;
+            transition: background-color 0.3s ease;
+        }
+        .carousel-control:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .carousel-control.prev {
+            left: 0;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        .carousel-control.next {
+            right: 0;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            gap: 10px;
+        }
+        .indicator-dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .indicator-dot.active {
+            background-color: white;
+        }
+
+        /* Category Section and Movie Row Styles */
+        .category-section {
+            margin-bottom: 50px;
+        }
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            padding-left: 40px;
+        }
+        /* Style for horizontal scrolling movie rows */
+        .movie-row {
+            display: flex;
+            overflow-x: scroll;
+            padding: 0 40px 20px 40px;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Optional: Style the scrollbar for webkit browsers (Chrome, Safari) */
+        .movie-row::-webkit-scrollbar {
+            height: 8px;
+        }
+        .movie-row::-webkit-scrollbar-track {
+            background: var(--bg-card);
+            border-radius: 10px;
+        }
+        .movie-row::-webkit-scrollbar-thumb {
+            background: var(--primary-accent);
+            border-radius: 10px;
+        }
+        .movie-row::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-accent-darker);
+        }
+
+        /* New style for grid display (My List and Search Results) */
+        .movie-grid-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid columns */
+            gap: 20px; /* Gap between grid items */
+            padding: 0 40px; /* Maintain side padding */
+            margin-bottom: 20px; /* Space below the grid */
+        }
+
+        .movie-card {
+            flex: 0 0 auto; /* Default for horizontal rows: Do not grow, do not shrink, fixed width */
+            width: 280px; /* Default for horizontal rows: Fixed width for consistent cards */
+            margin-right: 15px; /* Default for horizontal rows: Spacing between cards */
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        /* Adjustments for movie cards specifically within a grid layout */
+        .movie-grid-display .movie-card {
+            margin-right: 0; /* Remove horizontal margin for grid items */
+            width: auto; /* Allow cards to take up available grid space */
+        }
+
+        .movie-card:last-child {
+            margin-right: 0;
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        /* Movie Card Image Aspect Ratio */
+        .aspect-16-9 {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            overflow: hidden;
+        }
+        .aspect-16-9 img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        /* Movie Card Content and Button Styles */
+        .movie-card-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: var(--bg-card);
+        }
+        .movie-card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-light);
+        }
+        .movie-card-description {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+            margin-bottom: 12px;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .watch-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            background-color: var(--primary-accent);
+            color: white;
+            box-shadow: 0 2px 8px rgba(32, 178, 170, 0.4);
+            font-size: 0.95rem;
+        }
+        .watch-button:hover {
+            background-color: var(--primary-accent-darker);
+            box-shadow: 0 4px 12px rgba(32, 178, 170, 0.6);
+            transform: translateY(-1px);
+        }
+        .watch-icon {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            fill: currentColor;
+        }
+
+        /* Add/Remove My List Button */
+        .my-list-button {
+            background-color: rgba(109, 109, 110, 0.5); /* Semi-transparent background */
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px; /* Space from description */
+            width: 100%;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .my-list-button.added {
+            background-color: var(--primary-accent); /* Greenish when added */
+        }
+        .my-list-button:hover {
+            background-color: rgba(109, 109, 110, 0.7);
+        }
+        .my-list-button.added:hover {
+            background-color: var(--primary-accent-darker);
+        }
+        .my-list-button svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+        }
+
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background-color: var(--bg-card);
+            margin: auto;
+            padding: 0;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            width: 90%;
+            max-width: 600px;
+            animation: fadeInScale 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            color: var(--text-light);
+            overflow: hidden;
+        }
+        .modal-header {
+            background-color: var(--primary-accent);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
+        .close-button {
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--bg-main);
+            transform: scale(1.1);
+        }
+        .modal-body {
+            padding: 30px;
+            text-align: center; /* Center align the text in the modal body */
+        }
+
+        .crypto-options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Add space between items */
+            margin-top: 20px;
+        }
+
+        .crypto-option {
+            background-color: var(--input-bg);
+            padding: 50px;
+            border-radius: 10px;
+            border: 1px solid var(--input-border);
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .crypto-option:hover {
+            border-color: var(--primary-accent);
+            transform: translateY(-2px);
+        }
+
+        .crypto-logo {
+            width: 300px;
+            height: 300px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .crypto-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .crypto-note {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            margin-bottom: 15px;
+        }
+
+        .crypto-address-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-main);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--input-border);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .crypto-address {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            word-break: break-all;
+            flex-grow: 1;
+            text-align: left;
+            margin-right: 10px;
+        }
+
+        .copy-button {
+            background-color: var(--primary-accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border: none;
+            flex-shrink: 0;
+        }
+        .copy-button:hover {
+            background-color: var(--primary-accent-darker);
+        }
+        .copied-message {
+            margin-top: 15px;
+            text-align: center;
+            color: #4CAF50;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .copied-message.show {
+            opacity: 1;
+        }
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--bg-main);
+            padding: 20px 40px;
+            margin-top: 40px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.4);
+        }
+        footer p {
+            color: var(--text-medium);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .user-icon-button {
+                display: none;
+            }
+
+            header {
+                padding: 15px 20px;
+            }
+            .header-logo {
+                font-size: 2rem;
+            }
+            /* Adjust search elements and donate button on smaller screens */
+            #rightControlsContainer {
+                gap: 5px;
+            }
+            #searchElements {
+                margin-right: 0; /* Remove space */
+            }
+            .search-input-field.active {
+                width: 150px; /* Smaller width for mobile search bar */
+                padding: 8px 12px;
+            }
+            .donate-button {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+                margin-left: 5px;
+            }
+            .user-icon-button {
+                margin-left: 5px;
+            }
+
+            /* User ID tooltip on mobile */
+            .user-id-tooltip {
+                right: 0; /* Align right on smaller screens too */
+                left: auto; /* Ensure it doesn't try to go left */
+                transform: translateY(10px) translateX(0%); /* Reset translation for mobile */
+            }
+
+            .hero {
+                height: 450px;
+                padding-bottom: 30px;
+            }
+            .hero-content {
+                padding-left: 20px;
+            }
+            .hero-buttons .play-button,
+            .hero-buttons .info-button {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+            .category-title {
+                font-size: 1.5rem;
+                padding-left: 20px;
+            }
+            .movie-row, .movie-grid-display { /* Apply padding to both row and grid on small screens */
+                padding: 0 20px 15px 20px;
+            }
+            .movie-card {
+                width: 200px;
+            }
+            .movie-card-title {
+                font-size: 1rem;
+            }
+            .movie-card-description {
+                font-size: 0.8rem;
+            }
+            .watch-button {
+                padding: 6px 10px;
+                font-size: 0.85rem;
+            }
+            .modal-content {
+                width: 95%;
+                padding: 0;
+            }
+            .modal-header {
+                padding: 15px 20px;
+            }
+            .modal-title {
+                font-size: 1.5rem;
+            }
+            .modal-body {
+                padding: 20px;
+            }
+            .crypto-option {
+                padding: 30px;
+            }
+            .crypto-logo {
+                width: 220px;
+                height: 220px;
+            }
+            .crypto-name {
+                font-size: 1.1rem;
+            }
+            .crypto-note {
+                font-size: 0.8rem;
+            }
+            .crypto-address-container {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+            }
+            .crypto-address {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            .copy-button {
+                width: 100%;
+                padding: 8px;
+            }
+        }
+
+.movie-language {
+    display: inline-block;
+    background-color: #444;
+    color: #eee;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
