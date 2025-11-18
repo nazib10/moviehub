@@ -36,12 +36,6 @@ const heroMoviesData = [
         videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/1266322374949691/" // Placeholder for video URL
     },
     {
-        title: "The Girl Who Leapt Through Time",
-        description: "A high-school girl, Makoto Konno, discovers she can time-travel and uses the ability for her own benefit, only to realize her actions have unforeseen consequences for others.",
-        imageUrl: "images/the-girl-who-leapt-through-time.jpg",
-        videoUrl: "https://www.facebook.com/reel/836863325760939/"
-    },
-    {
         title: "Doraemon: Sky Utopia",
         description: "Join Nobita and Doraemon in a grand adventure to find the perfect sky utopia, where dreams take flight and new friendships are forged!",
         imageUrl: "images/doraemon-sky-utopia.jpg", // Updated with actual image
@@ -54,10 +48,10 @@ const heroMoviesData = [
         videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/640454295760593/" // Placeholder for video URL
     },
     {
-        title: "Dragon Ball Super: Super Hero",
-        description: "The Red Ribbon Army returns with new androids, forcing Piccolo and Gohan to step up to protect the world.",
-        imageUrl: "images/dragon-ball-super-hero.jpg",
-        videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/1882284009295582/"
+        title: "Shinchan: The Adult Empire Strikes Back",
+        description: "Shinchan and his family must save the world from adults who want to revert to their childhood.",
+        imageUrl: "images/shinchan-adult-empire.jpg", // Updated with actual image
+        videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/1802085427401967/" // Placeholder for video URL
     }
 ];
 
