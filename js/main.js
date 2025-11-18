@@ -46,6 +46,12 @@ const heroMoviesData = [
         description: "Doraemon and Nobita embark on a thrilling journey to the South Seas, encountering pirates and hidden treasures.",
         imageUrl: "images/doraemon-treasure-island.jpg", // Updated with actual image
         videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/640454295760593/" // Placeholder for video URL
+    },
+    {
+        title: "Dragon Ball Super: Super Hero",
+        description: "The Red Ribbon Army returns with new androids, forcing Piccolo and Gohan to step up to protect the world.",
+        imageUrl: "images/dragon-ball-super-hero.jpg",
+        videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/1882284009295582/"
     }
 ];
 
@@ -476,10 +482,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         const mainContent = document.querySelector('main.content-sections');
         document.querySelectorAll('.category-section:not(#searchResultsSection):not(#myListSection)').forEach(section => section.remove());
 
+        const categorizedMovies = allMoviesData.reduce((acc, movie) => {
+            if (!acc[movie.category]) {
+                acc[movie.category] = [];
+            }
+            acc[movie.category].push(movie);
+            return acc;
+        }, {});
+
         const categoryOrder = ['latestReleases', 'doraemonClassics', 'otherAnimeMovies'];
 
         categoryOrder.forEach(categoryKey => {
-            const categoryMovies = allMoviesData.filter(movie => movie.category.includes(categoryKey));
+            const categoryMovies = categorizedMovies[categoryKey];
             if (categoryMovies && categoryMovies.length > 0) {
                 const section = document.createElement('section');
                 section.className = 'category-section';
