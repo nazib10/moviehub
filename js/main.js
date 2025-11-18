@@ -73,6 +73,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     const userIdToggleButton = document.getElementById('userIdToggleButton');
     const userIdTooltip = document.getElementById('userIdTooltip');
     const cryptoOptionsContainer = document.getElementById('cryptoOptionsContainer');
+    const movieInfoModal = document.getElementById('movieInfoModal');
+    const movieInfoTitle = document.getElementById('movieInfoTitle');
+    const movieInfoDescription = document.getElementById('movieInfoDescription');
+    const movieInfoImage = document.getElementById('movieInfoImage');
+    const movieInfoLanguage = document.getElementById('movieInfoLanguage');
+    const movieInfoWatchButton = document.getElementById('movieInfoWatchButton');
 
     // Carousel elements
     const heroCarousel = document.getElementById('heroCarousel');
@@ -246,6 +252,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                             movie_title: playButton.dataset.movieTitle
                         });
                     }
+                });
+            }
+
+            const infoButton = carouselItem.querySelector('.info-button');
+            if (infoButton) {
+                infoButton.addEventListener('click', () => {
+                    movieInfoTitle.textContent = movie.title;
+                    movieInfoDescription.textContent = movie.description;
+                    movieInfoImage.src = movie.imageUrl;
+                    movieInfoLanguage.textContent = movie.language || '';
+                    movieInfoWatchButton.href = movie.videoUrl;
+                    movieInfoModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
                 });
             }
         });
@@ -602,9 +621,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
     }
     
-    var modal = document.getElementById("donateModal");
+    var infoModal = document.getElementById("movieInfoModal");
+    var donateModal = document.getElementById("donateModal");
     var btn = document.getElementById("donateButton");
-    var span = document.getElementsByClassName("close-button")[0];
+    var span = document.getElementsByClassName("close-button");
 
     // Function to render crypto options
     function renderCryptoOptions() {
@@ -612,7 +632,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         cryptoOptionsContainer.innerHTML = ''; // Clear previous options if any
 
-        const btcAddress = "bc1qh7zwujd45n0wv3k0drc6sjd7n0ezduwcsnzzv3";
+        const btcAddress = "bc1qh7zwujd45n0wv3k0drc6sjd7n0wv3k0drc6sjd7nzzv3";
         const usdtAddress = "TSFxpiF47okoMTSTJWq8hpZ9Py4qRgJ1NG";
 
         // Binance Pay
@@ -654,8 +674,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     if (btn) {
         btn.onclick = function() {
-            if (modal) {
-                modal.style.display = "flex";
+            if (donateModal) {
+                donateModal.style.display = "flex";
                 document.body.style.overflow = "hidden";
                 userIdTooltip.classList.remove('show');
                 renderCryptoOptions(); // Call this function when modal opens
@@ -663,25 +683,32 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
-    if (span) {
-        span.onclick = function() {
-            if (modal) {
-                modal.style.display = "none";
-                document.body.style.overflow = "auto";
-                if (copiedMessageElement) {
-                    copiedMessageElement.classList.remove('show');
-                }
+    for (let i = 0; i < span.length; i++) {
+        span[i].onclick = function() {
+            if (infoModal) {
+                infoModal.style.display = "none";
+            }
+            if (donateModal) {
+                donateModal.style.display = "none";
+            }
+            document.body.style.overflow = "auto";
+            if (copiedMessageElement) {
+                copiedMessageElement.classList.remove('show');
             }
         }
     }
 
     window.onclick = function(event) {
-        if (modal && event.target === modal) {
-            modal.style.display = "none";
+        if (event.target == donateModal) {
+            donateModal.style.display = "none";
             document.body.style.overflow = "auto";
             if (copiedMessageElement) {
                 copiedMessageElement.classList.remove('show');
             }
+        }
+        if (event.target == infoModal) {
+            infoModal.style.display = "none";
+            document.body.style.overflow = "auto";
         }
         if (userIdTooltip.classList.contains('show') && !userIdTooltip.contains(event.target) && event.target !== userIdToggleButton && !userIdToggleButton.contains(event.target)) {
             userIdTooltip.classList.remove('show');

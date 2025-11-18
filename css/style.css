@@ -1,15 +1,15 @@
 /* New Color Variables */
-        :root {
-            --primary-accent: #20B2AA; /* Light Sea Green - a vibrant, yet calm teal */
-            --primary-accent-darker: #1A8F8A; /* Slightly darker for hover states */
-            --bg-main: #1A1A1A; /* Deep dark background */
-            --bg-card: #282828; /* Slightly lighter dark for cards */
-            --bg-modal: #383838; /* Even lighter for modal content */
-            --text-light: #E0E0E0; /* Soft white for primary text */
-            --text-medium: #A0A0A0; /* Medium gray for secondary text */
-            --input-bg: #333333; /* Darker background for inputs */
-            --input-border: #444444; /* Subtle dark border for inputs */
-        }
+:root {
+    --primary-accent: #0099ff; /* Doraemon's blue */
+    --primary-accent-darker: #0077cc; /* Darker blue for hover */
+    --bg-main: #1A1A1A; /* Deep dark background */
+    --bg-card: #282828; /* Slightly lighter dark for cards */
+    --bg-modal: #383838; /* Even lighter for modal content */
+    --text-light: #E0E0E0; /* Soft white for primary text */
+    --text-medium: #A0A0A0; /* Medium gray for secondary text */
+    --input-bg: #333333; /* Darker background for inputs */
+    --input-border: #444444; /* Subtle dark border for inputs */
+}
 
         /* General Body and Font Styles for Dorahub Feel */
         body {
@@ -136,8 +136,8 @@
 
         /* Donate Button Styles (Header) */
         .donate-button {
-            background-image: linear-gradient(45deg, #FFD700, #FFA500);
-            color: #333;
+            background-image: linear-gradient(45deg, #fbb400, #fdd835);
+            color: #000000;
             padding: 10px 20px;
             border-radius: 8px;
             font-weight: 700;
@@ -149,7 +149,7 @@
             flex-shrink: 0;
             white-space: nowrap;
             margin-left: 15px;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(251, 180, 0, 0.4);
         }
         .donate-button.hidden {
             opacity: 0;
@@ -694,6 +694,86 @@
             to {
                 opacity: 1;
                 transform: scale(1);
+            }
+        }
+
+        /* New styles for the enhanced movie info modal */
+        .movie-info-modal-content {
+            padding: 0; /* Remove padding to allow image to be flush */
+        }
+
+        .movie-info-layout {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .movie-info-poster {
+            flex: 0 0 40%; /* Poster takes 40% of the width */
+        }
+
+        .movie-info-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+        }
+
+        .movie-info-details {
+            padding: 30px;
+            flex: 1;
+        }
+
+        .movie-info-details .modal-title {
+            margin-bottom: 15px;
+        }
+
+        .movie-info-details .movie-language {
+            display: inline-block;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .movie-info-details .watch-button {
+            width: auto; /* Override the 100% width from the card */
+            padding: 12px 28px;
+        }
+
+        /* Make the close button more prominent on the new modal */
+        .movie-info-modal-content .close-button {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            line-height: 1;
+            transition: background-color 0.2s ease;
+        }
+
+        .movie-info-modal-content .close-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+        }
+
+        /* Responsive adjustments for the new modal */
+        @media (max-width: 768px) {
+            .movie-info-layout {
+                flex-direction: column;
+            }
+
+            .movie-info-poster img {
+                border-radius: 12px 12px 0 0;
+            }
+
+            .movie-info-details {
+                padding: 20px;
             }
         }
 
