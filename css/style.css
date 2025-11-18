@@ -27,7 +27,7 @@
         
         /* Header Specific Styles */
         header {
-            background-color: rgba(26, 26, 26, 0.8); /* Semi-transparent background */
+            background-color: rgba(26, 26, 26, 0.5); /* More transparent by default */
             padding: 20px 40px;
             display: flex;
             justify-content: space-between; /* Keeps logo left, other items right */
@@ -35,9 +35,16 @@
             position: sticky;
             top: 0;
             z-index: 50;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+            box-shadow: none; /* No shadow by default */
             backdrop-filter: blur(5px); /* Optional: adds a blur effect behind the transparent header */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
+
+        header.scrolled {
+            background-color: rgba(26, 26, 26, 0.85); /* More opaque on scroll */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
         .header-logo {
             font-size: 2.5rem;
             font-weight: 900;
@@ -427,7 +434,7 @@
         }
         .movie-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.7);
             z-index: 10;
         }
 
@@ -494,7 +501,7 @@
         }
         .watch-button:hover {
             background-color: var(--primary-accent-darker);
-            box-shadow: 0 4px 12px rgba(32, 178, 170, 0.6);
+            box-shadow: 0 4px 12px rgba(0, 153, 255, 0.6);
             transform: translateY(-1px);
         }
         .watch-icon {
@@ -523,7 +530,7 @@
         }
 
         .my-list-button.added {
-            background-color: var(--primary-accent); /* Greenish when added */
+            background-color: #ff0000; /* Red when added */
         }
         .my-list-button:hover {
             background-color: rgba(109, 109, 110, 0.7);
@@ -764,28 +771,92 @@
 
         /* Responsive adjustments for the new modal */
         @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                max-width: none;
+            }
+
             .movie-info-layout {
                 flex-direction: column;
             }
 
             .movie-info-poster img {
                 border-radius: 12px 12px 0 0;
+                max-height: 300px; /* Limit poster height on mobile */
             }
 
             .movie-info-details {
                 padding: 20px;
             }
+
+            .movie-info-details .modal-title {
+                font-size: 1.5rem; /* Smaller title on mobile */
+            }
         }
 
         /* Footer Styles */
         footer {
-            background-color: var(--bg-main);
-            padding: 20px 40px;
+            background-color: #111; /* Darker footer background */
+            padding: 30px 40px;
             margin-top: 40px;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.4);
+            border-top: 1px solid #333;
         }
-        footer p {
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            text-align: center;
+        }
+
+        footer {
+            padding-bottom: 80px; /* Add padding to the bottom of the footer */
+        }
+        
+        .footer-left p {
+            margin: 0;
             color: var(--text-medium);
+        }
+
+        .footer-left .text-xs {
+            color: #777;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-link {
+            color: var(--text-medium);
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--primary-accent);
+        }
+
+        #scrollToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: var(--primary-accent);
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, opacity 0.3s;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: var(--primary-accent-darker);
         }
 
         /* Responsive adjustments */

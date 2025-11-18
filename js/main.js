@@ -433,8 +433,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </a>
                 <button class="my-list-button ${isInMyList ? 'added' : ''}" data-movie-id="${movie.id}">
                     ${isInMyList ?
-                        '<svg viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Added to My List' :
-                        '<svg viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Add to My List'
+                        '<svg viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Added' :
+                        '<svg viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Add to List'
                     }
                 </button>
             </div>
@@ -758,6 +758,31 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         });
     }
+
+    // Scroll to top button functionality
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    window.onscroll = function() {
+        // Scroll to top button logic
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            scrollToTopBtn.style.display = "block";
+        } else {
+            scrollToTopBtn.style.display = "none";
+        }
+
+        // Header scroll effect
+        const header = document.querySelector('header');
+        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    };
+
+    scrollToTopBtn.addEventListener('click', function() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    });
 
     initializeFirebase();
 });
