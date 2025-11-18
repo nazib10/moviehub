@@ -482,18 +482,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const mainContent = document.querySelector('main.content-sections');
         document.querySelectorAll('.category-section:not(#searchResultsSection):not(#myListSection)').forEach(section => section.remove());
 
-        const categorizedMovies = allMoviesData.reduce((acc, movie) => {
-            if (!acc[movie.category]) {
-                acc[movie.category] = [];
-            }
-            acc[movie.category].push(movie);
-            return acc;
-        }, {});
-
         const categoryOrder = ['latestReleases', 'doraemonClassics', 'otherAnimeMovies'];
 
         categoryOrder.forEach(categoryKey => {
-            const categoryMovies = categorizedMovies[categoryKey];
+            const categoryMovies = allMoviesData.filter(movie => movie.category.includes(categoryKey));
             if (categoryMovies && categoryMovies.length > 0) {
                 const section = document.createElement('section');
                 section.className = 'category-section';
