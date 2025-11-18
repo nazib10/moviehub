@@ -48,10 +48,10 @@ const heroMoviesData = [
         videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/640454295760593/" // Placeholder for video URL
     },
     {
-        title: "Shinchan: The Adult Empire Strikes Back",
-        description: "Shinchan and his family must save the world from adults who want to revert to their childhood.",
-        imageUrl: "images/shinchan-adult-empire.jpg", // Updated with actual image
-        videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/1802085427401967/" // Placeholder for video URL
+        title: "DB Super: Super Hero (2022)",
+        description: "The Red Ribbon Army returns, forcing heroes to step up.",
+        imageUrl: "images/dragon-ball-super-hero.jpg",
+        videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/1882284009295582/"
     }
 ];
 
