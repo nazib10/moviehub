@@ -55,7 +55,7 @@ const heroMoviesData = [
     }
 ];
 
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', async function () {
     console.log("DOMContentLoaded fired. Starting initialization...");
 
     // --- DOM Elements ---
@@ -433,9 +433,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </a>
                 <button class="my-list-button ${isInMyList ? 'added' : ''}" data-movie-id="${movie.id}">
                     ${isInMyList ?
-                        '<svg viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Added' :
-                        '<svg viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Add to List'
-                    }
+                '<svg viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Added' :
+                '<svg viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Add to List'
+            }
                 </button>
             </div>
         `;
@@ -491,9 +491,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 section.className = 'category-section';
                 section.id = categoryKey;
                 const formattedTitle = categoryKey.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-                
+
                 section.innerHTML = `<h2 class="category-title">${formattedTitle}</h2><div class="movie-row"></div>`;
-                
+
                 const movieRowDiv = section.querySelector('.movie-row');
                 categoryMovies.forEach(movie => {
                     const isInList = myListIds.has(movie.id);
@@ -582,7 +582,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     if (searchToggleButton) {
-        searchToggleButton.addEventListener('click', function() {
+        searchToggleButton.addEventListener('click', function () {
             if (isSearchActive) {
                 deactivateSearch();
             }
@@ -593,7 +593,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     if (movieSearchInput) {
-        movieSearchInput.addEventListener('keyup', function(event) {
+        movieSearchInput.addEventListener('keyup', function (event) {
             if (event.key === 'Escape') {
                 deactivateSearch();
                 return;
@@ -612,7 +612,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         });
     }
-    
+
     var infoModal = document.getElementById("movieInfoModal");
     var donateModal = document.getElementById("donateModal");
     var btn = document.getElementById("donateButton");
@@ -665,7 +665,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     if (btn) {
-        btn.onclick = function() {
+        btn.onclick = function () {
             if (donateModal) {
                 donateModal.style.display = "flex";
                 document.body.style.overflow = "hidden";
@@ -676,7 +676,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     for (let i = 0; i < span.length; i++) {
-        span[i].onclick = function() {
+        span[i].onclick = function () {
             if (infoModal) {
                 infoModal.style.display = "none";
             }
@@ -690,7 +690,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == donateModal) {
             donateModal.style.display = "none";
             document.body.style.overflow = "auto";
@@ -739,7 +739,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let userIdTooltipTimeout;
 
     if (userIdToggleButton && userIdTooltip) {
-        userIdToggleButton.addEventListener('click', function(event) {
+        userIdToggleButton.addEventListener('click', function (event) {
             event.stopPropagation();
             userIdTooltip.classList.toggle('show');
             clearTimeout(userIdTooltipTimeout);
@@ -754,12 +754,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Scroll to top button functionality
     const scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
-    window.onscroll = function() {
+    window.onscroll = function () {
         // Scroll to top button logic
         if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-            scrollToTopBtn.style.display = "block";
+            scrollToTopBtn.classList.add('show');
         } else {
-            scrollToTopBtn.style.display = "none";
+            scrollToTopBtn.classList.remove('show');
         }
 
         // Header scroll effect
@@ -771,7 +771,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     };
 
-    scrollToTopBtn.addEventListener('click', function() {
+    scrollToTopBtn.addEventListener('click', function () {
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     });

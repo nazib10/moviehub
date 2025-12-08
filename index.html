@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +9,23 @@
     <!-- Google Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P365MMCVRW"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'G-P365MMCVRW');
+        gtag('config', 'G-P365MMCVRW');
     </script>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Your ultimate hub for Doraemon movies, presented in a sleek, Dorahub-style interface. Watch, track, and enjoy all your favorite Doraemon adventures.">
+    <meta name="description"
+        content="Your ultimate hub for Doraemon movies, presented in a sleek, Dorahub-style interface. Watch, track, and enjoy all your favorite Doraemon adventures.">
     <meta name="keywords" content="Doraemon, movies, films, watch, streaming, anime, kids, family, adventure">
     <meta name="author" content="Dorahub">
 
     <!-- Open Graph Meta Tags (for Facebook, etc.) -->
     <meta property="og:title" content="Doraemon Films Hub">
-    <meta property="og:description" content="Your ultimate hub for Doraemon movies, presented in a sleek, Dorahub-style interface.">
+    <meta property="og:description"
+        content="Your ultimate hub for Doraemon movies, presented in a sleek, Dorahub-style interface.">
     <meta property="og:image" content="https://doraemonhub.netlify.app/images/doraemon-stand-by-me-2.jpg">
     <meta property="og:url" content="https://doraemonhub.netlify.app/">
     <meta property="og:type" content="website">
@@ -30,29 +33,36 @@
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Doraemon Films Hub">
-    <meta property="twitter:description" content="Your ultimate hub for Doraemon movies, presented in a sleek, Dorahub-style interface.">
+    <meta property="twitter:description"
+        content="Your ultimate hub for Doraemon movies, presented in a sleek, Dorahub-style interface.">
     <meta property="twitter:image" content="https://doraemonhub.netlify.app/images/doraemon-stand-by-me-2.jpg">
 
 
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="main-wrapper">
         <header>
             <div class="header-logo" id="headerLogo">Dorahub</div>
-            
+
             <div class="flex items-center" id="rightControlsContainer">
                 <!-- Search elements -->
                 <div id="searchElements">
                     <button id="searchToggleButton" class="search-icon-button">
                         <svg class="search-icon-svg" viewBox="0 0 24 24">
                             <!-- Magnifying glass path -->
-                            <path class="search-path" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.69 0 3.17-.59 4.38-1.55l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                            <path class="search-path"
+                                d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.69 0 3.17-.59 4.38-1.55l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
                             <!-- Close (X) path -->
-                            <path class="close-path" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                            <path class="close-path"
+                                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                        </svg>
                     </button>
                     <input type="text" id="movieSearch" placeholder="Search for films..." class="search-input-field">
                 </div>
@@ -60,17 +70,26 @@
                 <!-- User Icon and Tooltip (now comes before Support Us) -->
                 <button id="userIdToggleButton" class="user-icon-button">
                     <svg class="user-icon-svg" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        <path
+                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                     </svg>
                 </button>
                 <div id="userIdTooltip" class="user-id-tooltip"></div>
 
                 <!-- Support Us Button (now moved to the very right) -->
                 <button id="donateButton" class="donate-button">
-                    <svg class="donate-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 21.5C17.2467 21.5 21.5 17.2467 21.5 12C21.5 6.75329 17.2467 2.5 12 2.5C6.75329 2.5 2.5 6.75329 2.5 12C2.5 17.2467 6.75329 21.5 12 21.5Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 16.5V12" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg class="donate-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M12 21.5C17.2467 21.5 21.5 17.2467 21.5 12C21.5 6.75329 17.2467 2.5 12 2.5C6.75329 2.5 2.5 6.75329 2.5 12C2.5 17.2467 6.75329 21.5 12 21.5Z"
+                            stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M12 16.5V12" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z"
+                            stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
+                            stroke-linejoin="round" />
                     </svg>
                     Support Us
                 </button>
@@ -92,7 +111,8 @@
                 <div class="movie-grid-display" id="myListGrid">
                     <!-- My List movies will be appended here by JavaScript -->
                 </div>
-                <p id="myListEmptyMessage" class="text-medium text-center mt-8" style="display: none;">Your list is empty. Add some movies!</p>
+                <p id="myListEmptyMessage" class="text-medium text-center mt-8" style="display: none;">Your list is
+                    empty. Add some movies!</p>
             </section>
 
             <!-- All Movies Section (Dynamically Populated) -->
@@ -102,14 +122,15 @@
                     <!-- All movies will be appended here by JavaScript -->
                 </div>
             </section>
-            
+
             <!-- Search Results Section (Dynamically Added/Removed) -->
             <section class="category-section" id="searchResultsSection" style="display: none;">
                 <h2 class="category-title">Search Results</h2>
                 <div class="movie-grid-display" id="searchResultsGrid">
                     <!-- Search results will be appended here by JavaScript -->
                 </div>
-                <p id="noResultsMessage" class="text-medium text-center mt-8" style="display: none;">No movies found matching your search.</p>
+                <p id="noResultsMessage" class="text-medium text-center mt-8" style="display: none;">No movies found
+                    matching your search.</p>
             </section>
 
         </main>
@@ -118,17 +139,30 @@
             <div class="footer-content">
                 <div class="footer-left">
                     <p class="text-sm">© 2025 Dorahub. All rights reserved.</p>
-                    <p class="text-xs mt-2">Disclaimer: This site does not host any files on its server. All contents are provided by non-affiliated third parties.</p>
+                    <p class="text-xs mt-2">Disclaimer: This site does not host any files on its server. All contents
+                        are provided by non-affiliated third parties.</p>
                 </div>
                 <div class="footer-right">
                     <a href="https://github.com/nazib10/moviehub" target="_blank" class="social-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
                     </a>
                     <a href="#" class="social-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-.424.727-.666 1.584-.666 2.477 0 1.61.82 3.027 2.053 3.848-.764-.024-1.482-.232-2.11-.583v.062c0 2.256 1.605 4.14 3.737 4.568-.39.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.598 1.85 2.332 3.198 4.384 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.096 7.14 2.096 8.57 0 13.255-7.098 13.255-13.254 0-.202-.005-.403-.014-.602.91-.658 1.7-1.47 2.323-2.41z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-.424.727-.666 1.584-.666 2.477 0 1.61.82 3.027 2.053 3.848-.764-.024-1.482-.232-2.11-.583v.062c0 2.256 1.605 4.14 3.737 4.568-.39.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.598 1.85 2.332 3.198 4.384 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.096 7.14 2.096 8.57 0 13.255-7.098 13.255-13.254 0-.202-.005-.403-.014-.602.91-.658 1.7-1.47 2.323-2.41z" />
+                        </svg>
                     </a>
                     <a href="https://www.facebook.com/nazibul.haque.958129/" target="_blank" class="social-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                        </svg>
                     </a>
                 </div>
             </div>
@@ -148,7 +182,9 @@
                     <p id="movieInfoDescription"></p>
                     <span id="movieInfoLanguage" class="movie-language"></span>
                     <a id="movieInfoWatchButton" href="#" target="_blank" class="watch-button">
-                        <svg class="watch-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                        <svg class="watch-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z"></path>
+                        </svg>
                         Watch Now
                     </a>
                 </div>
@@ -176,8 +212,9 @@
     <script type="module" src="js/main.js"></script>
     <button id="scrollToTopBtn" title="Go to top">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
-            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
         </svg>
     </button>
 </body>
+
 </html>
