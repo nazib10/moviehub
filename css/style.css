@@ -251,6 +251,11 @@ header.scrolled {
     height: 16px;
 }
 
+/* Hidden utility class */
+.hidden {
+    display: none !important;
+}
+
 /* ===================================
    HERO SECTION
    =================================== */
@@ -261,6 +266,12 @@ header.scrolled {
     position: relative;
     overflow: hidden;
     margin-top: 72px;
+    transition: opacity 0.3s var(--transition-smooth), visibility 0.3s;
+}
+
+/* Hide hero when search is active */
+.hero.hidden-by-search {
+    display: none;
 }
 
 .hero-carousel {
