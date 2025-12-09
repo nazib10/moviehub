@@ -485,6 +485,11 @@ header.scrolled {
     transform: translateY(0);
 }
 
+/* Always show card details for search results (Desktop view) */
+#searchResultsGrid .movie-card .movie-card-overlay {
+    transform: translateY(0);
+}
+
 .movie-title {
     color: white;
     font-family: var(--font-heading);
