@@ -112,14 +112,82 @@
 
     .movie-card {
         border-radius: 15px;
+        aspect-ratio: 9/16;
+        /* Taller card for full title */
     }
 
+    /* Mobile Movie Card Overlay - Always Visible & Compact */
     .movie-card-overlay {
         padding: 10px;
+        transform: translateY(0);
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 40%, rgba(0, 0, 0, 0.6) 80%, transparent 100%);
+        justify-content: flex-end;
     }
 
     .movie-title {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        line-height: 1.2;
+        margin-bottom: 4px;
+        white-space: normal;
+        /* Allow wrapping */
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        /* Show up to 4 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: unset;
+    }
+
+    .movie-rating {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+        margin-bottom: 5px;
+        align-self: flex-start;
+    }
+
+    /* Adjust Buttons for Mobile */
+    .movie-card .flex {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        /* Reduce gap */
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .movie-card .watch-button {
+        padding: 5px 10px !important;
+        /* Force override style.css */
+        font-size: 0.75rem !important;
+        margin-top: 0;
+        width: auto;
+        flex: 1;
+        /* Take available space */
+        justify-content: center;
+        height: 30px;
+    }
+
+    .watch-button .watch-icon {
+        width: 14px;
+        height: 14px;
+        margin-right: 4px;
+    }
+
+    .my-list-button {
+        width: 30px;
+        height: 30px;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        color: white;
+    }
+
+    .my-list-button svg {
+        width: 16px;
+        height: 16px;
     }
 
     /* Categories */
@@ -143,7 +211,6 @@
 
     .footer-right {
         order: -1;
-        /* Option to show social icons first */
     }
 
     /* Modal */
