@@ -1,0 +1,194 @@
+/* Mobile Responsiveness Improvements */
+
+@media (max-width: 768px) {
+
+    /* Header Adjustments */
+    header {
+        padding: 0.8rem 1rem;
+        flex-wrap: wrap;
+    }
+
+    .header-logo {
+        font-size: 1.5rem;
+    }
+
+    /* Keep controls on one line */
+    #rightControlsContainer {
+        gap: 0.5rem;
+    }
+
+    /* Compact Buttons */
+    .search-icon-button,
+    .user-icon-button,
+    .donate-button {
+        width: 38px;
+        height: 38px;
+        padding: 8px;
+        margin-right: 5px;
+    }
+
+    /* Hide Support Us Text */
+    .button-text {
+        display: none;
+    }
+
+    .donate-button {
+        padding: 0;
+        border-radius: 50%;
+        justify-content: center;
+        min-width: 38px;
+    }
+
+    .donate-button .donate-icon {
+        margin: 0;
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Search Input Mobile */
+    .search-input-field.active {
+        position: absolute;
+        top: 100%;
+        left: 5%;
+        width: 90%;
+        background: white;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin: 0;
+        z-index: 999;
+    }
+
+    /* Hero Section */
+    .hero {
+        padding-top: 130%;
+        /* Taller aspect ratio for portrait */
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 2rem;
+    }
+
+    .hero-content {
+        padding: 1.5rem;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.4), transparent);
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 0 var(--doraemon-blue);
+    }
+
+    .hero-content p {
+        font-size: 0.95rem;
+        line-height: 1.4;
+        margin-bottom: 1.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .play-button,
+    .info-button {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    /* Movie Grid */
+    .movie-grid-display,
+    .movie-row {
+        grid-template-columns: repeat(2, 1fr);
+        /* Force 2 columns */
+        gap: 15px;
+        padding: 0 10px;
+    }
+
+    .movie-card {
+        border-radius: 15px;
+    }
+
+    .movie-card-overlay {
+        padding: 10px;
+    }
+
+    .movie-title {
+        font-size: 0.9rem;
+    }
+
+    /* Categories */
+    .category-section {
+        margin-bottom: 2rem;
+        padding: 0 10px;
+    }
+
+    .category-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        padding-left: 15px;
+    }
+
+    /* Footer */
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .footer-right {
+        order: -1;
+        /* Option to show social icons first */
+    }
+
+    /* Modal */
+    .modal-content {
+        padding: 20px;
+        width: 95%;
+        margin: 10px auto;
+        border-width: 3px;
+    }
+
+    .movie-info-details {
+        text-align: left;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+    }
+
+    .close-button {
+        top: 10px;
+        right: 15px;
+        font-size: 30px;
+    }
+
+    /* Tooltip adjustment */
+    .user-id-tooltip {
+        top: 60px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+        text-align: center;
+    }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 380px) {
+
+    .movie-grid-display,
+    .movie-row {
+        grid-template-columns: repeat(2, 1fr);
+        /* Still keep 2 columns usually looks better than 1 massive one, but maybe tight */
+        gap: 10px;
+    }
+
+    .hero-content h1 {
+        font-size: 1.6rem;
+    }
+}

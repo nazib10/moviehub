@@ -30,10 +30,16 @@ const LOCAL_FIREBASE_CONFIG = {
 // Hero Carousel Movie Data
 const heroMoviesData = [
     {
+        title: "Welcome to Dorahub",
+        description: "Your ultimate destination for all Doraemon movies and anime adventures. Explore the gadgetless world of wonders!",
+        imageUrl: "images/doraemon_hero.png",
+        videoUrl: "#allMoviesGrid" // Scrolls down to movies
+    },
+    {
         title: "Death Note: Visions of God",
         description: "A thrilling psychological thriller where a brilliant student discovers a supernatural notebook that allows him to kill anyone whose name he writes in it.",
-        imageUrl: "images/death-note-relight.jpg", // Updated with actual image
-        videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/1266322374949691/" // Placeholder for video URL
+        imageUrl: "images/death-note-relight.jpg",
+        videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/1266322374949691/"
     },
     {
         title: "Doraemon: Sky Utopia",
@@ -97,6 +103,7 @@ document.addEventListener('DOMContentLoaded', async function () {
      */
     function showSlide(index) {
         if (heroCarousel && carouselItems.length > 0) {
+            // Handle index wrapping
             if (index >= carouselItems.length) {
                 currentSlide = 0;
             } else if (index < 0) {
@@ -104,8 +111,17 @@ document.addEventListener('DOMContentLoaded', async function () {
             } else {
                 currentSlide = index;
             }
-            // Apply a CSS transform to shift the carousel horizontally
-            heroCarousel.style.transform = `translateX(${-currentSlide * 100}%)`;
+
+            // CSS Fade Transition Logic: Toggle .active class on items
+            carouselItems.forEach((item, idx) => {
+                if (idx === currentSlide) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Update dots
             updateIndicators();
         }
     }
@@ -220,33 +236,51 @@ document.addEventListener('DOMContentLoaded', async function () {
                 carouselItem.classList.add('active');
             }
             carouselItem.style.backgroundImage = `url('${movie.imageUrl}')`;
+            // Check if this is the static Welcome slide
+            const isWelcomeSlide = movie.title === "Welcome to Dorahub";
+            const buttonHtml = isWelcomeSlide ?
+                `<a href="#latestReleases" class="play-button explore-button" style="text-decoration:none;">Explore Movies</a>` :
+                `<a href="${movie.videoUrl}" target="_blank" class="play-button" data-movie-title="${movie.title}">
+                    <svg viewBox="0 0 24 24" width="24" height="24" class="mr-2" fill="currentColor">
+                        <path d="M8 5v14l11-7z"></path>
+                    </svg>
+                    Play
+                 </a>
+                 <button class="info-button">
+                    <svg viewBox="0 0 24 24" width="24" height="24" class="mr-2" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+                    </svg>
+                    More Info
+                 </button>`;
+
             carouselItem.innerHTML = `
                 <div class="hero-content">
                     <h1>${movie.title}</h1>
                     <p>${movie.description}</p>
                     <div class="hero-buttons">
-                        <a href="${movie.videoUrl}" target="_blank" class="play-button" data-movie-title="${movie.title}">
-                            <svg viewBox="0 0 24 24" width="24" height="24" class="mr-2" fill="currentColor">
-                                <path d="M8 5v14l11-7z"></path>
-                            </svg>
-                            Play
-                        </a>
-                        <button class="info-button">
-                            <svg viewBox="0 0 24 24" width="24" height="24" class="mr-2" fill="currentColor">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
-                            </svg>
-                            More Info
-                        </button>
+                        ${buttonHtml}
                     </div>
                 </div>
             `;
             heroCarousel.appendChild(carouselItem);
             carouselItems.push(carouselItem);
 
-            // Attach event listener to the play button of the newly created carousel item
             const playButton = carouselItem.querySelector('.play-button');
             if (playButton) {
-                playButton.addEventListener('click', () => {
+                playButton.addEventListener('click', (e) => {
+                    if (playButton.classList.contains('explore-button')) {
+                        e.preventDefault();
+                        const targetSection = document.getElementById('latestReleases');
+                        if (targetSection) {
+                            targetSection.scrollIntoView({ behavior: 'smooth' });
+                        } else {
+                            // Fallback to scrolling to main content if specific section is missing
+                            const mainContent = document.querySelector('main.content-sections');
+                            if (mainContent) mainContent.scrollIntoView({ behavior: 'smooth' });
+                        }
+                        return;
+                    }
+
                     if (analytics) {
                         logEvent(analytics, 'play_video', {
                             movie_title: playButton.dataset.movieTitle
@@ -420,23 +454,22 @@ document.addEventListener('DOMContentLoaded', async function () {
         const language = movie.language ? movie.language : '';
 
         movieCard.innerHTML = `
-            <div class="aspect-16-9">
-                <img src="${movie.imageUrl}" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="${movie.title} Poster">
-            </div>
-            <div class="movie-card-content">
-                <h2 class="movie-card-title">${movie.title}</h2>
-                <p class="movie-card-description">${movie.description}</p>
-                <span class="movie-language">${language}</span>
-                <a href="${movie.videoUrl}" target="_blank" class="watch-button">
-                    <svg class="watch-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
-                    Watch Now
-                </a>
-                <button class="my-list-button ${isInMyList ? 'added' : ''}" data-movie-id="${movie.id}">
-                    ${isInMyList ?
-                '<svg viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Added' :
-                '<svg viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Add to List'
+            <img src="${movie.imageUrl}" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="${movie.title} Poster">
+            <div class="movie-card-overlay">
+                <h2 class="movie-title">${movie.title}</h2>
+                <span class="movie-rating">${language}</span>
+                <div class="flex gap-2 mt-3">
+                    <a href="${movie.videoUrl}" target="_blank" class="watch-button text-xs px-3 py-2">
+                        <svg class="watch-icon w-4 h-4 mr-1" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                        Watch
+                    </a>
+                    <button class="my-list-button ${isInMyList ? 'added' : ''} text-white hover:text-yellow-400" data-movie-id="${movie.id}">
+                        ${isInMyList ?
+                '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>' :
+                '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>'
             }
-                </button>
+                    </button>
+                </div>
             </div>
         `;
 
@@ -631,7 +664,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const binancePayOption = document.createElement('div');
         binancePayOption.className = 'crypto-option';
         binancePayOption.innerHTML = `
-            <img src="assets/images/binancepay.png" alt="Binance Pay Logo" class="crypto-logo">
+            <img src="assets/images/binancepay.png" alt="Binance Pay Logo" class="crypto-logo crypto-qr">
             <p class="crypto-name">Binance Pay</p>
             <p class="crypto-note">Scan QR code in Binance app</p>
         `;
@@ -641,7 +674,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const btcOption = document.createElement('div');
         btcOption.className = 'crypto-option';
         btcOption.innerHTML = `
-            <img src="assets/images/btc.jpg" alt="Bitcoin Logo" class="crypto-logo">
+            <img src="assets/images/btc.jpg" alt="Bitcoin Logo" class="crypto-logo crypto-qr">
             <p class="crypto-name">Bitcoin (BTC)</p>
             <div class="crypto-address-container">
                 <span id="btcAddressDisplay" class="crypto-address">${btcAddress}</span>
@@ -654,7 +687,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const usdtOption = document.createElement('div');
         usdtOption.className = 'crypto-option';
         usdtOption.innerHTML = `
-            <img src="assets/images/usdt.jpg" alt="USDT Logo" class="crypto-logo">
+            <img src="assets/images/usdt.jpg" alt="USDT Logo" class="crypto-logo crypto-qr">
             <p class="crypto-name">USDT (TRC20)</p>
             <div class="crypto-address-container">
                 <span id="usdtAddressDisplay" class="crypto-address">${usdtAddress}</span>
