@@ -513,7 +513,8 @@ header.scrolled {
 footer {
     background: var(--doraemon-blue);
     color: white;
-    padding: 3rem 2rem;
+    padding: 3rem 7rem 3rem 2rem;
+    /* Added right padding to prevent overlap with scroll button */
     margin-top: 4rem;
     border-radius: 50px 50px 0 0;
     position: relative;
@@ -803,6 +804,19 @@ footer::before {
     align-items: center;
     justify-content: center;
     z-index: 999;
+
+    /* Initial hidden state */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(20px);
+}
+
+#scrollToTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
 }
 
 #scrollToTopBtn:hover {
