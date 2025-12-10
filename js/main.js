@@ -598,7 +598,15 @@ document.addEventListener('DOMContentLoaded', async function () {
         donateButton.classList.add('hidden');
         userIdToggleButton.classList.add('hidden');
         userIdTooltip.classList.remove('show');
+
+        // Hide hero and categories
         toggleOriginalCategoriesAndHero(false);
+
+        // Show search results section with active class for overlay effect
+        searchResultsSection.style.display = 'block';
+        searchResultsSection.classList.add('active');
+        document.body.style.overflow = 'auto'; // Enable scrolling for search results
+
         displayMovies([]);
     }
 
@@ -609,8 +617,13 @@ document.addEventListener('DOMContentLoaded', async function () {
         movieSearchInput.value = '';
         donateButton.classList.remove('hidden');
         userIdToggleButton.classList.remove('hidden');
+
+        // Hide search results
         searchResultsSection.style.display = 'none';
+        searchResultsSection.classList.remove('active');
         noResultsMessage.style.display = 'none';
+
+        // Restore hero and categories
         toggleOriginalCategoriesAndHero(true);
     }
 
@@ -678,7 +691,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             <p class="crypto-name">Bitcoin (BTC)</p>
             <div class="crypto-address-container">
                 <span id="btcAddressDisplay" class="crypto-address">${btcAddress}</span>
-                <button class="copy-button" onclick="copyToClipboard('btcAddressDisplay')">Copy</button>
+                <button class="copy-button" onclick="copyToClipboard('btcAddressDisplay', this)">Copy</button>
             </div>
         `;
         cryptoOptionsContainer.appendChild(btcOption);
@@ -691,7 +704,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             <p class="crypto-name">USDT (TRC20)</p>
             <div class="crypto-address-container">
                 <span id="usdtAddressDisplay" class="crypto-address">${usdtAddress}</span>
-                <button class="copy-button" onclick="copyToClipboard('usdtAddressDisplay')">Copy</button>
+                <button class="copy-button" onclick="copyToClipboard('usdtAddressDisplay', this)">Copy</button>
             </div>
         `;
         cryptoOptionsContainer.appendChild(usdtOption);
@@ -740,7 +753,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-    function copyToClipboard(elementId) {
+    function copyToClipboard(elementId, btnElement) {
         const element = document.getElementById(elementId);
         if (!element) {
             console.error(`Error: Element with ID '${elementId}' not found for copy function.`);
@@ -757,6 +770,19 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         document.body.removeChild(tempTextArea);
 
+        // Button Feedback
+        if (btnElement) {
+            const originalText = btnElement.innerText;
+            btnElement.innerText = 'Copied!';
+            btnElement.style.background = '#10b981'; // Green feedback
+
+            setTimeout(() => {
+                btnElement.innerText = originalText;
+                btnElement.style.background = ''; // Reset to CSS default
+            }, 2000);
+        }
+
+        // Global Toast (Optional)
         if (copiedMessageElement) {
             copiedMessageElement.classList.add('show');
             setTimeout(() => {
