@@ -27,39 +27,44 @@ const LOCAL_FIREBASE_CONFIG = {
 };
 // --- END Firebase Config ---
 
-// Hero Carousel Movie Data
-const heroMoviesData = [
+// Hero Carousel Configuration
+// This references actual movie IDs from allMoviesData to avoid duplication
+const heroMoviesConfig = [
     {
+        // Welcome slide - custom content
+        id: "hero-welcome",
         title: "Welcome to Dorahub",
         description: "Your ultimate destination for all Doraemon movies and anime adventures. Explore the gadgetless world of wonders!",
         imageUrl: "images/doraemon_hero.png",
-        videoUrl: "#allMoviesGrid" // Scrolls down to movies
+        videoUrl: "#allMoviesGrid",
+        language: "Multi-Language",
+        category: [],
+        isCustom: true
     },
     {
-        title: "Death Note: Visions of God",
-        description: "A thrilling psychological thriller where a brilliant student discovers a supernatural notebook that allows him to kill anyone whose name he writes in it.",
-        imageUrl: "images/death-note-relight.jpg",
-        videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/1266322374949691/"
+        // Reference to actual movie in allMoviesData
+        movieId: "death-note-relight-2007",
+        isCustom: false
     },
     {
-        title: "Doraemon: Sky Utopia",
-        description: "Join Nobita and Doraemon in a grand adventure to find the perfect sky utopia, where dreams take flight and new friendships are forged!",
-        imageUrl: "images/doraemon-sky-utopia.jpg", // Updated with actual image
-        videoUrl: "https://www.facebook.com/nazibul.haque.955129/videos/3932224157088366/"
+        // Reference to actual movie in allMoviesData
+        movieId: "sky-utopia-2023",
+        isCustom: false
     },
     {
-        title: "Doraemon: Nobita's Great Adventure in the South Seas",
-        description: "Doraemon and Nobita embark on a thrilling journey to the South Seas, encountering pirates and hidden treasures.",
-        imageUrl: "images/doraemon-treasure-island.jpg", // Updated with actual image
-        videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/640454295760593/" // Placeholder for video URL
+        // Reference to actual movie in allMoviesData
+        movieId: "treasure-island",
+        isCustom: false
     },
     {
-        title: "DB Super: Super Hero (2022)",
-        description: "The Red Ribbon Army returns, forcing heroes to step up.",
-        imageUrl: "images/dragon-ball-super-hero.jpg",
-        videoUrl: "https://www.facebook.com/nazibul.haque.958129/videos/1882284009295582/"
+        // Reference to actual movie in allMoviesData
+        movieId: "db-super-hero-2022",
+        isCustom: false
     }
 ];
+
+// This will be populated after allMoviesData is imported
+let heroMoviesData = [];
 
 document.addEventListener('DOMContentLoaded', async function () {
     console.log("DOMContentLoaded fired. Starting initialization...");
@@ -85,6 +90,15 @@ document.addEventListener('DOMContentLoaded', async function () {
     const movieInfoImage = document.getElementById('movieInfoImage');
     const movieInfoLanguage = document.getElementById('movieInfoLanguage');
     const movieInfoWatchButton = document.getElementById('movieInfoWatchButton');
+    const movieInfoYear = document.getElementById('movieInfoYear');
+    const movieInfoGenre = document.getElementById('movieInfoGenre');
+    const movieInfoRating = document.getElementById('movieInfoRating');
+    const movieInfoCast = document.getElementById('movieInfoCast');
+    const movieInfoRuntime = document.getElementById('movieInfoRuntime');
+    const movieCastRow = document.getElementById('movieCastRow');
+    const movieRuntimeRow = document.getElementById('movieRuntimeRow');
+    const movieInfoMyListButton = document.getElementById('movieInfoMyListButton');
+
 
     // Carousel elements
     const heroCarousel = document.getElementById('heroCarousel');
@@ -95,6 +109,144 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     let currentSlide = 0;
     let carouselInterval;
+    let currentModalMovieId = null;
+
+    /**
+     * Initialize hero movies data from config
+     * Resolves movie references from allMoviesData
+     */
+    function initializeHeroMovies() {
+        heroMoviesData = heroMoviesConfig.map(config => {
+            if (config.isCustom) {
+                // Return custom slide as-is
+                return config;
+            } else {
+                // Find the actual movie from allMoviesData
+                const movie = allMoviesData.find(m => m.id === config.movieId);
+                if (movie) {
+                    return movie;
+                } else {
+                    console.warn(`Hero carousel: Movie with ID "${config.movieId}" not found in allMoviesData`);
+                    return null;
+                }
+            }
+        }).filter(movie => movie !== null); // Remove any null entries
+
+        console.log(`Hero carousel initialized with ${heroMoviesData.length} movies`);
+    }
+
+    // Initialize hero movies
+    initializeHeroMovies();
+
+    /**
+     * Shows the movie info modal with all details populated
+     * @param {Object} movie - The movie object with all details
+     */
+    function showMovieModal(movie) {
+        currentModalMovieId = movie.id;
+
+        // Basic info
+        movieInfoTitle.textContent = movie.title;
+        movieInfoDescription.textContent = movie.description;
+        movieInfoImage.src = movie.imageUrl;
+        movieInfoWatchButton.href = movie.videoUrl;
+
+        // Language
+        if (movie.language) {
+            movieInfoLanguage.textContent = movie.language;
+            movieInfoLanguage.style.display = 'inline-flex';
+        } else {
+            movieInfoLanguage.style.display = 'none';
+        }
+
+        // Year - extract from title if present
+        const yearMatch = movie.title.match(/\((\d{4})\)/);
+        if (yearMatch) {
+            movieInfoYear.textContent = yearMatch[1];
+            movieInfoYear.style.display = 'inline-flex';
+        } else {
+            movieInfoYear.style.display = 'none';
+        }
+
+        // Genre - derive from category
+        if (movie.category && movie.category.length > 0) {
+            const genreMap = {
+                'latestReleases': 'Latest',
+                'doraemonClassics': 'Doraemon',
+                'otherAnimeMovies': 'Anime'
+            };
+            const genres = movie.category.map(cat => genreMap[cat] || cat).filter(Boolean);
+            if (genres.length > 0) {
+                movieInfoGenre.textContent = genres.join(', ');
+                movieInfoGenre.style.display = 'inline-flex';
+            } else {
+                movieInfoGenre.style.display = 'none';
+            }
+        } else {
+            movieInfoGenre.style.display = 'none';
+        }
+
+        // Rating - show a default rating or hide if not available
+        if (movie.rating) {
+            movieInfoRating.textContent = movie.rating;
+            movieInfoRating.style.display = 'inline-flex';
+        } else {
+            // Default rating for display purposes
+            movieInfoRating.textContent = 'All Ages';
+            movieInfoRating.style.display = 'inline-flex';
+        }
+
+        // Cast - hide for now as data doesn't include it
+        if (movie.cast) {
+            movieInfoCast.textContent = movie.cast;
+            movieCastRow.style.display = 'flex';
+        } else {
+            movieCastRow.style.display = 'none';
+        }
+
+        // Runtime - hide for now as data doesn't include it
+        if (movie.runtime) {
+            movieInfoRuntime.textContent = movie.runtime;
+            movieRuntimeRow.style.display = 'flex';
+        } else {
+            movieRuntimeRow.style.display = 'none';
+        }
+
+        // Update My List button state
+        if (movieInfoMyListButton) {
+            const isInList = userMyList.has(movie.id);
+            if (isInList) {
+                movieInfoMyListButton.classList.add('added');
+                movieInfoMyListButton.querySelector('.my-list-text').textContent = 'Remove from List';
+                movieInfoMyListButton.querySelector('.list-icon path').setAttribute('d', 'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z');
+            } else {
+                movieInfoMyListButton.classList.remove('added');
+                movieInfoMyListButton.querySelector('.my-list-text').textContent = 'My List';
+                movieInfoMyListButton.querySelector('.list-icon path').setAttribute('d', 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z');
+            }
+        }
+
+        // Show modal with animation
+        movieInfoModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        // Log analytics if available
+        if (analytics) {
+            logEvent(analytics, 'view_movie_info', {
+                movie_id: movie.id,
+                movie_title: movie.title
+            });
+        }
+    }
+
+    /**
+     * Closes the movie info modal and resets its state
+     */
+    function closeMovieModal() {
+        movieInfoModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        currentModalMovieId = null;
+    }
 
     /**
      * Displays the carousel slide at the given index.
@@ -291,14 +443,15 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             const infoButton = carouselItem.querySelector('.info-button');
             if (infoButton) {
+                // Capture the movie object in the closure by using a data attribute
+                infoButton.setAttribute('data-movie-id', movie.id);
                 infoButton.addEventListener('click', () => {
-                    movieInfoTitle.textContent = movie.title;
-                    movieInfoDescription.textContent = movie.description;
-                    movieInfoImage.src = movie.imageUrl;
-                    movieInfoLanguage.textContent = movie.language || '';
-                    movieInfoWatchButton.href = movie.videoUrl;
-                    movieInfoModal.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
+                    // Find the movie from the data
+                    const movieId = infoButton.getAttribute('data-movie-id');
+                    const movieData = heroMoviesData.find(m => m.id === movieId);
+                    if (movieData) {
+                        showMovieModal(movieData);
+                    }
                 });
             }
         });
@@ -469,6 +622,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                 '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>'
             }
                     </button>
+                    <button class="more-info-button" data-movie-id="${movie.id}" title="More Info">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
         `;
@@ -507,6 +665,17 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
             });
         }
+
+        // More Info Button Handler
+        const moreInfoBtn = movieCard.querySelector('.more-info-button');
+        if (moreInfoBtn) {
+            moreInfoBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                event.preventDefault();
+                showMovieModal(movie);
+            });
+        }
+
         return movieCard;
     }
 
@@ -724,7 +893,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     for (let i = 0; i < span.length; i++) {
         span[i].onclick = function () {
             if (infoModal) {
-                infoModal.style.display = "none";
+                closeMovieModal();
             }
             if (donateModal) {
                 donateModal.style.display = "none";
@@ -745,13 +914,43 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
         }
         if (event.target == infoModal) {
-            infoModal.style.display = "none";
-            document.body.style.overflow = "auto";
+            closeMovieModal();
         }
         if (userIdTooltip.classList.contains('show') && !userIdTooltip.contains(event.target) && event.target !== userIdToggleButton && !userIdToggleButton.contains(event.target)) {
             userIdTooltip.classList.remove('show');
         }
     }
+
+    // My List Button in Modal Handler
+    if (movieInfoMyListButton) {
+        movieInfoMyListButton.addEventListener('click', async () => {
+            if (!currentModalMovieId || !currentUserId) {
+                console.warn("Cannot add/remove from list: No movie selected or user not authenticated");
+                return;
+            }
+
+            const isInList = userMyList.has(currentModalMovieId);
+
+            if (isInList) {
+                await removeMovieFromMyList(currentModalMovieId);
+                movieInfoMyListButton.classList.remove('added');
+                movieInfoMyListButton.querySelector('.my-list-text').textContent = 'My List';
+                movieInfoMyListButton.querySelector('.list-icon path').setAttribute('d', 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z');
+            } else {
+                await addMovieToMyList(currentModalMovieId);
+                movieInfoMyListButton.classList.add('added');
+                movieInfoMyListButton.querySelector('.my-list-text').textContent = 'Remove from List';
+                movieInfoMyListButton.querySelector('.list-icon path').setAttribute('d', 'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z');
+
+                if (analytics) {
+                    logEvent(analytics, 'add_to_my_list_modal', {
+                        movie_id: currentModalMovieId
+                    });
+                }
+            }
+        });
+    }
+
 
     function copyToClipboard(elementId, btnElement) {
         const element = document.getElementById(elementId);
