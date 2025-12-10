@@ -1301,8 +1301,8 @@ header.scrolled {
 }
 
 .crypto-logo {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     object-fit: contain;
     border-radius: 20px;
     margin-bottom: 1rem;
