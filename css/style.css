@@ -664,15 +664,15 @@ header.scrolled {
 }
 
 .movie-rating {
-    background: rgba(255, 215, 0, 0.15);
-    color: #FFD700;
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    background: #FFFFFF;
+    color: #DAA520;
+    /* Dark Goldenrod */
     padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 700;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 800;
     align-self: flex-start;
-    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .movie-card .watch-button {
@@ -681,25 +681,30 @@ header.scrolled {
     padding: 10px;
     width: 100%;
     justify-content: center;
-    font-size: 0.9rem;
-    background: var(--primary);
-    border-radius: 8px;
-    box-shadow: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    background: var(--secondary);
+    /* Red details */
+    color: white;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px var(--secondary-glow);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .movie-card .watch-button:hover {
-    background: #0081bb;
-    box-shadow: 0 0 15px var(--primary-glow);
+    background: #FF1F4B;
+    transform: scale(1.05);
+    border-color: #FFFFFF;
 }
 
 /* More Info Button in Cards */
 .more-info-button {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.5);
     color: white;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -709,10 +714,10 @@ header.scrolled {
 }
 
 .more-info-button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: var(--primary);
-    box-shadow: 0 0 15px rgba(0, 160, 233, 0.4);
-    transform: scale(1.1);
+    background: #FFFFFF;
+    color: var(--primary);
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
 }
 
 
