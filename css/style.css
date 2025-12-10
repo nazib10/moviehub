@@ -1,43 +1,51 @@
-/* CINEMATIC PREMIUM DESIGN */
-/* Award-Worthy UI Upgrade */
+/* DORAEMON PLAYFUL THEME */
+/* Fun, Bright, and Gadget-Filled */
 
 :root {
-    /* Brand Colors - Sophisticated Palette */
-    --primary: #00a0e9;
-    /* Signature Doraemon Blue */
-    --primary-glow: rgba(0, 160, 233, 0.4);
-    --secondary: #e9002d;
-    /* Signature Red */
-    --secondary-glow: rgba(233, 0, 45, 0.4);
+    /* Brand Colors - Doraemon Palette */
+    --primary: #009FE3;
+    /* Doraemon Blue */
+    --primary-glow: rgba(0, 159, 227, 0.5);
+    --secondary: #E30032;
+    /* Red Collar/Nose */
+    --secondary-glow: rgba(227, 0, 50, 0.4);
     --accent: #FFD700;
-    /* Gold */
+    /* Bell Gold */
 
-    /* Backgrounds - Deep & Immersive */
-    --bg-main: #0B0E14;
-    /* Midnight Dark */
-    --bg-surface: #151A25;
-    /* Card Surface */
-    --bg-glass: rgba(11, 14, 20, 0.75);
-    --border-glass: rgba(255, 255, 255, 0.08);
+    /* Backgrounds - Sunny & Aerial */
+    --bg-main: #F0F8FF;
+    /* Alice Blue - Sky Feel */
+    --bg-surface: #FFFFFF;
+    /* Clean White Cards */
+    --bg-glass: rgba(255, 255, 255, 0.85);
+    /* Frosted White */
+    --border-glass: rgba(0, 159, 227, 0.2);
+    /* Subtle Blue Border */
 
     /* Typography */
-    --font-heading: 'Outfit', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    --font-heading: 'Fredoka One', cursive;
+    /* Playful Rounded Headings */
+    --font-body: 'Outfit', sans-serif;
+    /* Clean Readable Body */
     --font-logo: 'Fredoka One', cursive;
 
     /* Text Colors */
-    --text-white: #ffffff;
-    --text-muted: #94a3b8;
+    --text-white: #1E293B;
+    /* Slate 800 - Reading text */
+    --text-muted: #64748B;
+    /* Slate 500 */
 
     /* Decoration */
-    --radius-lg: 24px;
-    --radius-md: 16px;
-    --radius-sm: 8px;
-    --shadow-soft: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
-    --shadow-glow: 0 0 20px var(--primary-glow);
+    --radius-lg: 32px;
+    /* Extra Rounded */
+    --radius-md: 20px;
+    --radius-sm: 12px;
+    --shadow-soft: 0 10px 30px -5px rgba(0, 159, 227, 0.15);
+    --shadow-glow: 0 0 25px var(--primary-glow);
 
     --transition-fast: 0.2s ease;
-    --transition-smooth: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    --transition-smooth: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Bouncy Physics */
 }
 
 /* RESET */
@@ -53,10 +61,11 @@ body {
     font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
-    /* Subtle cinematic ambience */
+    /* Playful Cloud Pattern Background */
     background-image:
-        radial-gradient(circle at 0% 0%, rgba(0, 160, 233, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(233, 0, 45, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.8) 0%, transparent 20%),
+        radial-gradient(circle at 90% 90%, rgba(255, 255, 255, 0.8) 0%, transparent 20%),
+        linear-gradient(180deg, #E0F2FE 0%, #F0F8FF 100%);
     background-attachment: fixed;
 }
 
@@ -94,27 +103,28 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(180deg, rgba(11, 14, 20, 0.7) 0%, rgba(11, 14, 20, 0.3) 100%);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    /* Starts with subtle overlay */
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     transition: var(--transition-smooth);
 }
 
 header.scrolled {
-    background: rgba(11, 14, 20, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 1rem 4rem;
     border-bottom: 1px solid var(--border-glass);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 159, 227, 0.1);
 }
 
 .header-logo {
     font-family: var(--font-logo);
     font-size: 2.2rem;
-    color: var(--text-white);
-    text-shadow: 0 0 20px rgba(0, 160, 233, 0.8);
+    color: var(--primary);
+    /* Logo is now Primary Blue */
+    text-shadow: 4px 4px 0px #fff, 6px 6px 0px rgba(0, 0, 0, 0.1);
+    /* Pop-art style shadow */
     cursor: pointer;
     transition: var(--transition-smooth);
 }
@@ -173,9 +183,9 @@ header.scrolled {
 }
 
 .search-input-field {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--border-glass);
-    color: white;
+    background: #FFFFFF;
+    border: 2px solid var(--border-glass);
+    color: var(--primary);
     padding: 0;
     border-radius: 24px;
     width: 0;
@@ -189,9 +199,8 @@ header.scrolled {
 .search-input-field:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 20px rgba(0, 160, 233, 0.5),
-        0 0 40px rgba(0, 160, 233, 0.2);
-    background: rgba(15, 23, 42, 0.8);
+    box-shadow: 0 0 15px var(--primary-glow);
+    background: #FFFFFF;
 }
 
 .search-input-field.active {
@@ -199,13 +208,13 @@ header.scrolled {
     visibility: visible;
     opacity: 1;
     padding: 0.6rem 1.2rem;
-    border-color: rgba(0, 160, 233, 0.5);
-    box-shadow: 0 0 15px rgba(0, 160, 233, 0.3);
-    background: rgba(15, 23, 42, 0.6);
+    border-color: var(--primary);
+    box-shadow: 0 4px 15px rgba(0, 159, 227, 0.15);
+    background: #FFFFFF;
 }
 
 .search-input-field::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
 }
 
 .donate-button {
@@ -278,26 +287,44 @@ header.scrolled {
     transition: all 0.3s ease !important;
 }
 
-/* Search Overlay - Netflix Style */
+/* Search Overlay - Portal Reveal Style */
 #searchResultsSection {
-    transition: all 0.3s ease;
-}
-
-#searchResultsSection.active {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 100;
-    background: var(--bg-main);
+    z-index: 900;
+    /* Behind header but above content */
+    background: radial-gradient(circle at top right, #FFFFFF 0%, #F0F8FF 100%);
     padding-top: 100px;
     overflow-y: auto;
+    /* Portal Animation */
+    clip-path: circle(0% at 85% 50px);
+    transition: clip-path 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#searchResultsSection.active {
+    clip-path: circle(150% at 85% 50px);
+    /* Open Portal */
+    opacity: 1;
+    pointer-events: auto;
 }
 
 /* Search results grid styling */
 #searchResultsGrid {
-    animation: fadeInUp 0.4s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: var(--transition-smooth);
+}
+
+#searchResultsSection.active #searchResultsGrid {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+    /* Wait for portal to open */
 }
 
 @keyframes fadeInUp {
@@ -379,18 +406,19 @@ header.scrolled {
     line-height: 1.1;
     margin-bottom: 1rem;
     color: white;
-    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 4px 15px rgba(0, 159, 227, 0.4);
     letter-spacing: -1px;
 }
 
 .hero-content p {
     font-size: 1rem;
-    color: #cbd5e1;
+    color: #F0F8FF;
+    /* Alice Blue text */
     margin-bottom: 2.5rem;
     max-width: 600px;
     line-height: 1.7;
-    font-weight: 400;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+    font-weight: 500;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .hero-buttons {
@@ -413,32 +441,37 @@ header.scrolled {
     align-items: center;
     gap: 10px;
     cursor: pointer;
+    box-shadow: 0 10px 25px rgba(227, 0, 50, 0.3);
 }
 
 .play-button:hover {
     background: #ff1f4b;
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(233, 0, 45, 0.5);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(227, 0, 50, 0.5);
 }
 
 .info-button {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 159, 227, 0.8);
+    /* Primary Blue Glass */
     backdrop-filter: blur(10px);
     color: white;
     padding: 14px 36px;
     border-radius: 50px;
     font-weight: 700;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.5);
     font-family: var(--font-heading);
     transition: var(--transition-smooth);
     cursor: pointer;
     text-decoration: none;
     font-size: 1.1rem;
+    box-shadow: 0 10px 25px rgba(0, 159, 227, 0.3);
 }
 
 .info-button:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: translateY(-4px);
+    background: var(--primary);
+    transform: translateY(-4px) scale(1.05);
+    border-color: white;
+    box-shadow: 0 15px 35px rgba(0, 159, 227, 0.5);
 }
 
 /* Carousel Controls */
@@ -489,30 +522,71 @@ header.scrolled {
     /* Pull content up over the gradient */
 }
 
+
+
 .category-section {
     margin-bottom: 5rem;
 }
 
 .category-title {
     font-family: var(--font-heading);
-    font-size: 2rem;
-    color: white;
+    font-size: 2.2rem;
+    color: var(--primary);
     margin-bottom: 2rem;
     display: flex;
     align-items: center;
     gap: 15px;
     font-weight: 700;
+    text-shadow: 0 4px 0px rgba(0, 159, 227, 0.1);
 }
 
+/* Vertical Red Bar */
 .category-title::before {
     content: '';
     display: block;
     width: 6px;
     height: 32px;
-    background: var(--primary);
+    background: var(--secondary);
+    /* Red Collar */
     border-radius: 4px;
-    box-shadow: 0 0 15px var(--primary);
+    box-shadow: 0 0 15px var(--secondary-glow);
 }
+
+/* CSS Doraemon Bell for Logo */
+.header-logo {
+    position: relative;
+    padding-right: 25px;
+}
+
+.header-logo::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at 30% 30%, #FFD700, #DAA520);
+    /* Gold Bell */
+    border-radius: 50%;
+    border: 2px solid #333;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Bell Keyhole */
+.header-logo::before {
+    content: '';
+    position: absolute;
+    right: 8.5px;
+    top: 50%;
+    width: 3px;
+    height: 3px;
+    background: #333;
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 4px 0 #333;
+}
+
 
 /* Movie Grid */
 .movie-grid-display,
@@ -532,14 +606,15 @@ header.scrolled {
     aspect-ratio: 2/3;
     cursor: pointer;
     transition: var(--transition-smooth);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border: 4px solid #FFFFFF;
+    /* Sticker Border */
+    box-shadow: 0 10px 20px rgba(0, 159, 227, 0.15);
 }
 
 .movie-card:hover {
     transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px rgba(0, 159, 227, 0.3);
+    border-color: #FFFFFF;
     z-index: 5;
 }
 
@@ -558,7 +633,8 @@ header.scrolled {
 .movie-card-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(11, 14, 20, 0.95) 15%, rgba(11, 14, 20, 0.4) 60%, transparent 100%);
+    /* Blue Gradient Overlay for Doraemon Theme */
+    background: linear-gradient(to top, rgba(0, 159, 227, 0.95) 15%, rgba(0, 159, 227, 0.5) 60%, transparent 100%);
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -649,10 +725,10 @@ header.scrolled {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(5, 7, 10, 0.85);
-    /* Darker backdrop */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background-color: rgba(255, 255, 255, 0.6);
+    /* Light frosted backdrop */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     align-items: center;
     justify-content: center;
     padding: 20px;
@@ -674,18 +750,19 @@ header.scrolled {
 }
 
 .modal-content {
-    background: rgba(26, 32, 44, 0.95);
-    /* Dark Slate with opacity */
+    background: #FFFFFF;
+    /* Clean White */
     padding: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
+    border: 4px solid var(--primary);
+    /* Blue Border */
+    border-radius: 32px;
     width: 95%;
     max-width: 850px;
     position: relative;
-    box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 20px 60px rgba(0, 159, 227, 0.3);
     max-height: 90vh;
     overflow-y: auto;
-    color: var(--text-muted);
+    color: var(--text-white);
 }
 
 .modal-header {
@@ -696,7 +773,7 @@ header.scrolled {
 
 .modal-title {
     font-family: var(--font-heading);
-    color: white;
+    color: var(--primary);
     font-size: 2.2rem;
     margin-bottom: 0.5rem;
     line-height: 1.2;
@@ -706,15 +783,17 @@ header.scrolled {
     position: absolute;
     top: 25px;
     right: 30px;
-    color: var(--text-muted);
+    color: white;
     font-size: 2rem;
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--secondary);
+    /* Red Nose! */
+    box-shadow: 0 4px 10px var(--secondary-glow);
     cursor: pointer;
     line-height: 1;
     transition: 0.3s ease;
@@ -722,9 +801,8 @@ header.scrolled {
 }
 
 .close-button:hover {
-    color: white;
-    background: var(--primary);
-    transform: rotate(90deg);
+    background: #ff1f4b;
+    transform: rotate(90deg) scale(1.1);
 }
 
 /* Movie Info Modal Specifics */
@@ -1306,29 +1384,28 @@ header.scrolled {
 }
 
 /* ================= FOOTER ================= */
+/* ================= FOOTER ================= */
 footer {
-    background: linear-gradient(180deg, rgba(2, 3, 5, 0) 0%, #020305 20%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #E6F3FF 100%);
+    /* Light fade to blue */
     padding: 5rem 4rem 3rem;
     margin-top: 8rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 4px solid #FFFFFF;
     position: relative;
 }
 
 footer::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: -4px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
-    height: 1px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            var(--primary) 20%,
-            var(--accent) 50%,
-            var(--primary) 80%,
-            transparent 100%);
-    box-shadow: 0 0 20px var(--primary-glow);
+    width: 20%;
+    height: 8px;
+    background: var(--secondary);
+    /* Red Accent Line */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px var(--secondary-glow);
 }
 
 .footer-content {
@@ -1354,15 +1431,16 @@ footer::before {
 }
 
 .footer-left p:first-child {
-    font-size: 1.05rem;
-    color: #cbd5e1;
-    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--primary);
+    font-family: 'Fredoka One', cursive;
+    /* Playful Font! */
 }
 
 .footer-left .text-xs {
-    font-size: 0.85rem;
-    color: #64748b;
-    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
 }
 
 .footer-right {
@@ -1375,22 +1453,25 @@ footer::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    color: #64748b;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    width: 48px;
+    height: 48px;
+    color: white;
+    background: var(--primary);
+    border: 3px solid #FFFFFF;
+    /* Sticker Border */
     border-radius: 50%;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Bouncy! */
     position: relative;
     overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 159, 227, 0.2);
 }
 
 .social-link::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at center, var(--primary) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -1399,14 +1480,13 @@ footer::before {
     position: relative;
     z-index: 1;
     transition: transform 0.3s ease;
+    fill: white;
 }
 
 .social-link:hover {
-    color: var(--primary);
-    background: rgba(0, 160, 233, 0.1);
-    border-color: var(--primary);
-    transform: translateY(-5px) rotate(5deg);
-    box-shadow: 0 10px 25px rgba(0, 160, 233, 0.3);
+    color: white;
+    transform: translateY(-8px) scale(1.1);
+    box-shadow: 0 15px 30px rgba(0, 159, 227, 0.4);
 }
 
 .social-link:hover::before {
@@ -1422,24 +1502,31 @@ footer::before {
 }
 
 /* GitHub link - special styling */
+/* GitHub link */
+.social-link:nth-child(1) {
+    background: #333;
+}
+
 .social-link:nth-child(1):hover {
-    color: #fff;
-    border-color: #fff;
-    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 /* Twitter link */
+.social-link:nth-child(2) {
+    background: #1DA1F2;
+}
+
 .social-link:nth-child(2):hover {
-    color: #1DA1F2;
-    border-color: #1DA1F2;
-    box-shadow: 0 10px 25px rgba(29, 161, 242, 0.3);
+    box-shadow: 0 10px 25px rgba(29, 161, 242, 0.4);
 }
 
 /* Facebook link */
+.social-link:nth-child(3) {
+    background: #1877F2;
+}
+
 .social-link:nth-child(3):hover {
-    color: #1877F2;
-    border-color: #1877F2;
-    box-shadow: 0 10px 25px rgba(24, 119, 242, 0.3);
+    box-shadow: 0 10px 25px rgba(24, 119, 242, 0.4);
 }
 
 /* SCROLL TO TOP */
