@@ -320,6 +320,8 @@
         margin-bottom: 2px;
         text-shadow: none;
         font-family: var(--font-heading);
+        padding-right: 40px;
+        /* Ensure no overlap with close button */
     }
 
     .movie-metadata {

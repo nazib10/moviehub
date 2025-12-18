@@ -842,11 +842,15 @@ header.scrolled {
 @media (max-width: 1024px) {
     .movie-info-modal-content {
         max-width: 700px;
-        padding: 35px 25px 25px 25px;
+        padding: 60px 25px 25px 25px;
     }
 
     .movie-info-layout {
         gap: 1.5rem;
+    }
+
+    .modal-title {
+        padding-right: 50px;
     }
 }
 
