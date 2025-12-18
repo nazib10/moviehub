@@ -73,8 +73,8 @@
 
     /* Hero Section Mobile Optimized */
     .hero {
-        height: 75vh;
-        /* Reduced height for better mobile layout */
+        height: 85vh;
+        /* Standard Netflix-style height for mobile */
         border-radius: 0;
         /* Remove rounded corners for full immersion */
     }
@@ -352,7 +352,7 @@
     }
 
     .hero {
-        height: 65vh;
+        height: 80vh;
     }
 
     .play-button,
