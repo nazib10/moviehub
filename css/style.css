@@ -356,8 +356,8 @@ header.scrolled {
     /* Reset to center for standard view */
     position: absolute;
     opacity: 0;
-    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-    /* Removed transform transition */
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Reduced duration to minimize overlap */
     transform: scale(1);
     /* Removed zoom effect */
     pointer-events: none;
@@ -465,6 +465,9 @@ header.scrolled {
     text-decoration: none;
     font-size: 1.1rem;
     box-shadow: 0 10px 25px rgba(0, 159, 227, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .info-button:hover {

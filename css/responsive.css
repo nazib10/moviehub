@@ -5,72 +5,76 @@
 
     /* Header Adjustments */
     header {
-        padding: 1rem 1.5rem;
+        padding: 1rem 2rem;
     }
 
     header.scrolled {
-        padding: 0.8rem 1.5rem;
+        padding: 0.8rem 2rem;
     }
 
     .header-logo {
         font-size: 1.8rem;
     }
 
-    /* Keep controls tight */
+    /* Keep controls tight but readable */
     #rightControlsContainer {
         gap: 0.8rem;
     }
 
+    /* Keep Donate Button with text on tablet */
+    .button-text {
+        display: inline;
+    }
+
+    .donate-button {
+        padding: 10px 24px;
+        width: auto;
+        border-radius: 50px;
+    }
+
     /* Compact Buttons */
-    .search-icon-button,
     .user-icon-button {
         width: 40px;
         height: 40px;
     }
 
-    .search-icon-svg,
     .user-icon-svg {
         width: 18px;
         height: 18px;
     }
 
-    /* Donate Button - Icon Only */
-    .button-text {
-        display: none;
+    /* Hero Section Tablet Optimized */
+    .carousel-item {
+        padding: 100px 3rem 12vh 3rem;
     }
 
-    .donate-button {
-        padding: 0;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        justify-content: center;
+    .hero-content h1 {
+        font-size: 2.8rem;
+        margin-bottom: 0.8rem;
     }
 
-    .donate-button .donate-icon {
-        margin: 0;
-        width: 20px;
-        height: 20px;
+    .hero-content p {
+        font-size: 1.05rem;
+        max-width: 500px;
+        margin-bottom: 2rem;
     }
 
-    /* Search Input Mobile - Absolute Overlay */
-    .search-input-field.active {
-        position: absolute;
-        top: 80px;
-        left: 5%;
-        width: 90%;
-        background: #1e293b;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        margin: 0;
-        z-index: 999;
-        height: 50px;
+    .hero-buttons {
+        gap: 15px;
+    }
+
+    .play-button,
+    .info-button {
+        padding: 12px 28px;
+        font-size: 1rem;
+        min-width: 150px;
+        flex: initial;
     }
 
     /* Hero Section Mobile Optimized */
     .hero {
-        height: 100vh;
-        /* Full screen on mobile too */
+        height: 75vh;
+        /* Reduced height for better mobile layout */
         border-radius: 0;
         /* Remove rounded corners for full immersion */
     }
@@ -116,14 +120,25 @@
 
     .hero-buttons {
         gap: 10px;
+        width: 100%;
+        max-width: 400px;
     }
 
     .play-button,
     .info-button {
-        padding: 12px 24px;
-        font-size: 1rem;
+        padding: 10px 20px;
+        font-size: 0.95rem;
         flex: 1;
+        min-width: 0;
         justify-content: center;
+        gap: 8px;
+        border-radius: 40px;
+    }
+
+    .play-button svg,
+    .info-button svg {
+        width: 18px;
+        height: 18px;
     }
 
     /* Content Sections */
@@ -255,6 +270,97 @@
     .watch-icon {
         width: 18px;
         height: 18px;
+    }
+}
+
+/* Mobile only: Hide logo when search is active to prevent layout issues */
+@media (max-width: 600px) {
+    header:has(.search-input-field.active) .header-logo {
+        display: none !important;
+    }
+
+    /* Allow search to expand to fill the header when logo is hidden */
+    header:has(.search-input-field.active) #rightControlsContainer,
+    header:has(.search-input-field.active) #searchElements {
+        width: 100%;
+    }
+
+    header:has(.search-input-field.active) .search-input-field.active {
+        flex-grow: 1;
+        width: 100%;
+    }
+
+    /* Donate Button - Icon Only on Mobile */
+    .button-text {
+        display: none;
+    }
+
+    .donate-button {
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        justify-content: center;
+    }
+
+    .donate-button .donate-icon {
+        margin: 0;
+        width: 20px;
+        height: 20px;
+    }
+
+    header {
+        padding: 0.7rem 1rem;
+    }
+
+    #rightControlsContainer {
+        gap: 0.5rem;
+    }
+}
+
+/* Specific optimisations for small mobile screens */
+@media (max-width: 480px) {
+    header {
+        padding: 0.6rem 0.75rem;
+    }
+
+    .header-logo {
+        font-size: 1.4rem;
+        padding-right: 20px;
+    }
+
+    .header-logo::after {
+        width: 16px;
+        height: 16px;
+    }
+
+    #rightControlsContainer {
+        gap: 0.4rem;
+    }
+
+    .search-icon-button,
+    .user-icon-button,
+    .donate-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .hero-buttons {
+        width: 100%;
+        /* Stretch on very small screens */
+        gap: 8px;
+    }
+
+    .hero {
+        height: 65vh;
+    }
+
+    .play-button,
+    .info-button {
+        flex: 1;
+        min-width: 0;
+        padding: 12px 10px;
+        font-size: 0.9rem;
     }
 }
 
