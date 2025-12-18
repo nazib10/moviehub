@@ -1,6 +1,16 @@
-/* Mobile Responsiveness Improvements - Premium Edition */
+/* Tablet (iPad Pro, iPad Mini, etc.) */
+@media (max-width: 1024px) {
+    .hero {
+        height: 60vh;
+        /* Cinematic Standard for Tablets */
+    }
 
-/* Tablet & Mobile */
+    .carousel-item {
+        padding: 80px 3rem 8vh 3rem;
+    }
+}
+
+/* Tablet & Mobile (Standard) */
 @media (max-width: 850px) {
 
     /* Header Adjustments */
@@ -73,8 +83,8 @@
 
     /* Hero Section Mobile Optimized */
     .hero {
-        height: 85vh;
-        /* Standard Netflix-style height for mobile */
+        height: 75vh;
+        /* Standard Netflix-style height for mobile/mini */
         border-radius: 0;
         /* Remove rounded corners for full immersion */
     }
@@ -471,7 +481,7 @@
     }
 
     .hero {
-        height: 80vh;
+        height: 70vh;
     }
 
     .play-button,
