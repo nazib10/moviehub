@@ -152,26 +152,26 @@
         margin-bottom: 1.5rem;
     }
 
-    /* Movie Grid */
+    /* Netflix-Style Grid: 3 columns with tight spacing */
     .movie-grid-display,
     .movie-row {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+        /* Netflix-style dense spacing */
+        margin-bottom: 2rem;
     }
 
-    /* Mobile Cards */
+    /* Netflix-Style Cards: Posters only, sharp radii */
     .movie-card {
-        border-radius: 12px;
+        border-radius: 4px;
         aspect-ratio: 2/3;
+        border: none;
+        box-shadow: none;
     }
 
-    /* Always show overlay on mobile for usability */
+    /* Hide all overlays/buttons on the grid for the pure poster look */
     .movie-card-overlay {
-        opacity: 1;
-        transform: translateY(0);
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 40%, rgba(0, 0, 0, 0.5) 80%, transparent 100%);
-        padding: 10px;
-        justify-content: flex-end;
+        display: none !important;
     }
 
     .movie-title {
@@ -233,43 +233,160 @@
         height: 40px;
     }
 
-    /* Modal Mobile */
+    /* Modal Mobile - Doraemon Netflix Bottom Sheet */
     .modal {
-        padding: 15px;
+        padding: 0;
+        background-color: rgba(0, 159, 227, 0.4);
+        /* Soft Blue Backdrop */
+        backdrop-filter: blur(10px);
+        align-items: flex-end;
+        /* Align to bottom */
     }
 
     .modal-content {
-        padding: 25px 20px;
-        width: 95%;
+        background: #FFFFFF;
+        padding: 0;
+        width: 100%;
         max-width: 100%;
         max-height: 90vh;
-        border-radius: 20px;
+        border-radius: 24px 24px 0 0;
+        /* Playful Rounded Top */
+        border: none;
+        border-top: 5px solid var(--primary);
+        /* Doraemon Blue Top Border */
+        color: var(--text-white);
+        box-shadow: 0 -10px 40px rgba(0, 159, 227, 0.2);
+        animation: sheetSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow-x: hidden;
+    }
+
+    @keyframes sheetSlideUp {
+        from {
+            transform: translateY(100%);
+        }
+
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    .movie-info-layout {
+        flex-direction: column;
+        gap: 0;
+        align-items: stretch;
+    }
+
+    /* Immersive Banner for Modal */
+    .movie-info-poster {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        height: 220px;
+        position: relative;
+    }
+
+    .movie-info-poster img {
+        border-radius: 0;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        box-shadow: none;
+    }
+
+    /* Light Fade over banner */
+    .movie-info-poster::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60%;
+        background: linear-gradient(to top, #FFFFFF 10%, transparent);
+        z-index: 3;
+    }
+
+    .poster-glow {
+        display: none;
+    }
+
+    .movie-info-details {
+        padding: 20px 24px;
+        gap: 12px;
+    }
+
+    .modal-title {
+        font-size: 1.8rem;
+        color: var(--primary);
+        margin-bottom: 2px;
+        text-shadow: none;
+        font-family: var(--font-heading);
+    }
+
+    .movie-metadata {
+        margin-bottom: 10px;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    .rating-badge {
+        background: var(--bg-main);
+        border: 2px solid var(--primary);
+        color: var(--primary);
+        padding: 2px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        box-shadow: none;
+    }
+
+    #movieInfoDescription {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #475569;
+        margin-bottom: 20px;
+    }
+
+    /* Action Buttons - Streamline for Mobile Sheet */
+    .modal-action-buttons {
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 15px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .modal-watch-btn {
+        background: var(--secondary) !important;
+        /* Doraemon Red */
+        color: white !important;
+        width: 100%;
+        border-radius: 50px;
+        font-family: var(--font-heading);
+        padding: 14px !important;
+        font-size: 1.1rem !important;
+        box-shadow: 0 8px 20px var(--secondary-glow) !important;
+    }
+
+    .my-list-button-modal {
+        background: var(--bg-main) !important;
+        color: var(--primary) !important;
+        border: 2px solid var(--primary) !important;
+        width: 100%;
+        border-radius: 50px;
+        padding: 12px !important;
+        font-size: 1rem !important;
+        box-shadow: none !important;
     }
 
     .close-button {
         top: 15px;
         right: 15px;
-        font-size: 1.8rem;
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--primary);
         width: 36px;
         height: 36px;
-    }
-
-    .modal-title {
         font-size: 1.5rem;
-        margin-bottom: 0.75rem;
-    }
-
-    /* Watch button optimization for mobile */
-    .watch-button {
-        width: 100%;
-        justify-content: center;
-        padding: 12px 24px;
-        font-size: 1rem;
-    }
-
-    .watch-icon {
-        width: 18px;
-        height: 18px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        z-index: 20;
+        border: 2px solid var(--primary);
     }
 }
 

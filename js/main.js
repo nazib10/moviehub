@@ -676,6 +676,13 @@ document.addEventListener('DOMContentLoaded', async function () {
             });
         }
 
+        // Full card click for mobile usability (Netflix style)
+        movieCard.addEventListener('click', (event) => {
+            if (!event.target.closest('button') && !event.target.closest('a')) {
+                showMovieModal(movie);
+            }
+        });
+
         return movieCard;
     }
 
