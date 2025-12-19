@@ -8,10 +8,46 @@
     .carousel-item {
         padding: 80px 3rem 8vh 3rem;
     }
+
+    /* Tablet Header Adjustment - Keep it substantial */
+    header {
+        padding: 1.2rem 3rem;
+    }
+
+    .header-logo {
+        font-size: 2rem;
+    }
+
+    /* Prevent overflow on narrower tablets (iPad Portrait) */
+    .search-input-field.active {
+        width: 200px;
+    }
+
+    #rightControlsContainer {
+        gap: 1rem;
+    }
+
+    /* Tablet Content & Grid - Netflix Density */
+    .content-sections {
+        padding: 2rem 3rem;
+        /* Align with header padding */
+    }
+
+    .category-title {
+        font-size: 1.8rem;
+    }
+
+    /* Ensure we get 3-4 items on tablet instead of 2 */
+    .movie-grid-display,
+    .movie-row {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1.5rem;
+    }
 }
 
 /* Tablet & Mobile (Standard) */
-@media (max-width: 850px) {
+/* Mobile (Standard) - Phones & Small Tablets */
+@media (max-width: 767px) {
 
     /* Header Adjustments */
     header {
