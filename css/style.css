@@ -535,7 +535,7 @@ header.transparent-mode:not(.scrolled) .mobile-menu-toggle .bar:nth-child(2) {
     display: none;
 }
 
-/* New Per-Slide Fade */
+/* New Per-Slide Fade (Darker) */
 .carousel-item::after {
     content: '';
     position: absolute;
@@ -543,8 +543,8 @@ header.transparent-mode:not(.scrolled) .mobile-menu-toggle .bar:nth-child(2) {
     left: 0;
     right: 0;
     height: 35%;
-    /* Cinematic fade */
-    background: linear-gradient(to top, var(--bg-main) 0%, transparent 100%);
+    /* Cinematic dark fade */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
     z-index: 5;
     pointer-events: none;
 }
