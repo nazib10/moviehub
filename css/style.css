@@ -796,10 +796,10 @@ header.transparent-mode:not(.scrolled) .mobile-menu-toggle .bar:nth-child(2) {
 
 /* ================= MAIN CONTENT ================= */
 .content-sections {
-    padding: 2rem 4rem;
+    padding: 6rem 4rem 2rem 4rem;
     position: relative;
     z-index: 10;
-    margin-top: -40px;
+    margin-top: -120px;
     /* Pull content up over the gradient */
     pointer-events: none;
     /* Allow clicks to pass through transparent padding overlap */
