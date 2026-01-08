@@ -5,6 +5,7 @@ import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, updateDoc, a
 import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 
 import { allMoviesData } from '/js/data.js';
+import { supportData } from '/js/support.js';
 
 // Global Firebase variables
 let app;
@@ -59,6 +60,16 @@ const heroMoviesConfig = [
     {
         // Reference to actual movie in allMoviesData
         movieId: "db-super-hero-2022",
+        isCustom: false
+    },
+    {
+        // Reference to actual movie in allMoviesData
+        movieId: "dragon-ball-super-series", // TV Series
+        isCustom: false
+    },
+    {
+        // Reference to actual movie in allMoviesData
+        movieId: "doraemon-2005-series", // TV Series
         isCustom: false
     }
 ];
@@ -121,7 +132,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                 // Return custom slide as-is
                 return config;
             } else {
-                // Find the actual movie from allMoviesData
                 const movie = allMoviesData.find(m => m.id === config.movieId);
                 if (movie) {
                     return movie;
@@ -133,6 +143,23 @@ document.addEventListener('DOMContentLoaded', async function () {
         }).filter(movie => movie !== null); // Remove any null entries
 
         console.log(`Hero carousel initialized with ${heroMoviesData.length} movies`);
+    }
+
+    /**
+     * Filters the hero movies based on the current view (Movies vs Series).
+     * @param {string} view - 'home', 'movies', 'series'
+     * @returns {Array} Filtered hero movies
+     */
+    function getFilteredHeroMovies(view) {
+        if (view === 'series') {
+            // Only show Series in hero
+            return heroMoviesData.filter(m => m.type === 'series');
+        } else if (view === 'movies') {
+            // Show only movies (keep welcome slide if type is undefined/custom, but welcome slide has no type usually)
+            // Let's assume custom slides like Welcome slide should appear in Home and Movies, but not Series if we want strict Series hero
+            return heroMoviesData.filter(m => m.type !== 'series');
+        }
+        return heroMoviesData;
     }
 
     // Initialize hero movies
@@ -149,7 +176,29 @@ document.addEventListener('DOMContentLoaded', async function () {
         movieInfoTitle.textContent = movie.title;
         movieInfoDescription.textContent = movie.description;
         movieInfoImage.src = movie.imageUrl;
-        movieInfoWatchButton.href = movie.videoUrl;
+
+        // Logic for Series vs Movie
+        if (movie.type === 'series') {
+            // Change button to "View Series" and redirect to series page
+            movieInfoWatchButton.textContent = 'View Series';
+            movieInfoWatchButton.href = `series.html?id=${movie.id}`;
+            movieInfoWatchButton.target = '_self'; // Open in same tab
+            movieInfoWatchButton.style.display = 'flex';
+
+            // Hide series UI if exists
+            const seriesContainer = document.getElementById('seriesUIContainer');
+            if (seriesContainer) seriesContainer.style.display = 'none';
+        } else {
+            // Regular movie - show Watch button
+            movieInfoWatchButton.textContent = 'Watch Now';
+            movieInfoWatchButton.href = movie.videoUrl;
+            movieInfoWatchButton.target = '_blank'; // Open in new tab
+            movieInfoWatchButton.style.display = 'flex';
+
+            // Hide series UI if exists
+            const seriesContainer = document.getElementById('seriesUIContainer');
+            if (seriesContainer) seriesContainer.style.display = 'none';
+        }
 
         // Language
         if (movie.language) {
@@ -240,12 +289,132 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     /**
+     * Renders the Season Selector and Episode List for a Series
+     * @param {Object} movie - The series object
+     */
+    function renderSeriesUI(movie) {
+        // 1. Setup Watch Button for Series (Netflix style)
+        if (movie.seasons && movie.seasons.length > 0 && movie.seasons[0].episodes && movie.seasons[0].episodes.length > 0) {
+            movieInfoWatchButton.href = movie.seasons[0].episodes[0].videoUrl;
+            movieInfoWatchButton.style.display = 'flex';
+        } else {
+            movieInfoWatchButton.style.display = 'none';
+        }
+
+        // 2. Container for Series UI
+        let seriesContainer = document.getElementById('seriesUIContainer');
+        if (!seriesContainer) {
+            seriesContainer = document.createElement('div');
+            seriesContainer.id = 'seriesUIContainer';
+            // Insert after description or before action buttons
+            // Let's insert before action buttons so My List is at bottom
+            const actionButtons = document.querySelector('.modal-action-buttons');
+            actionButtons.parentNode.insertBefore(seriesContainer, actionButtons);
+        }
+        seriesContainer.innerHTML = ''; // Reset
+        seriesContainer.style.display = 'block';
+
+        // 3. Render Season Selector (if > 1 season)
+        let currentSeasonIndex = 0;
+        const seasons = movie.seasons || [];
+
+        if (seasons.length > 1) {
+            const selectorContainer = document.createElement('div');
+            selectorContainer.className = 'season-selector-container';
+
+            const selector = document.createElement('select');
+            selector.className = 'season-selector';
+
+            seasons.forEach((season, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = season.title ? `Season ${season.seasonNumber}: ${season.title}` : `Season ${season.seasonNumber}`;
+                selector.appendChild(option);
+            });
+
+            selector.addEventListener('change', (e) => {
+                currentSeasonIndex = parseInt(e.target.value);
+                renderEpisodes(seasons[currentSeasonIndex].episodes, seriesContainer);
+            });
+
+            selectorContainer.appendChild(selector);
+            seriesContainer.appendChild(selectorContainer);
+        }
+
+        // 4. Render Episodes
+        if (seasons.length > 0) {
+            renderEpisodes(seasons[0].episodes, seriesContainer);
+        } else {
+            seriesContainer.innerHTML += '<p class="text-gray-400">No episodes available.</p>';
+        }
+    }
+
+    /**
+     * Renders the list of episodes
+     * @param {Array} episodes - Array of episode objects
+     * @param {HTMLElement} container - Container to append to
+     */
+    function renderEpisodes(episodes, container) {
+        // Remove existing list if any
+        const existingList = container.querySelector('.episodes-container');
+        if (existingList) existingList.remove();
+
+        const episodesWrapper = document.createElement('div');
+        episodesWrapper.className = 'episodes-container';
+
+        const list = document.createElement('div');
+        list.className = 'episode-list';
+
+        episodes.forEach(ep => {
+            const item = document.createElement('a');
+            item.className = 'episode-item';
+            item.href = ep.videoUrl;
+            item.target = '_blank';
+
+            item.innerHTML = `
+                <div class="episode-number">${ep.episodeNumber}</div>
+                <div class="episode-info">
+                    <div class="episode-title">
+                        ${ep.title}
+                        <svg class="play-icon-mini" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+                    </div>
+                    <div class="episode-description">${ep.description || ''}</div>
+                </div>
+            `;
+
+            // Analytics for episode click
+            item.addEventListener('click', () => {
+                if (analytics) {
+                    logEvent(analytics, 'play_episode', {
+                        series_title: movieInfoTitle.textContent,
+                        episode_title: ep.title,
+                        season_number: ep.seasonNumber // Note: pass this if needed, or derived
+                    });
+                }
+            });
+
+            list.appendChild(item);
+        });
+
+        episodesWrapper.appendChild(list);
+        container.appendChild(episodesWrapper);
+    }
+
+    /**
      * Closes the movie info modal and resets its state
      */
     function closeMovieModal() {
         movieInfoModal.style.display = 'none';
         document.body.style.overflow = 'auto';
         currentModalMovieId = null;
+
+        // Clean up Series UI
+        const seriesContainer = document.getElementById('seriesUIContainer');
+        if (seriesContainer) {
+            seriesContainer.style.display = 'none';
+        }
+        // Restore Watch Button
+        movieInfoWatchButton.style.display = 'flex';
     }
 
     /**
@@ -365,6 +534,38 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 
+    // Touch Swipe Functionality for Carousel
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    if (heroCarousel) {
+        heroCarousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoScroll();
+        }, { passive: true });
+
+        heroCarousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+            startAutoScroll();
+        }, { passive: true });
+    }
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swiped Left -> Next Slide
+                nextSlide();
+            } else {
+                // Swiped Right -> Prev Slide
+                prevSlide();
+            }
+        }
+    }
+
     // Auto-scroll on hover functionality
     if (heroSection) {
         heroSection.addEventListener('mouseenter', stopAutoScroll);
@@ -374,25 +575,42 @@ document.addEventListener('DOMContentLoaded', async function () {
     /**
      * Renders the hero carousel dynamically based on the heroMoviesData array.
      * Creates carousel items, attaches content, and sets up event listeners for play buttons.
+     * @param {Array} moviesToRender - Optional filtered list of movies to render. Defaults to all heroMoviesData.
      */
-    function renderHeroCarousel() {
+    function renderHeroCarousel(moviesToRender = null) {
         if (!heroCarousel) return;
+
+        const data = moviesToRender || heroMoviesData; // Use passed data or default
+
+        // If no data for this view (e.g. no series in hero config), fallback to default to avoid empty carousel
+        const finalData = data.length > 0 ? data : heroMoviesData;
 
         heroCarousel.innerHTML = ''; // Clear existing items
         carouselItems = []; // Reset carouselItems array
 
-        heroMoviesData.forEach((movie, index) => {
+        finalData.forEach((movie, index) => {
             const carouselItem = document.createElement('div');
             carouselItem.classList.add('carousel-item');
             if (index === 0) {
                 carouselItem.classList.add('active');
             }
             carouselItem.style.backgroundImage = `url('${movie.imageUrl}')`;
-            // Check if this is the static Welcome slide
             const isWelcomeSlide = movie.title === "Welcome to Dorahub";
+
+            let watchLink = movie.videoUrl || '#';
+            let targetAttr = '_blank';
+
+            if (movie.type === 'series') {
+                watchLink = `series.html?id=${movie.id}`;
+                targetAttr = '_self'; // Open series page in same tab
+            } else if (movie.seasons && movie.seasons.length > 0 && movie.seasons[0].episodes && movie.seasons[0].episodes.length > 0) {
+                // Fallback for weird data structures or if we revert
+                watchLink = movie.seasons[0].episodes[0].videoUrl;
+            }
+
             const buttonHtml = isWelcomeSlide ?
                 `<a href="#latestReleases" class="play-button explore-button" style="text-decoration:none;">Explore Movies</a>` :
-                `<a href="${movie.videoUrl}" target="_blank" class="play-button" data-movie-title="${movie.title}">
+                `<a href="${watchLink}" target="${targetAttr}" class="play-button" data-movie-title="${movie.title}">
                     <svg viewBox="0 0 24 24" width="24" height="24" class="mr-2" fill="currentColor">
                         <path d="M8 5v14l11-7z"></path>
                     </svg>
@@ -543,14 +761,20 @@ document.addEventListener('DOMContentLoaded', async function () {
                         });
                     }
                     renderMyList(userMyList);
-                    renderAllMovies(userMyList);
+                    // If we are currently viewing Home/Series/Movies, re-render to update the checkmarks
+                    if (currentView !== 'myList') {
+                        renderAllMovies(userMyList, currentView);
+                    } else {
+                        // If we are in My List view, renderAllMovies('myList') handles showing the list section
+                        renderAllMovies(userMyList, 'myList');
+                    }
                     console.log("My List and All Movies rendered based on snapshot.");
                 }, (error) => {
                     console.error("Error listening to My List:", error);
                     document.getElementById('myListEmptyMessage').textContent = "Error loading your list.";
                     myListEmptyMessage.style.display = 'block';
                     myListSection.style.display = 'block';
-                    renderAllMovies(userMyList);
+                    renderAllMovies(userMyList, currentView);
                     console.log("Rendering all movies due to My List listener error.");
                 });
 
@@ -606,15 +830,20 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         const language = movie.language ? movie.language : '';
 
+        // For series, use series page link instead of direct video
+        const watchLink = movie.type === 'series' ? `series.html?id=${movie.id}` : movie.videoUrl;
+        const watchTarget = movie.type === 'series' ? '_self' : '_blank';
+
         movieCard.innerHTML = `
             <img src="${movie.imageUrl}" onerror="this.src='https://placehold.co/400x260/f0f0f0/888888?text=Poster+Missing';" alt="${movie.title} Poster">
             <div class="movie-card-overlay">
+                ${movie.type === 'series' ? '<span class="series-badge">Series</span>' : ''}
                 <h2 class="movie-title">${movie.title}</h2>
                 <span class="movie-rating">${language}</span>
                 <div class="flex gap-2 mt-3">
-                    <a href="${movie.videoUrl}" target="_blank" class="watch-button text-xs px-3 py-2">
+                    <a href="${watchLink}" target="${watchTarget}" class="watch-button text-xs px-3 py-2">
                         <svg class="watch-icon w-4 h-4 mr-1" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
-                        Watch
+                        ${movie.type === 'series' ? 'View Series' : 'Watch'}
                     </a>
                     <button class="my-list-button ${isInMyList ? 'added' : ''} text-white hover:text-yellow-400" data-movie-id="${movie.id}">
                         ${isInMyList ?
@@ -635,7 +864,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (watchButton) {
             watchButton.addEventListener('click', () => {
                 if (analytics) {
-                    logEvent(analytics, 'play_video', {
+                    logEvent(analytics, movie.type === 'series' ? 'view_series' : 'play_video', {
                         movie_title: movie.title
                     });
                 }
@@ -672,6 +901,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             moreInfoBtn.addEventListener('click', (event) => {
                 event.stopPropagation();
                 event.preventDefault();
+                // Always show modal for More Info button (both movies and series)
                 showMovieModal(movie);
             });
         }
@@ -679,6 +909,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         // Full card click for mobile usability (Netflix style)
         movieCard.addEventListener('click', (event) => {
             if (!event.target.closest('button') && !event.target.closest('a')) {
+                // Always show modal on card click (both movies and series)
                 showMovieModal(movie);
             }
         });
@@ -686,34 +917,148 @@ document.addEventListener('DOMContentLoaded', async function () {
         return movieCard;
     }
 
-    function renderAllMovies(myListIds) {
-        console.log("renderAllMovies called.");
+    function renderAllMovies(myListIds, view = 'home') {
+        console.log(`renderAllMovies called with view: ${view}`);
         const mainContent = document.querySelector('main.content-sections');
-        document.querySelectorAll('.category-section:not(#searchResultsSection):not(#myListSection)').forEach(section => section.remove());
+        document.querySelectorAll('.category-section:not(#searchResultsSection):not(#myListSection):not(#supportSection)').forEach(section => section.remove());
 
-        const categoryOrder = ['latestReleases', 'doraemonClassics', 'otherAnimeMovies'];
+        // Handle My List View
+        if (view === 'myList') {
+            myListSection.style.display = 'block';
+            const supportSection = document.getElementById('supportSection');
+            if (supportSection) supportSection.style.display = 'none';
+            renderMyList(myListIds);
+            if (typeof heroSection !== 'undefined') heroSection.style.display = 'none';
+            // Add padding when hero is hidden
+            mainContent.classList.add('no-hero');
+            document.querySelector('header')?.classList.remove('transparent-mode'); // Reset header
+            return;
+        }
 
-        categoryOrder.forEach(categoryKey => {
-            const categoryMovies = allMoviesData.filter(movie => movie.category.includes(categoryKey));
-            if (categoryMovies && categoryMovies.length > 0) {
+        // Handle Support View
+        else if (view === 'support') {
+            myListSection.style.display = 'none';
+            if (typeof heroSection !== 'undefined') heroSection.style.display = 'none';
+            mainContent.classList.add('no-hero');
+            document.querySelector('header')?.classList.remove('transparent-mode');
+
+            // Show Support Section specifically
+            const supportSection = document.getElementById('supportSection');
+            if (supportSection) {
+                supportSection.style.display = 'block';
+                // Inject options if empty
+                const grid = document.getElementById('supportOptionsGrid');
+                if (grid) {
+                    grid.innerHTML = '';
+                    supportData.forEach(item => {
+                        const card = document.createElement('div');
+                        card.className = 'crypto-option';
+
+                        let addressHtml = '';
+                        if (item.address) {
+                            // Unique ID for copy functionality
+                            const addressId = `addr_${item.name.replace(/\s+/g, '')}`;
+                            addressHtml = `
+                                <div class="crypto-container">
+                                    <input type="text" class="crypto-address" value="${item.address}" readonly id="${addressId}">
+                                    <button class="copy-button" onclick="copyToClipboard('${addressId}', this)">Copy</button>
+                                </div>
+                            `;
+                        } else {
+                            addressHtml = `<p class="text-sm text-gray-500 mt-2">Scan QR in App</p>`;
+                        }
+
+                        const logoHtml = item.logo ? `<img src="${item.logo}" class="brand-mini-logo" alt="logo" style="width: 24px; height: 24px; margin-right: 8px; vertical-align: middle;">` : '';
+                        const qrHtml = item.qrCode ? `<div class="crypto-logo-wrapper" style="display: flex; justify-content: center;"><img src="${item.qrCode}" alt="${item.name}" class="crypto-logo" style="width: 150px; height: 150px; object-fit: contain;"></div>` : '';
+
+                        card.innerHTML = `
+                            <div>
+                                <h3 class="crypto-name" style="display: flex; align-items: center; justify-content: center;">${logoHtml}${item.name}</h3>
+                                ${qrHtml}
+                                ${!item.address ? addressHtml : ''}
+                            </div>
+                            <div class="crypto-container-wrapper">
+                                ${item.address ? addressHtml : ''}
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                }
+            }
+            return;
+        } else {
+            const supportSection = document.getElementById('supportSection');
+            if (supportSection) supportSection.style.display = 'none';
+            myListSection.style.display = 'none';
+
+            // Only show Hero on Home view
+            if (view === 'home') {
+                if (typeof heroSection !== 'undefined') {
+                    heroSection.style.display = 'block';
+                    mainContent.classList.remove('no-hero'); // Remove padding
+                    // Update Hero content based on view (just home now)
+                    const filteredHeroes = getFilteredHeroMovies(view);
+                    renderHeroCarousel(filteredHeroes);
+                    // Enable Transparent Header for Immersive Home
+                    document.querySelector('header')?.classList.add('transparent-mode');
+                }
+            } else {
+                // Hide hero for Series and Movies views
+                if (typeof heroSection !== 'undefined') heroSection.style.display = 'none';
+                mainContent.classList.add('no-hero'); // Add padding
+                document.querySelector('header')?.classList.remove('transparent-mode'); // Reset header
+            }
+        }
+
+        // 1. Render TV Series Section First (or wherever preferred, let's put it at top)
+        if (view === 'home' || view === 'series') {
+            const seriesData = allMoviesData.filter(m => m.type === 'series');
+            if (seriesData.length > 0) {
                 const section = document.createElement('section');
                 section.className = 'category-section';
-                section.id = categoryKey;
-                const formattedTitle = categoryKey.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-
-                section.innerHTML = `<h2 class="category-title">${formattedTitle}</h2><div class="movie-row"></div>`;
+                section.id = 'tvSeries';
+                section.innerHTML = `<h2 class="category-title">TV Series</h2><div class="movie-row"></div>`;
 
                 const movieRowDiv = section.querySelector('.movie-row');
-                categoryMovies.forEach(movie => {
+                seriesData.forEach(movie => {
                     const isInList = myListIds.has(movie.id);
                     movieRowDiv.appendChild(createMovieCard(movie, isInList));
                 });
                 mainContent.insertBefore(section, searchResultsSection);
-                console.log(`Category "${formattedTitle}" rendered with ${categoryMovies.length} movies.`);
-            } else {
-                console.log(`Category "${categoryKey}" has no movies to render.`);
+                console.log(`Category "TV Series" rendered with ${seriesData.length} items.`);
             }
-        });
+        }
+
+        // 2. Render Standard Categories (Movies Only)
+        if (view === 'home' || view === 'movies') {
+            const categoryOrder = ['latestReleases', 'doraemonClassics', 'otherAnimeMovies'];
+
+            categoryOrder.forEach(categoryKey => {
+                // Filter by category AND ensure it's NOT a series (to avoid duplication/blending)
+                const categoryMovies = allMoviesData.filter(movie =>
+                    movie.category.includes(categoryKey) && movie.type !== 'series'
+                );
+
+                if (categoryMovies && categoryMovies.length > 0) {
+                    const section = document.createElement('section');
+                    section.className = 'category-section';
+                    section.id = categoryKey;
+                    const formattedTitle = categoryKey.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+
+                    section.innerHTML = `<h2 class="category-title">${formattedTitle}</h2><div class="movie-row"></div>`;
+
+                    const movieRowDiv = section.querySelector('.movie-row');
+                    categoryMovies.forEach(movie => {
+                        const isInList = myListIds.has(movie.id);
+                        movieRowDiv.appendChild(createMovieCard(movie, isInList));
+                    });
+                    mainContent.insertBefore(section, searchResultsSection);
+                    console.log(`Category "${formattedTitle}" rendered with ${categoryMovies.length} movies.`);
+                } else {
+                    console.log(`Category "${categoryKey}" has no movies to render.`);
+                }
+            });
+        }
     }
 
     function renderMyList(myListIds) {
@@ -757,30 +1102,87 @@ document.addEventListener('DOMContentLoaded', async function () {
     console.log("Initial rendering of all movies completed.");
 
     function toggleOriginalCategoriesAndHero(show) {
-        heroSection.classList.toggle('hidden-by-search', !show);
-        document.querySelectorAll('.category-section:not(#searchResultsSection):not(#myListSection)').forEach(section => {
-            section.style.display = show ? 'block' : 'none';
-        });
-        if (currentUserId) {
-            myListSection.style.display = show ? 'block' : 'none';
+        const supportSection = document.getElementById('supportSection');
+
+        if (show) {
+            // Restore ONLY based on currentView
+            if (currentView === 'home') {
+                if (heroSection) {
+                    heroSection.style.display = 'block';
+                    heroSection.classList.remove('hidden-by-search');
+                }
+                document.querySelector('header')?.classList.add('transparent-mode');
+                // Show dynamic category rows only
+                document.querySelectorAll('.category-section:not(#searchResultsSection):not(#myListSection):not(#supportSection)').forEach(section => {
+                    section.style.display = 'block';
+                });
+                if (myListSection) myListSection.style.display = 'none';
+                if (supportSection) supportSection.style.display = 'none';
+            } else if (currentView === 'myList') {
+                if (heroSection) heroSection.style.display = 'none';
+                document.querySelector('header')?.classList.remove('transparent-mode');
+                if (myListSection) myListSection.style.display = 'block';
+                // Hide ALL others
+                document.querySelectorAll('.category-section:not(#myListSection)').forEach(section => section.style.display = 'none');
+            } else if (currentView === 'support') {
+                if (heroSection) heroSection.style.display = 'none';
+                document.querySelector('header')?.classList.remove('transparent-mode');
+                if (supportSection) supportSection.style.display = 'block';
+                // Hide ALL others
+                document.querySelectorAll('.category-section:not(#supportSection)').forEach(section => section.style.display = 'none');
+            } else {
+                // series, movies category view
+                if (heroSection) heroSection.style.display = 'none';
+                document.querySelector('header')?.classList.remove('transparent-mode');
+                document.querySelectorAll('.category-section:not(#searchResultsSection):not(#myListSection):not(#supportSection)').forEach(section => {
+                    section.style.display = 'block';
+                });
+                if (myListSection) myListSection.style.display = 'none';
+                if (supportSection) supportSection.style.display = 'none';
+            }
+        } else {
+            // Hiding for search
+            if (heroSection) {
+                heroSection.style.display = 'none';
+                heroSection.classList.add('hidden-by-search');
+            }
+            document.querySelector('header')?.classList.remove('transparent-mode');
+            document.querySelectorAll('.category-section:not(#searchResultsSection)').forEach(section => {
+                section.style.display = 'none';
+            });
         }
     }
 
+    // Global Key Listener for robustness
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isSearchActive) {
+            deactivateSearch();
+        }
+    });
+
     function activateSearch() {
         isSearchActive = true;
-        searchToggleButton.classList.add('active');
-        movieSearchInput.classList.add('active');
-        movieSearchInput.focus();
-        donateButton.classList.add('hidden');
-        userIdToggleButton.classList.add('hidden');
-        userIdTooltip.classList.remove('show');
+        if (searchToggleButton) searchToggleButton.classList.add('active');
+        if (movieSearchInput) {
+            movieSearchInput.classList.add('active');
+            movieSearchInput.focus();
+        }
+
+        // Hide other controls if they exist
+        const donateNav = document.getElementById('donateNavButton');
+        if (donateNav) donateNav.classList.add('hidden');
+        if (donateButton) donateButton.classList.add('hidden');
+        if (userIdToggleButton) userIdToggleButton.classList.add('hidden');
+        if (userIdTooltip) userIdTooltip.classList.remove('show');
 
         // Hide hero and categories
         toggleOriginalCategoriesAndHero(false);
 
         // Show search results section with active class for overlay effect
-        searchResultsSection.style.display = 'block';
-        searchResultsSection.classList.add('active');
+        if (searchResultsSection) {
+            searchResultsSection.style.display = 'block';
+            searchResultsSection.classList.add('active');
+        }
         document.body.style.overflow = 'auto'; // Enable scrolling for search results
 
         displayMovies([]);
@@ -788,16 +1190,24 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     function deactivateSearch() {
         isSearchActive = false;
-        searchToggleButton.classList.remove('active');
-        movieSearchInput.classList.remove('active');
-        movieSearchInput.value = '';
-        donateButton.classList.remove('hidden');
-        userIdToggleButton.classList.remove('hidden');
+        if (searchToggleButton) searchToggleButton.classList.remove('active');
+        if (movieSearchInput) {
+            movieSearchInput.classList.remove('active');
+            movieSearchInput.value = '';
+        }
+
+        // Show other controls
+        const donateNav = document.getElementById('donateNavButton');
+        if (donateNav) donateNav.classList.remove('hidden');
+        if (donateButton) donateButton.classList.remove('hidden');
+        if (userIdToggleButton) userIdToggleButton.classList.remove('hidden');
 
         // Hide search results
-        searchResultsSection.style.display = 'none';
-        searchResultsSection.classList.remove('active');
-        noResultsMessage.style.display = 'none';
+        if (searchResultsSection) {
+            searchResultsSection.style.display = 'none';
+            searchResultsSection.classList.remove('active');
+        }
+        if (noResultsMessage) noResultsMessage.style.display = 'none';
 
         // Restore hero and categories
         toggleOriginalCategoriesAndHero(true);
@@ -836,74 +1246,15 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     var infoModal = document.getElementById("movieInfoModal");
-    var donateModal = document.getElementById("donateModal");
-    var btn = document.getElementById("donateButton");
     var span = document.getElementsByClassName("close-button");
 
-    // Function to render crypto options
-    function renderCryptoOptions() {
-        if (!cryptoOptionsContainer) return;
-
-        cryptoOptionsContainer.innerHTML = ''; // Clear previous options if any
-
-        const btcAddress = "bc1qh7zwujd45n0wv3k0drc6sjd7n0wv3k0drc6sjd7nzzv3";
-        const usdtAddress = "TSFxpiF47okoMTSTJWq8hpZ9Py4qRgJ1NG";
-
-        // Binance Pay
-        const binancePayOption = document.createElement('div');
-        binancePayOption.className = 'crypto-option';
-        binancePayOption.innerHTML = `
-            <img src="assets/images/binancepay.png" alt="Binance Pay Logo" class="crypto-logo crypto-qr">
-            <p class="crypto-name">Binance Pay</p>
-            <p class="crypto-note">Scan QR code in Binance app</p>
-        `;
-        cryptoOptionsContainer.appendChild(binancePayOption);
-
-        // Bitcoin (BTC)
-        const btcOption = document.createElement('div');
-        btcOption.className = 'crypto-option';
-        btcOption.innerHTML = `
-            <img src="assets/images/btc.jpg" alt="Bitcoin Logo" class="crypto-logo crypto-qr">
-            <p class="crypto-name">Bitcoin (BTC)</p>
-            <div class="crypto-address-container">
-                <span id="btcAddressDisplay" class="crypto-address">${btcAddress}</span>
-                <button class="copy-button" onclick="copyToClipboard('btcAddressDisplay', this)">Copy</button>
-            </div>
-        `;
-        cryptoOptionsContainer.appendChild(btcOption);
-
-        // USDT (TRC20)
-        const usdtOption = document.createElement('div');
-        usdtOption.className = 'crypto-option';
-        usdtOption.innerHTML = `
-            <img src="assets/images/usdt.jpg" alt="USDT Logo" class="crypto-logo crypto-qr">
-            <p class="crypto-name">USDT (TRC20)</p>
-            <div class="crypto-address-container">
-                <span id="usdtAddressDisplay" class="crypto-address">${usdtAddress}</span>
-                <button class="copy-button" onclick="copyToClipboard('usdtAddressDisplay', this)">Copy</button>
-            </div>
-        `;
-        cryptoOptionsContainer.appendChild(usdtOption);
-    }
-
-    if (btn) {
-        btn.onclick = function () {
-            if (donateModal) {
-                donateModal.style.display = "flex";
-                document.body.style.overflow = "hidden";
-                userIdTooltip.classList.remove('show');
-                renderCryptoOptions(); // Call this function when modal opens
-            }
-        }
-    }
+    // Old donate logic removed.
+    // The "Support Us" button (donateNavButton) now routes to the Support view via navigation logic.
 
     for (let i = 0; i < span.length; i++) {
         span[i].onclick = function () {
             if (infoModal) {
-                closeMovieModal();
-            }
-            if (donateModal) {
-                donateModal.style.display = "none";
+                infoModal.style.display = "none";
             }
             document.body.style.overflow = "auto";
             if (copiedMessageElement) {
@@ -913,13 +1264,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     window.onclick = function (event) {
-        if (event.target == donateModal) {
-            donateModal.style.display = "none";
-            document.body.style.overflow = "auto";
-            if (copiedMessageElement) {
-                copiedMessageElement.classList.remove('show');
-            }
-        }
         if (event.target == infoModal) {
             closeMovieModal();
         }
@@ -1016,6 +1360,98 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 
+    // Mobile Menu Logic
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileNavSidebar = document.getElementById('mobileNavSidebar');
+    const mobileNavBackdrop = document.getElementById('mobileNavBackdrop');
+    const closeMobileNav = document.querySelector('.close-mobile-nav');
+    const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+
+    function openMobileMenu() {
+        if (mobileNavSidebar) {
+            mobileNavSidebar.classList.add('active');
+            if (mobileNavBackdrop) mobileNavBackdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeMobileMenu() {
+        if (mobileNavSidebar) {
+            mobileNavSidebar.classList.remove('active');
+            if (mobileNavBackdrop) mobileNavBackdrop.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', openMobileMenu);
+    }
+
+    if (closeMobileNav) {
+        closeMobileNav.addEventListener('click', closeMobileMenu);
+    }
+
+    if (mobileNavBackdrop) {
+        mobileNavBackdrop.addEventListener('click', closeMobileMenu);
+    }
+
+    mobileNavItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // Update Active State
+            mobileNavItems.forEach(nav => nav.classList.remove('active'));
+            item.classList.add('active');
+
+            // Close Menu
+            closeMobileMenu();
+
+            // Navigation Logic (Similar to main nav)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const category = item.getAttribute('data-category');
+            if (category === 'support') {
+                currentView = 'support';
+                renderAllMovies(null, 'support');
+                document.querySelector('main.content-sections').classList.add('no-hero');
+                document.querySelector('header')?.classList.remove('transparent-mode');
+                if (isSearchActive) deactivateSearch();
+
+                // Sync desktop nav
+                navItems.forEach(nav => nav.classList.remove('active'));
+                const donateNav = document.getElementById('donateNavButton');
+                if (donateNav) donateNav.classList.add('active');
+                return;
+            }
+
+            if (!category) return;
+
+            currentView = category;
+
+            if (isSearchActive) deactivateSearch();
+
+            if (category === 'myList') {
+                renderAllMovies(userMyList, 'myList');
+                document.querySelector('main.content-sections').classList.add('no-hero');
+            } else {
+                renderAllMovies(userMyList, category);
+                const mainContent = document.querySelector('main.content-sections');
+                if (category === 'home') {
+                    mainContent.classList.remove('no-hero');
+                } else {
+                    mainContent.classList.add('no-hero');
+                }
+            }
+
+            // Sync Main Nav
+            navItems.forEach(nav => {
+                if (nav.getAttribute('data-category') === category || (category === 'support' && nav.id === 'donateNavButton')) {
+                    nav.classList.add('active');
+                } else {
+                    nav.classList.remove('active');
+                }
+            });
+        });
+    });
+
     // Scroll to top button functionality
     const scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
@@ -1039,6 +1475,149 @@ document.addEventListener('DOMContentLoaded', async function () {
     scrollToTopBtn.addEventListener('click', function () {
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    });
+
+    // Navigation Logic
+    const navItems = document.querySelectorAll('.nav-item');
+    let currentView = 'home';
+
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // Update UI
+            navItems.forEach(nav => nav.classList.remove('active'));
+            item.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Update View
+            // Start view update
+            const category = item.getAttribute('data-category');
+            if (item.id === 'donateNavButton' || category === 'support') {
+                currentView = 'support';
+                // Trigger render with 'support' which handles the new section
+                renderAllMovies(null, 'support');
+                document.querySelector('main.content-sections').classList.add('no-hero');
+                document.querySelector('header')?.classList.remove('transparent-mode');
+                if (isSearchActive) deactivateSearch();
+                return;
+            }
+
+            if (!category) return; // Safety
+
+            currentView = category;
+
+            if (category === 'myList' && !currentUserId) {
+                // If user tries to access My List without auth (fallback)
+                // We'll still show the empty state or local list if we supported it
+            }
+
+            // Close Search if open
+            if (isSearchActive) deactivateSearch();
+
+            // Re-render
+            if (category === 'myList') {
+                renderAllMovies(userMyList, 'myList');
+                // Ensure padding is added for My List too if hero is hidden (it is)
+                document.querySelector('main.content-sections').classList.add('no-hero');
+            } else {
+                renderAllMovies(userMyList, category);
+                // Explicitly handle class here for immediate feedback, though renderAllMovies does it too
+                const mainContent = document.querySelector('main.content-sections');
+                if (category === 'home') {
+                    mainContent.classList.remove('no-hero');
+                } else {
+                    mainContent.classList.add('no-hero');
+                }
+            }
+        });
+    });
+
+    // Logo Click Handler
+    const headerLogo = document.getElementById('headerLogo');
+    if (headerLogo) {
+        headerLogo.addEventListener('click', () => {
+            currentView = 'home';
+
+            // Reset Nav Active State
+            navItems.forEach(nav => {
+                if (nav.getAttribute('data-category') === 'home') {
+                    nav.classList.add('active');
+                } else {
+                    nav.classList.remove('active');
+                }
+            });
+
+            // Scroll to Top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Close Search if open
+            if (isSearchActive) deactivateSearch();
+
+            // Render Home View
+            renderAllMovies(userMyList, 'home');
+            document.querySelector('main.content-sections').classList.remove('no-hero');
+        });
+    }
+
+    // Handle Link Navigation (Hash-based)
+    function handleHashNavigation() {
+        const hash = window.location.hash.substring(1); // Remove '#'
+        if (!hash) return false;
+
+        console.log(`Handling hash navigation: ${hash}`);
+
+        // Map hash to category/view
+        let targetCategory = '';
+        if (hash === 'series') targetCategory = 'series';
+        else if (hash === 'movies') targetCategory = 'movies';
+        else if (hash === 'myList') targetCategory = 'myList';
+        else if (hash === 'support') targetCategory = 'support';
+
+        if (targetCategory) {
+            currentView = targetCategory;
+
+            // Update Nav Active State
+            navItems.forEach(nav => {
+                const navCat = nav.getAttribute('data-category');
+                if (navCat === targetCategory || (targetCategory === 'support' && nav.id === 'donateNavButton')) {
+                    nav.classList.add('active');
+                } else {
+                    nav.classList.remove('active');
+                }
+            });
+
+            // Specific View Logic
+            if (targetCategory === 'support') {
+                renderAllMovies(null, 'support');
+                document.querySelector('main.content-sections').classList.add('no-hero');
+                document.querySelector('header')?.classList.remove('transparent-mode');
+            } else if (targetCategory === 'myList') {
+                renderAllMovies(userMyList, 'myList');
+                document.querySelector('main.content-sections').classList.add('no-hero');
+            } else {
+                renderAllMovies(userMyList, targetCategory);
+                const mainContent = document.querySelector('main.content-sections');
+                if (targetCategory === 'home') {
+                    mainContent.classList.remove('no-hero');
+                } else {
+                    mainContent.classList.add('no-hero');
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    // Attempt hash nav, if unrelated or empty, default to home is already handled roughly by initial variable state, 
+    // BUT we executed renderAllMovies(new Set()) earlier. We might need to override it.
+    if (handleHashNavigation()) {
+        console.log("Navigated via hash.");
+    }
+
+    // Listen for hash changes (if user clicks hash links while on the page)
+    window.addEventListener('hashchange', () => {
+        handleHashNavigation();
     });
 
     initializeFirebase();

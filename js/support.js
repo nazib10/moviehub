@@ -1,8 +1,15 @@
 
 export const supportData = [
     {
+        name: "bKash",
+        qrCode: "assets/images/bkash.png?v=3", // User's real QR code
+        logo: "assets/images/bkash_logo.png",
+        address: "+8801576561687",
+        network: "Personal"
+    },
+    {
         name: "Binance Pay",
-        qrCode: "assets/images/binancepay_new.png",
+        qrCode: "assets/images/binancepay.png?v=2",
         address: null,
         network: null
     },

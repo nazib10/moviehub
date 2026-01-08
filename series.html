@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Series - Doraemon Films Hub</title>
+
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P365MMCVRW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-P365MMCVRW');
+    </script>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" id="pageDescription" content="Watch all episodes of your favorite anime series">
+    <meta name="keywords" content="Doraemon, series, episodes, anime, watch online">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/series.css">
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <header>
+            <!-- Mobile Menu Toggle -->
+            <button id="mobileMenuToggle" class="mobile-menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="header-logo" onclick="window.location.href='index.html'">Dorahub</div>
+
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html">Home</a></li>
+                    <li class="nav-item active"><a href="index.html#series">TV Shows</a></li>
+                    <li class="nav-item"><a href="index.html#movies">Movies</a></li>
+                    <li class="nav-item"><a href="index.html#myList">My List</a></li>
+                    <li class="nav-item"><a href="index.html#support">Support Us</a></li>
+                </ul>
+            </nav>
+
+            <div class="flex items-center" id="rightControlsContainer">
+                <!-- User Icon -->
+                <button id="userIdToggleButton" class="user-icon-button">
+                    <svg class="user-icon-svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                    </svg>
+                </button>
+                <div id="userIdTooltip" class="user-id-tooltip"></div>
+            </div>
+        </header>
+
+        <!-- Mobile Navigation Sidebar -->
+        <div class="mobile-nav-sidebar" id="mobileNavSidebar">
+            <div class="mobile-nav-content">
+                <div class="mobile-nav-header">
+                    <div class="header-logo">Dorahub</div>
+                    <span class="close-mobile-nav">&times;</span>
+                </div>
+                <ul class="mobile-nav-list">
+                    <li class="mobile-nav-item"><a href="index.html">Home</a></li>
+                    <li class="mobile-nav-item active"><a href="index.html#series">TV Shows</a></li>
+                    <li class="mobile-nav-item"><a href="index.html#movies">Movies</a></li>
+                    <li class="mobile-nav-item"><a href="index.html#myList">My List</a></li>
+                    <li class="mobile-nav-item"><a href="index.html#support">Support Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mobile-nav-overlay-backdrop" id="mobileNavBackdrop"></div>
+
+        <!-- Series Hero Section -->
+        <div class="series-hero" id="seriesHero">
+            <div class="series-hero-background"></div>
+            <div class="series-hero-content">
+                <div class="series-info">
+                    <h1 class="series-title" id="seriesTitle">Loading...</h1>
+                    <div class="series-meta" id="seriesMeta">
+                        <span class="meta-badge" id="seriesLanguage">Language</span>
+                        <span class="meta-badge" id="seriesSeasons">Seasons</span>
+                        <span class="meta-badge" id="seriesEpisodes">Episodes</span>
+                    </div>
+                    <p class="series-description" id="seriesDescription">Loading description...</p>
+                    <div class="series-actions">
+                        <button class="play-first-button" id="playFirstEpisode">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                            Play First Episode
+                        </button>
+                        <button class="add-to-list-button" id="addToListButton">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                            My List
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Episodes Section -->
+        <main class="episodes-container">
+            <div class="seasons-tabs" id="seasonsTabs">
+                <!-- Season tabs will be dynamically added here -->
+            </div>
+
+            <div class="episodes-list" id="episodesList">
+                <!-- Episodes will be dynamically added here -->
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p class="text-sm">© 2025 Dorahub. All rights reserved.</p>
+                    <p class="text-xs mt-2">Disclaimer: This site does not host any files on its server. All contents
+                        are provided by non-affiliated third parties.</p>
+                </div>
+                <div class="footer-right">
+                    <a href="https://github.com/nazib10/moviehub" target="_blank" class="social-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-.424.727-.666 1.584-.666 2.477 0 1.61.82 3.027 2.053 3.848-.764-.024-1.482-.232-2.11-.583v.062c0 2.256 1.605 4.14 3.737 4.568-.39.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.598 1.85 2.332 3.198 4.384 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.096 7.14 2.096 8.57 0 13.255-7.098 13.255-13.254 0-.202-.005-.403-.014-.602.91-.658 1.7-1.47 2.323-2.41z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/nazibul.haque.958129/" target="_blank" class="social-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- The Episode Info Modal -->
+    <div id="episodeInfoModal" class="modal">
+        <div class="modal-content movie-info-modal-content">
+            <span class="close-button">&times;</span>
+            <div class="movie-info-layout">
+                <div class="movie-info-poster">
+                    <img id="episodeInfoImage" src="" alt="Episode Thumbnail">
+                    <div class="poster-glow"></div>
+                </div>
+                <div class="movie-info-details">
+                    <h2 id="episodeInfoTitle" class="modal-title"></h2>
+
+                    <!-- Metadata Row -->
+                    <div class="movie-metadata">
+                        <span class="rating-badge">TV Shows</span>
+                        <span id="episodeInfoNumber" class="metadata-item"></span>
+                        <span id="episodeInfoDuration" class="metadata-item"></span>
+                    </div>
+
+                    <!-- Description -->
+                    <p id="episodeInfoDescription"></p>
+
+                    <!-- Action Buttons -->
+                    <div class="modal-action-buttons">
+                        <button id="episodeInfoWatchButton" class="watch-button modal-watch-btn">
+                            <svg class="watch-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                            Watch Episode
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/series.js"></script>
+    <button id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
+        </svg>
+    </button>
+</body>
+
+</html>

@@ -50,7 +50,23 @@
 <body>
     <div class="main-wrapper">
         <header>
+            <!-- Mobile Menu Toggle -->
+            <button id="mobileMenuToggle" class="mobile-menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
             <div class="header-logo" id="headerLogo">Dorahub</div>
+
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item active" data-category="home">Home</li>
+                    <li class="nav-item" data-category="series">TV Shows</li>
+                    <li class="nav-item" data-category="movies">Movies</li>
+                    <li class="nav-item" data-category="myList">My List</li>
+                    <li class="nav-item" id="donateNavButton">Support Us</li>
+                </ul>
+            </nav>
 
             <div class="flex items-center" id="rightControlsContainer">
                 <!-- Search elements -->
@@ -77,25 +93,26 @@
                 </button>
                 <div id="userIdTooltip" class="user-id-tooltip"></div>
 
-                <!-- Support Us Button (now moved to the very right) -->
-                <button id="donateButton" class="donate-button">
-                    <svg class="donate-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path
-                            d="M12 21.5C17.2467 21.5 21.5 17.2467 21.5 12C21.5 6.75329 17.2467 2.5 12 2.5C6.75329 2.5 2.5 6.75329 2.5 12C2.5 17.2467 6.75329 21.5 12 21.5Z"
-                            stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M12 16.5V12" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                        <path
-                            d="M12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z"
-                            stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    <span class="button-text">Support Us</span>
-                </button>
             </div>
         </header>
+
+        <!-- Mobile Navigation Sidebar -->
+        <div class="mobile-nav-sidebar" id="mobileNavSidebar">
+            <div class="mobile-nav-content">
+                <div class="mobile-nav-header">
+                    <div class="header-logo">Dorahub</div>
+                    <span class="close-mobile-nav">&times;</span>
+                </div>
+                <ul class="mobile-nav-list">
+                    <li class="mobile-nav-item active" data-category="home">Home</li>
+                    <li class="mobile-nav-item" data-category="series">TV Shows</li>
+                    <li class="mobile-nav-item" data-category="movies">Movies</li>
+                    <li class="mobile-nav-item" data-category="myList">My List</li>
+                    <li class="mobile-nav-item" data-category="support">Support Us</li>
+                </ul>
+            </div>
+        </div>
+        <div class="mobile-nav-overlay-backdrop" id="mobileNavBackdrop"></div>
 
         <div class="hero" id="heroSection">
             <div class="hero-carousel" id="heroCarousel">
@@ -121,6 +138,20 @@
                 <h2 class="category-title">All Movies</h2>
                 <div class="movie-row" id="allMoviesGrid">
                     <!-- All movies will be appended here by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Support Section (Hidden by default, shown via Nav) -->
+            <section class="category-section" id="supportSection" style="display: none;">
+                <div class="support-page-container">
+                    <h1 class="support-title">Choose how you want to support.</h1>
+                    <p class="support-subtitle">Your contribution helps us keep the servers running and the episodes
+                        coming.</p>
+
+                    <div class="plans-grid" id="supportOptionsGrid">
+                        <!-- Crypto Options Injected Here -->
+                    </div>
+                    <p id="copiedMessage" class="copied-message">Copied to clipboard!</p>
                 </div>
             </section>
 
@@ -238,21 +269,7 @@
     </div>
 
     <!-- The Modal -->
-    <div id="donateModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Support Us</h2>
-                <span class="close-button">&times;</span>
-            </div>
-            <div class="modal-body">
-                <p class="text-center text-gray-400 mb-6">Your support helps us keep the Doraemon Hub running!</p>
-                <div class="crypto-options" id="cryptoOptionsContainer">
-                    <!-- Crypto options will be dynamically loaded here -->
-                </div>
-                <p id="copiedMessage" class="copied-message">Copied to clipboard!</p>
-            </div>
-        </div>
-    </div>
+    <!-- Modal Removed: Support is now a page/section -->
 
     <script type="module" src="js/main.js"></script>
     <button id="scrollToTopBtn" title="Go to top">

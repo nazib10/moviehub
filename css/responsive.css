@@ -1,8 +1,9 @@
 /* Tablet (iPad Pro, iPad Mini, etc.) */
 @media (max-width: 1024px) {
     .hero {
-        height: 60vh;
-        /* Cinematic Standard for Tablets */
+        height: 80vh;
+        /* Standardized Netflix Height for Tablet */
+        min-height: 500px;
     }
 
     .carousel-item {
@@ -109,40 +110,52 @@
         gap: 15px;
     }
 
+    .carousel-control {
+        display: none !important;
+    }
+
     .play-button,
     .info-button {
-        padding: 12px 28px;
-        font-size: 1rem;
-        min-width: 150px;
-        flex: initial;
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        min-width: auto;
+        /* Remove fixed min-width */
+        flex: 1;
+        justify-content: center;
+        border-radius: 4px;
     }
 
     /* Hero Section Mobile Optimized */
     .hero {
-        height: 75vh;
-        /* Standard Netflix-style height for mobile/mini */
+        height: 80vh;
+        /* Standardized Netflix Height for Mobile */
         border-radius: 0;
-        /* Remove rounded corners for full immersion */
     }
 
     .carousel-item {
-        padding: 100px 1.5rem 80px;
-        /* Lower bottom padding to move content downward */
+        padding: 50px 1.5rem 100px;
+        /* Increased bottom padding to keep buttons well above the content area */
         justify-content: flex-end;
-        /* Bottom align on mobile for classic feel */
+        align-items: center;
+        text-align: center;
         background-position: center top;
     }
 
     .carousel-item::before {
-        /* Darker gradient on mobile for readability */
-        background: linear-gradient(to top, rgba(11, 14, 20, 0.95) 20%, transparent 100%);
+        /* Smoother Netflix-style scrim that blends more naturally */
+        background: linear-gradient(to top,
+                var(--bg-main) 0%,
+                rgba(0, 0, 0, 0.7) 10%,
+                rgba(0, 0, 0, 0.4) 40%,
+                transparent 100%);
+        z-index: 1;
     }
 
     .hero-content {
+        position: relative;
+        z-index: 10;
         max-width: 100%;
-        margin: 0;
-        text-align: left;
-        /* Keep left align */
+        margin: 0 auto;
     }
 
     .hero-content h1 {
@@ -165,9 +178,11 @@
     }
 
     .hero-buttons {
-        gap: 10px;
+        gap: 12px;
         width: 100%;
-        max-width: 400px;
+        justify-content: center;
+        /* Center buttons */
+        margin-top: 1rem;
     }
 
     .play-button,
@@ -178,19 +193,36 @@
         min-width: 0;
         justify-content: center;
         gap: 8px;
-        border-radius: 40px;
+        border-radius: 4px;
+        /* Netflix Style */
     }
 
     .play-button svg,
     .info-button svg {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        /* Slightly smaller icons */
+        height: 16px;
+    }
+
+    .hero::after {
+        display: none !important;
+        /* Remove global shadow to prevent double-fades and lines */
     }
 
     /* Content Sections */
     .content-sections {
-        padding: 1rem 1rem;
-        margin-top: -20px;
+        padding: 1.5rem 1rem;
+        margin-top: 0;
+        /* Remove overlap overlap that created the 'divider' line */
+        position: relative;
+        background-color: var(--bg-main);
+        z-index: 5;
+    }
+
+    /* Add padding when hero is hidden to account for fixed header */
+    .content-sections.no-hero {
+        padding-top: 80px !important;
+        /* Account for fixed header height on mobile */
     }
 
     .category-title {
@@ -243,6 +275,37 @@
         padding: 6px;
         font-size: 0.8rem;
     }
+
+    /* Support Section Mobile Fixes */
+    .support-page-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .support-title {
+        font-size: 1.8rem;
+    }
+
+    .support-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .plans-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        max-width: 350px;
+        margin: 0 auto;
+        justify-items: center;
+    }
+
+    .crypto-option {
+        padding: 1.5rem;
+    }
+
+    .crypto-address {
+        max-width: 120px;
+    }
+
 
     /* Footer Mobile */
     footer {
@@ -327,11 +390,15 @@
         width: 100%;
         max-width: 100%;
         margin: 0;
+        margin-bottom: -5px;
+        /* Pull content up to erase the last sub-pixel gap */
         height: 220px;
         position: relative;
     }
 
     .movie-info-poster img {
+        display: block;
+        /* Remove inline spacing gaps */
         border-radius: 0;
         height: 100%;
         width: 100%;
@@ -339,15 +406,20 @@
         box-shadow: none;
     }
 
-    /* Light Fade over banner */
+    /* Seamless Fade over banner */
     .movie-info-poster::after {
         content: '';
         position: absolute;
-        bottom: 0;
+        bottom: -1px;
+        /* Overlap slightly to ensure no sub-pixel line */
         left: 0;
         right: 0;
-        height: 60%;
-        background: linear-gradient(to top, #FFFFFF 10%, transparent);
+        height: 80%;
+        /* Increased height for smoother fade */
+        background: linear-gradient(to top,
+                #FFFFFF 0%,
+                rgba(255, 255, 255, 0.9) 20%,
+                rgba(255, 255, 255, 0) 100%);
         z-index: 3;
     }
 
@@ -356,8 +428,14 @@
     }
 
     .movie-info-details {
-        padding: 20px 24px;
+        padding: 10px 24px 24px;
+        /* Adjust padding to work with smoother fade */
         gap: 12px;
+        background: #FFFFFF;
+        /* Ensure solid background to cover poster overlap */
+        position: relative;
+        z-index: 4;
+        /* Sit above the poster gap */
     }
 
     .modal-title {
@@ -517,15 +595,30 @@
     }
 
     .hero {
-        height: 70vh;
+        height: 80vh;
+        /* Maintain standardization even on small screens */
+    }
+
+    /* Tighter spacing for small screens */
+    .content-sections.no-hero {
+        padding-top: 60px !important;
     }
 
     .play-button,
     .info-button {
         flex: 1;
         min-width: 0;
-        padding: 12px 10px;
-        font-size: 0.9rem;
+        padding: 10px 8px;
+        /* Tight padding for narrow screens */
+        font-size: 0.85rem;
+        /* Smaller font */
+        gap: 6px;
+    }
+
+    .play-button svg,
+    .info-button svg {
+        width: 14px;
+        height: 14px;
     }
 }
 
