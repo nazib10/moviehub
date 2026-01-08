@@ -632,8 +632,9 @@ header.transparent-mode:not(.scrolled) .mobile-menu-toggle .bar:nth-child(2) {
     flex-direction: column;
     justify-content: flex-end;
     /* Push content to bottom */
-    padding: 100px 4rem 10vh 4rem;
-    /* 10vh bottom padding (significantly reduced from 18vh) to move content downward */
+    padding: 100px 6rem 15vh 6rem;
+    /* Increased side padding (6rem) to avoid overlap with carousel arrows */
+    /* Increased bottom padding (15vh) to clear the content section overlap */
 }
 
 .carousel-item.active {
@@ -788,6 +789,13 @@ header.transparent-mode:not(.scrolled) .mobile-menu-toggle .bar:nth-child(2) {
     z-index: 10;
     margin-top: -80px;
     /* Pull content up over the gradient */
+    pointer-events: none;
+    /* Allow clicks to pass through transparent padding overlap */
+}
+
+/* Re-enable pointer events for content inside */
+.content-sections>* {
+    pointer-events: auto;
 }
 
 
