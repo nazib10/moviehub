@@ -31,7 +31,12 @@
     /* Tablet Content & Grid - Netflix Density */
     .content-sections {
         padding: 2rem 3rem;
-        /* Align with header padding */
+        margin-top: -50px;
+        /* Slight overlap for tablet */
+        background: transparent;
+        pointer-events: none;
+        z-index: 10;
+        position: relative;
     }
 
     .category-title {
@@ -221,11 +226,14 @@
 
     /* Content Sections */
     .content-sections {
-        padding: 1.5rem 1rem;
-        margin-top: 0;
-        /* Remove overlap overlap that created the 'divider' line */
+        padding: 0 1rem 1.5rem 1rem;
+        /* Removed top padding */
+        margin-top: -70px;
+        /* Increased overlap */
+        /* Pull content up over the gradient (Standard Netflix Mobile) */
         position: relative;
-        background-color: var(--bg-main);
+        background-color: transparent;
+        /* Transparent to show gradient behind if needed, or var(--bg-main) if we want solid */
         z-index: 5;
     }
 
@@ -235,18 +243,22 @@
         /* Account for fixed header height on mobile */
     }
 
-    .category-title {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
     /* Netflix-Style Grid: 3 columns with tight spacing */
     .movie-grid-display,
     .movie-row {
         grid-template-columns: repeat(3, 1fr);
         gap: 4px;
         /* Netflix-style dense spacing */
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .category-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .category-section {
+        margin-bottom: 1.5rem;
     }
 
     /* Netflix-Style Cards: Posters only, sharp radii */
@@ -641,29 +653,5 @@
 
     .hero-content h1 {
         font-size: 2rem;
-    }
-}
-
-/* Specific Phablet/Tablet Optimization to Match Series Page Logic */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .hero {
-        min-height: 500px;
-        /* Match series.css tablet height */
-    }
-
-    .carousel-item {
-        padding: 0 3rem 6vh 3rem;
-        /* Match series-hero-content padding in series.css */
-        justify-content: flex-end;
-    }
-
-    .hero-content {
-        max-width: 700px;
-        /* Match series-info max-width */
-    }
-
-    .hero-buttons {
-        justify-content: flex-start;
-        /* Ensure buttons align left like series page on tablet */
     }
 }

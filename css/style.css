@@ -692,6 +692,7 @@ header.transparent-mode:not(.scrolled) .mobile-menu-toggle .bar:nth-child(2) {
 .hero-buttons {
     display: flex;
     gap: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .play-button {
@@ -743,6 +744,12 @@ header.transparent-mode:not(.scrolled) .mobile-menu-toggle .bar:nth-child(2) {
     box-shadow: none;
 }
 
+.play-button svg,
+.info-button svg {
+    width: 20px;
+    height: 20px;
+}
+
 /* Carousel Controls */
 .carousel-control {
     position: absolute;
@@ -787,7 +794,7 @@ header.transparent-mode:not(.scrolled) .mobile-menu-toggle .bar:nth-child(2) {
     padding: 2rem 4rem;
     position: relative;
     z-index: 10;
-    margin-top: -80px;
+    margin-top: -40px;
     /* Pull content up over the gradient */
     pointer-events: none;
     /* Allow clicks to pass through transparent padding overlap */
@@ -801,14 +808,14 @@ header.transparent-mode:not(.scrolled) .mobile-menu-toggle .bar:nth-child(2) {
 
 
 .category-section {
-    margin-bottom: 5rem;
+    margin-bottom: 2rem;
 }
 
 .category-title {
     font-family: var(--font-heading);
     font-size: 2.2rem;
     color: var(--primary);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
     gap: 15px;
