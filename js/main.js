@@ -1121,9 +1121,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                 document.querySelectorAll('.category-section:not(#searchResultsSection):not(#myListSection):not(#supportSection)').forEach(section => {
                     section.style.display = 'block';
                 });
-                const adBanner = document.getElementById('adsterraBanner');
-                if (adBanner) adBanner.style.display = 'block';
-
                 if (myListSection) myListSection.style.display = 'none';
                 if (supportSection) supportSection.style.display = 'none';
             } else if (currentView === 'myList') {
@@ -1132,22 +1129,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                 if (myListSection) myListSection.style.display = 'block';
                 // Hide ALL others
                 document.querySelectorAll('.category-section:not(#myListSection)').forEach(section => section.style.display = 'none');
-
-                // Show Ad even in My List
-                const adBanner = document.getElementById('adsterraBanner');
-                if (adBanner) adBanner.style.display = 'block'; // FORCE SHOW
-
             } else if (currentView === 'support') {
                 if (heroSection) heroSection.style.display = 'none';
                 document.querySelector('header')?.classList.remove('transparent-mode');
                 if (supportSection) supportSection.style.display = 'block';
                 // Hide ALL others
                 document.querySelectorAll('.category-section:not(#supportSection)').forEach(section => section.style.display = 'none');
-
-                // Show Ad even in Support
-                const adBanner = document.getElementById('adsterraBanner');
-                if (adBanner) adBanner.style.display = 'block'; // FORCE SHOW
-
             } else {
                 // series, movies category view
                 if (heroSection) heroSection.style.display = 'none';
@@ -1155,9 +1142,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                 document.querySelectorAll('.category-section:not(#searchResultsSection):not(#myListSection):not(#supportSection)').forEach(section => {
                     section.style.display = 'block';
                 });
-                const adBanner = document.getElementById('adsterraBanner');
-                if (adBanner) adBanner.style.display = 'block';
-
                 if (myListSection) myListSection.style.display = 'none';
                 if (supportSection) supportSection.style.display = 'none';
             }
@@ -1171,9 +1155,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             document.querySelectorAll('.category-section:not(#searchResultsSection)').forEach(section => {
                 section.style.display = 'none';
             });
-            // Show Ad even during Search
-            const adBanner = document.getElementById('adsterraBanner');
-            if (adBanner) adBanner.style.display = 'block'; // FORCE SHOW
         }
     }
 

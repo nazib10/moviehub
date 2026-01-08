@@ -18,7 +18,7 @@ let activeSeason = seriesData.seasons[seriesData.seasons.length - 1];
 // Initialize page
 function initializePage() {
     // Update page title and meta
-    document.getElementById('pageTitle').textContent = `${seriesData.title} | Dorahub`;
+    document.getElementById('pageTitle').textContent = `${seriesData.title} - Doraemon Films Hub`;
     document.getElementById('pageDescription').content = seriesData.description;
 
     // Set hero background
