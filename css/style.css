@@ -530,8 +530,13 @@ header.transparent-mode:not(.scrolled) .mobile-menu-toggle .bar:nth-child(2) {
     display: none;
 }
 
-/* Gradient Fade to Content */
+/* Gradient Fade MOVED to .carousel-item::after to fix Z-Index Stacking Issue */
 .hero::after {
+    display: none;
+}
+
+/* New Per-Slide Fade */
+.carousel-item::after {
     content: '';
     position: absolute;
     bottom: 0;
