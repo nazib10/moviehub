@@ -44,6 +44,16 @@ const heroMoviesConfig = [
     },
     {
         // Reference to actual movie in allMoviesData
+        movieId: "doraemon-2005-series", // TV Series
+        isCustom: false
+    },
+    {
+        // Reference to actual movie in allMoviesData
+        movieId: "db-super-broly-2018",
+        isCustom: false
+    },
+    {
+        // Reference to actual movie in allMoviesData
         movieId: "doraemon-earth-symphony-2024",
         isCustom: false
     },
@@ -65,16 +75,6 @@ const heroMoviesConfig = [
     {
         // Reference to actual movie in allMoviesData
         movieId: "db-super-hero-2022",
-        isCustom: false
-    },
-    {
-        // Reference to actual movie in allMoviesData
-        movieId: "dragon-ball-super-series", // TV Series
-        isCustom: false
-    },
-    {
-        // Reference to actual movie in allMoviesData
-        movieId: "doraemon-2005-series", // TV Series
         isCustom: false
     }
 ];
