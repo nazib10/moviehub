@@ -632,9 +632,8 @@ header.transparent-mode:not(.scrolled) .mobile-menu-toggle .bar:nth-child(2) {
     flex-direction: column;
     justify-content: flex-end;
     /* Push content to bottom */
-    padding: 100px 6rem 15vh 6rem;
-    /* Increased side padding (6rem) to avoid overlap with carousel arrows */
-    /* Increased bottom padding (15vh) to clear the content section overlap */
+    padding: 100px 4rem 10vh 4rem;
+    /* 10vh bottom padding (significantly reduced from 18vh) to move content downward */
 }
 
 .carousel-item.active {
@@ -769,7 +768,7 @@ header.transparent-mode:not(.scrolled) .mobile-menu-toggle .bar:nth-child(2) {
 }
 
 .carousel-control.prev {
-    left: 20px;
+    left: 10px;
 }
 
 .carousel-control.next {
