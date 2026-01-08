@@ -44,6 +44,11 @@ const heroMoviesConfig = [
     },
     {
         // Reference to actual movie in allMoviesData
+        movieId: "doraemon-earth-symphony-2024",
+        isCustom: false
+    },
+    {
+        // Reference to actual movie in allMoviesData
         movieId: "death-note-relight-2007",
         isCustom: false
     },
