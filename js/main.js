@@ -230,6 +230,37 @@ document.addEventListener('DOMContentLoaded', async function () {
     initializeHeroMovies();
 
     /**
+     * Generates JSON-LD Structured Data for SEO
+     * Helps search engines understand that these are Movies and TV Series.
+     */
+    function generateStructuredData() {
+        const schemaData = {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": allMoviesData.map((movie, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": {
+                    "@type": movie.type === 'series' ? "TVSeries" : "Movie",
+                    "name": movie.title,
+                    "description": movie.description,
+                    "image": `https://doraemonhub.netlify.app/${movie.imageUrl}`, // Ensure absolute URL
+                    "url": `https://doraemonhub.netlify.app/${movie.type === 'series' ? 'series.html?id=' + movie.id : '#'}`
+                }
+            }))
+        };
+
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify(schemaData);
+        document.head.appendChild(script);
+        console.log("SEO: Structured Data injected.");
+    }
+
+    // Call it immediately
+    generateStructuredData();
+
+    /**
      * Shows the movie info modal with all details populated
      * @param {Object} movie - The movie object with all details
      */
@@ -240,6 +271,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         movieInfoTitle.textContent = movie.title;
         movieInfoDescription.textContent = movie.description;
         movieInfoImage.src = movie.imageUrl;
+        movieInfoImage.alt = movie.title + " Poster";
 
         // Logic for Series vs Movie
         if (movie.type === 'series') {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doraemon Films Hub - Anime Edition</title>
+    <title>Doraemon Films Hub - Watch Doraemon Movies & Anime Online</title>
 
     <!-- Google Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P365MMCVRW"></script>
@@ -18,26 +18,29 @@
 
     <!-- SEO Meta Tags -->
     <meta name="description"
-        content="Your ultimate hub for Doraemon movies, presented in a sleek, Dorahub-style interface. Watch, track, and enjoy all your favorite Doraemon adventures.">
-    <meta name="keywords" content="Doraemon, movies, films, watch, streaming, anime, kids, family, adventure">
-    <meta name="author" content="Dorahub">
+        content="Watch the best Doraemon movies and anime series online for free at Doraemon Films Hub. Your ultimate collection of Doraemon adventures, films, and TV shows.">
+    <meta name="keywords"
+        content="Doraemon, Doraemon movies, watch Doraemon online, anime movies, Doraemon Hindi, Doraemon English, kids anime, family movies, Doraemon stand by me, Doraemon series">
+    <meta name="author" content="Doraemon Films Hub">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://doraemonhub.netlify.app/">
+    <link rel="icon" type="image/png" href="images/doraemon-stand-by-me-2.jpg">
 
-    <!-- Open Graph Meta Tags (for Facebook, etc.) -->
-    <meta property="og:title" content="Doraemon Films Hub">
+    <!-- Open Graph Meta Tags (for Facebook, LinkedIn, etc.) -->
+    <meta property="og:title" content="Doraemon Films Hub - Watch Doraemon Movies & Anime">
     <meta property="og:description"
-        content="Your ultimate hub for Doraemon movies, presented in a sleek, Dorahub-style interface.">
+        content="Stream your favorite Doraemon movies and TV series in high quality. Join the adventure with Nobita and Doraemon at the ultimate anime hub.">
     <meta property="og:image" content="https://doraemonhub.netlify.app/images/doraemon-stand-by-me-2.jpg">
     <meta property="og:url" content="https://doraemonhub.netlify.app/">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Doraemon Films Hub">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Doraemon Films Hub">
-    <meta property="twitter:description"
-        content="Your ultimate hub for Doraemon movies, presented in a sleek, Dorahub-style interface.">
-    <meta property="twitter:image" content="https://doraemonhub.netlify.app/images/doraemon-stand-by-me-2.jpg">
-
-
+    <meta name="twitter:title" content="Doraemon Films Hub - Watch Doraemon Movies & Anime">
+    <meta name="twitter:description"
+        content="Stream your favorite Doraemon movies and TV series in high quality. Join the adventure with Nobita and Doraemon.">
+    <meta name="twitter:image" content="https://doraemonhub.netlify.app/images/doraemon-stand-by-me-2.jpg">
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link
@@ -48,15 +51,16 @@
 </head>
 
 <body>
+    <h1 class="sr-only">Doraemon Films Hub - Watch Doraemon Movies & Anime Online</h1>
     <div class="main-wrapper">
         <header>
             <!-- Mobile Menu Toggle -->
-            <button id="mobileMenuToggle" class="mobile-menu-toggle">
+            <button id="mobileMenuToggle" class="mobile-menu-toggle" aria-label="Open Menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </button>
-            <div class="header-logo" id="headerLogo">Dorahub</div>
+            <a href="index.html" class="header-logo" id="headerLogo">Dorahub</a>
 
             <nav class="main-nav">
                 <ul class="nav-list">
@@ -182,13 +186,7 @@
                                 d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                         </svg>
                     </a>
-                    <a href="#" class="social-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="currentColor">
-                            <path
-                                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-.424.727-.666 1.584-.666 2.477 0 1.61.82 3.027 2.053 3.848-.764-.024-1.482-.232-2.11-.583v.062c0 2.256 1.605 4.14 3.737 4.568-.39.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.598 1.85 2.332 3.198 4.384 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.096 7.14 2.096 8.57 0 13.255-7.098 13.255-13.254 0-.202-.005-.403-.014-.602.91-.658 1.7-1.47 2.323-2.41z" />
-                        </svg>
-                    </a>
+
                     <a href="https://www.facebook.com/nazibul.haque.958129/" target="_blank" class="social-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="currentColor">

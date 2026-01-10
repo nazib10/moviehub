@@ -21,6 +21,32 @@ function initializePage() {
     document.getElementById('pageTitle').textContent = `${seriesData.title} - Doraemon Films Hub`;
     document.getElementById('pageDescription').content = seriesData.description;
 
+    // Generate Structured Data (JSON-LD) for this specific series
+    const schemaData = {
+        "@context": "https://schema.org",
+        "@type": "TVSeries",
+        "name": seriesData.title,
+        "description": seriesData.description,
+        "image": `https://doraemonhub.netlify.app/${seriesData.imageUrl}`,
+        "numberOfSeasons": seriesData.seasons.length,
+        "containsSeason": seriesData.seasons.map(season => ({
+            "@type": "TVSeason",
+            "name": season.title || `Season ${season.seasonNumber}`,
+            "seasonNumber": season.seasonNumber,
+            "numberOfEpisodes": season.episodes.length,
+            "episode": season.episodes.map(ep => ({
+                "@type": "TVEpisode",
+                "episodeNumber": ep.episodeNumber,
+                "name": ep.title,
+                "description": ep.description
+            }))
+        }))
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(schemaData);
+    document.head.appendChild(script);
+
     // Set hero background
     const heroBackground = document.querySelector('.series-hero-background');
     heroBackground.style.backgroundImage = `url('${seriesData.imageUrl}')`;
@@ -176,7 +202,10 @@ function openEpisodeModal(episode) {
 
     // Use series image as fallback for episode image since we lack individual episode thumbs in data
     const img = document.getElementById('episodeInfoImage');
-    if (img) img.src = seriesData.imageUrl;
+    if (img) {
+        img.src = seriesData.imageUrl;
+        img.alt = `${episode.title} - ${seriesData.title}`;
+    }
 
     // Setup Watch Button in Modal
     const watchBtn = document.getElementById('episodeInfoWatchButton');
