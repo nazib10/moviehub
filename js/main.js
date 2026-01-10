@@ -128,6 +128,65 @@ document.addEventListener('DOMContentLoaded', async function () {
     let currentModalMovieId = null;
 
     /**
+     * Monetag Smart Link Integration
+     * intelligently triggers on the first "Play/Watch" interaction per session.
+     */
+    /**
+     * Monetag Smart Link - Hybrid Logic
+     * 1. Active Session: Shows ads every 10 mins (Monetize long users).
+     * 2. New Session: Shows ads immediately (Monetize "drop & return" users).
+     * 3. Safety: 60s global lock prevents ban from multi-tab spam.
+     */
+    function initSmartLink() {
+        const SMART_LINK_URL = "https://otieu.com/4/10442977";
+        const LOCAL_STORAGE_KEY = "monetag_last_ad_time";    // Global across all tabs
+        const SESSION_STORAGE_KEY = "monetag_session_active"; // Specific to this tab
+
+        const LONG_COOLDOWN = 10 * 60 * 1000; // 10 Minutes (For same session re-clicks)
+        const SHORT_COOLDOWN = 60 * 1000;     // 1 Minute (Spam protection for new sessions)
+
+        document.addEventListener('click', function (e) {
+            const target = e.target.closest('.watch-button, .play-button, .episode-item, .my-list-button');
+            if (!target) return;
+
+            const now = Date.now();
+            const lastShownGlobal = parseInt(localStorage.getItem(LOCAL_STORAGE_KEY) || 0);
+            const isSessionActive = sessionStorage.getItem(SESSION_STORAGE_KEY);
+
+            // Determine which timer to use
+            let cooldownToUse;
+            if (isSessionActive) {
+                // User is in a long session. Wait 10 mins between ads.
+                cooldownToUse = LONG_COOLDOWN;
+            } else {
+                // User just arrived (New Tab or Restarted Browser).
+                // Use short 60s lock to prevent multi-tab spam, but capture "Came Back" users.
+                cooldownToUse = SHORT_COOLDOWN;
+            }
+
+            // Check if we are inside the restricted window
+            if (now - lastShownGlobal < cooldownToUse) {
+                // Protection active: Allow normal click (Go to Facebook/Movie)
+                return;
+            }
+
+            // --- Trigger Ad ---
+            e.preventDefault();
+            e.stopPropagation();
+            window.open(SMART_LINK_URL, '_blank');
+
+            // Update State
+            localStorage.setItem(LOCAL_STORAGE_KEY, now.toString()); // Set global timer
+            sessionStorage.setItem(SESSION_STORAGE_KEY, 'true');     // Mark this session as "Ad Shown"
+
+            console.log(`Smart Link Triggered. Mode: ${isSessionActive ? 'Repeat Session (10m)' : 'New Session (Instant)'}`);
+
+        }, true);
+    }
+
+    initSmartLink();
+
+    /**
      * Initialize hero movies data from config
      * Resolves movie references from allMoviesData
      */
