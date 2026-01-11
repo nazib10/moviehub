@@ -2115,3 +2115,24 @@ footer::before {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
+
+/* Adsterra Banners */
+.ad-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem auto;
+    text-align: center;
+    overflow: hidden;
+    width: 100%;
+    z-index: 100;
+    max-width: 100%;
+}
+
+.ad-desktop {
+    display: block;
+}
+
+.ad-mobile {
+    display: none;
+}

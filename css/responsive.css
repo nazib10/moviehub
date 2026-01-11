@@ -655,3 +655,14 @@
         font-size: 2rem;
     }
 }
+
+/* Adsterra Responsive Logic */
+@media (max-width: 767px) {
+    .ad-desktop {
+        display: none !important;
+    }
+
+    .ad-mobile {
+        display: block !important;
+    }
+}
