@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+    <!-- Monetag Vignette Load -->
+    <script>(function (s) { s.dataset.zone = '10448229', s.src = 'https://gizokraijaw.net/vignette.min.js' })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doraemon Films Hub - Watch Doraemon Movies & Anime Online</title>
@@ -127,6 +130,8 @@
         </div>
 
         <main class="content-sections">
+
+
             <!-- My List Section -->
             <section class="category-section" id="myListSection" style="display: none;">
                 <h2 class="category-title">My List</h2>
@@ -159,18 +164,8 @@
                 </div>
             </section>
 
-            <!-- Search Results Section (Dynamically Added/Removed) -->
-            <section class="category-section" id="searchResultsSection" style="display: none;">
-                <h2 class="category-title">Search Results</h2>
-                <div class="movie-grid-display" id="searchResultsGrid">
-                    <!-- Search results will be appended here by JavaScript -->
-                </div>
-                <p id="noResultsMessage" class="text-medium text-center mt-8" style="display: none;">No movies found
-                    matching your search.</p>
-            </section>
-
-            <!-- Adsterra Responsive Banner -->
-            <div class="ad-container">
+            <!-- Middle Ad Banner (positioned here to appear between TV Series and Latest Releases) -->
+            <div id="middle-ad-banner" class="ad-container category-section" style="margin: 3rem auto; display: none;">
                 <div class="ad-desktop">
                     <script type="text/javascript">
                         atOptions = {
@@ -198,6 +193,18 @@
                         src="https://www.highperformanceformat.com/ee60d7be999d6168c35fe2393bd31c44/invoke.js"></script>
                 </div>
             </div>
+
+            <!-- Search Results Section (Dynamically Added/Removed) -->
+            <section class="category-section" id="searchResultsSection" style="display: none;">
+                <h2 class="category-title">Search Results</h2>
+                <div class="movie-grid-display" id="searchResultsGrid">
+                    <!-- Search results will be appended here by JavaScript -->
+                </div>
+                <p id="noResultsMessage" class="text-medium text-center mt-8" style="display: none;">No movies found
+                    matching your search.</p>
+            </section>
+
+
         </main>
 
         <footer>
@@ -298,8 +305,7 @@
     <!-- The Modal -->
     <!-- Modal Removed: Support is now a page/section -->
 
-    <!-- Adsterra Social Bar -->
-    <script src="https://pl28452277.effectivegatecpm.com/ac/1a/27/ac1a277fa17aaa0e1f658b8f0cbc51c6.js"></script>
+
     <script type="module" src="js/main.js"></script>
     <button id="scrollToTopBtn" title="Go to top">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">

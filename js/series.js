@@ -113,7 +113,9 @@ function renderEpisodes(season) {
     const episodesContainer = document.getElementById('episodesList');
     episodesContainer.innerHTML = '';
 
-    season.episodes.forEach(episode => {
+    const totalEpisodes = season.episodes.length;
+
+    season.episodes.forEach((episode, index) => {
         const episodeCard = document.createElement('div');
         episodeCard.className = 'episode-card';
 
@@ -148,6 +150,15 @@ function renderEpisodes(season) {
         }
 
         episodesContainer.appendChild(episodeCard);
+
+        // Insert static ad banner after the first episode (only if there are 2+ episodes)
+        if (index === 0 && totalEpisodes >= 2) {
+            const staticAd = document.getElementById('series-episode-ad');
+            if (staticAd) {
+                staticAd.style.display = 'flex';
+                episodesContainer.appendChild(staticAd);
+            }
+        }
     });
 }
 

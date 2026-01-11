@@ -657,6 +657,18 @@
 }
 
 /* Adsterra Responsive Logic */
+/* Desktop (larger than 767px) */
+@media (min-width: 768px) {
+    .ad-desktop {
+        display: block !important;
+    }
+
+    .ad-mobile {
+        display: none !important;
+    }
+}
+
+/* Mobile (767px and below) */
 @media (max-width: 767px) {
     .ad-desktop {
         display: none !important;

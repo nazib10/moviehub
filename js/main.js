@@ -1016,23 +1016,28 @@ document.addEventListener('DOMContentLoaded', async function () {
     function renderAllMovies(myListIds, view = 'home') {
         console.log(`renderAllMovies called with view: ${view}`);
         const mainContent = document.querySelector('main.content-sections');
-        document.querySelectorAll('.category-section:not(#searchResultsSection):not(#myListSection):not(#supportSection)').forEach(section => section.remove());
 
-        // Handle My List View
+        // Cache persistent elements (Search, MyList, Support, Ad)
+        const persistentIds = ['searchResultsSection', 'myListSection', 'supportSection', 'middle-ad-banner'];
+
+        // 1. Hide Everything First (Visual Reset) - except persistent elements
+        document.querySelectorAll('.category-section').forEach(section => {
+            if (!persistentIds.includes(section.id)) {
+                section.style.display = 'none';
+            }
+        });
+
+        // 2. Handle Specific Views which don't need dynamic Movie rows
         if (view === 'myList') {
             myListSection.style.display = 'block';
             const supportSection = document.getElementById('supportSection');
             if (supportSection) supportSection.style.display = 'none';
             renderMyList(myListIds);
             if (typeof heroSection !== 'undefined') heroSection.style.display = 'none';
-            // Add padding when hero is hidden
             mainContent.classList.add('no-hero');
-            document.querySelector('header')?.classList.remove('transparent-mode'); // Reset header
+            document.querySelector('header')?.classList.remove('transparent-mode');
             return;
-        }
-
-        // Handle Support View
-        else if (view === 'support') {
+        } else if (view === 'support') {
             myListSection.style.display = 'none';
             if (typeof heroSection !== 'undefined') heroSection.style.display = 'none';
             mainContent.classList.add('no-hero');
@@ -1044,8 +1049,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 supportSection.style.display = 'block';
                 // Inject options if empty
                 const grid = document.getElementById('supportOptionsGrid');
-                if (grid) {
-                    grid.innerHTML = '';
+                if (grid && grid.children.length === 0) {
                     supportData.forEach(item => {
                         const card = document.createElement('div');
                         card.className = 'crypto-option';
@@ -1082,31 +1086,39 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
             }
             return;
-        } else {
-            const supportSection = document.getElementById('supportSection');
-            if (supportSection) supportSection.style.display = 'none';
-            myListSection.style.display = 'none';
-
-            // Only show Hero on Home view
-            if (view === 'home') {
-                if (typeof heroSection !== 'undefined') {
-                    heroSection.style.display = 'block';
-                    mainContent.classList.remove('no-hero'); // Remove padding
-                    // Update Hero content based on view (just home now)
-                    const filteredHeroes = getFilteredHeroMovies(view);
-                    renderHeroCarousel(filteredHeroes);
-                    // Enable Transparent Header for Immersive Home
-                    document.querySelector('header')?.classList.add('transparent-mode');
-                }
-            } else {
-                // Hide hero for Series and Movies views
-                if (typeof heroSection !== 'undefined') heroSection.style.display = 'none';
-                mainContent.classList.add('no-hero'); // Add padding
-                document.querySelector('header')?.classList.remove('transparent-mode'); // Reset header
-            }
         }
 
-        // 1. Render TV Series Section First (or wherever preferred, let's put it at top)
+        // 3. Home / Movies / Series View Logic
+        // Clean up previously created dynamic sections ONLY
+        document.querySelectorAll('.category-section').forEach(section => {
+            if (!persistentIds.includes(section.id)) {
+                section.remove(); // Remove old dynamic rows to re-render fresh
+            }
+        });
+
+        // Hide My List and Support sections (they have their own views)
+        const supportSection = document.getElementById('supportSection');
+        if (myListSection) myListSection.style.display = 'none';
+        if (supportSection) supportSection.style.display = 'none';
+
+        // Hero Logic
+        if (view === 'home') {
+            if (heroSection) {
+                heroSection.style.display = 'block';
+                const filteredHeroes = getFilteredHeroMovies(view);
+                renderHeroCarousel(filteredHeroes);
+            }
+            mainContent.classList.remove('no-hero');
+            document.querySelector('header')?.classList.add('transparent-mode');
+        } else {
+            if (heroSection) heroSection.style.display = 'none';
+            mainContent.classList.add('no-hero');
+            document.querySelector('header')?.classList.remove('transparent-mode');
+        }
+
+        // 4. Render Dynamic Content
+
+        // A. TV Series Section
         if (view === 'home' || view === 'series') {
             const seriesData = allMoviesData.filter(m => m.type === 'series');
             if (seriesData.length > 0) {
@@ -1120,27 +1132,40 @@ document.addEventListener('DOMContentLoaded', async function () {
                     const isInList = myListIds.has(movie.id);
                     movieRowDiv.appendChild(createMovieCard(movie, isInList));
                 });
-                mainContent.insertBefore(section, searchResultsSection);
-                console.log(`Category "TV Series" rendered with ${seriesData.length} items.`);
+
+                // Insert before Middle Ad (if exists) to keep it in place, otherwise Search Results
+                const middleAd = document.getElementById('middle-ad-banner');
+                if (middleAd && mainContent.contains(middleAd)) {
+                    mainContent.insertBefore(section, middleAd);
+                } else {
+                    mainContent.insertBefore(section, searchResultsSection);
+                }
             }
         }
 
-        // 2. Render Standard Categories (Movies Only)
+        // B. Middle Ad Banner (Show on Home, Series, Movies)
+        const middleAd = document.getElementById('middle-ad-banner');
+        if (middleAd) {
+            if (view === 'home' || view === 'series' || view === 'movies') {
+                middleAd.style.display = 'flex';
+            } else {
+                middleAd.style.display = 'none';
+            }
+        }
+
+        // C. Movie Categories
         if (view === 'home' || view === 'movies') {
             const categoryOrder = ['latestReleases', 'doraemonClassics', 'otherAnimeMovies'];
-
             categoryOrder.forEach(categoryKey => {
-                // Filter by category AND ensure it's NOT a series (to avoid duplication/blending)
                 const categoryMovies = allMoviesData.filter(movie =>
                     movie.category.includes(categoryKey) && movie.type !== 'series'
                 );
 
-                if (categoryMovies && categoryMovies.length > 0) {
+                if (categoryMovies.length > 0) {
                     const section = document.createElement('section');
                     section.className = 'category-section';
                     section.id = categoryKey;
                     const formattedTitle = categoryKey.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-
                     section.innerHTML = `<h2 class="category-title">${formattedTitle}</h2><div class="movie-row"></div>`;
 
                     const movieRowDiv = section.querySelector('.movie-row');
@@ -1149,9 +1174,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                         movieRowDiv.appendChild(createMovieCard(movie, isInList));
                     });
                     mainContent.insertBefore(section, searchResultsSection);
-                    console.log(`Category "${formattedTitle}" rendered with ${categoryMovies.length} movies.`);
-                } else {
-                    console.log(`Category "${categoryKey}" has no movies to render.`);
                 }
             });
         }
@@ -1212,6 +1234,13 @@ document.addEventListener('DOMContentLoaded', async function () {
                 document.querySelectorAll('.category-section:not(#searchResultsSection):not(#myListSection):not(#supportSection)').forEach(section => {
                     section.style.display = 'block';
                 });
+
+                // Explicitly show Ad on Home
+                const middleAd = document.getElementById('middle-ad-banner');
+                if (middleAd) {
+                    middleAd.style.display = 'flex';
+                }
+
                 if (myListSection) myListSection.style.display = 'none';
                 if (supportSection) supportSection.style.display = 'none';
             } else if (currentView === 'myList') {
@@ -1246,6 +1275,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             document.querySelectorAll('.category-section:not(#searchResultsSection)').forEach(section => {
                 section.style.display = 'none';
             });
+            // Ensure ad is hidden on search
+            const middleAd = document.getElementById('middle-ad-banner');
+            if (middleAd) middleAd.style.display = 'none';
         }
     }
 
